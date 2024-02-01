@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.9;
 
-import './interfaces/IERC721.sol';
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-contract ERC721 is IERC721 {
-
+contract MyToken is ERC721, ERC721URIStorage {
+    constructor (string memory name, string memory symbol) {
+        ERC721(name, symbol);
+    }
 }
-
