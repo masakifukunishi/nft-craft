@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import contractFile from "../artifacts/contracts/ERC721.sol/MyFirstToken.json";
+import myFirstToken from "../artifacts/contracts/ERC721.sol/MyFirstToken.json";
 import * as dotenv from "dotenv";
 dotenv.config();
 async function main() {
@@ -13,7 +13,7 @@ async function main() {
   }
   const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
   const signer = new ethers.Wallet(privateKey, provider);
-  const factory = new ethers.ContractFactory(contractFile.abi, contractFile.bytecode, signer);
+  const factory = new ethers.ContractFactory(myFirstToken.abi, myFirstToken.bytecode, signer);
   const contract = await factory.deploy();
   console.log(`contract deploy address ${contract.address}`);
   console.log(`Transaction URL: https://sepolia.etherscan.io/tx/${contract.deployTransaction.hash}`);
