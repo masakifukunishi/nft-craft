@@ -60,7 +60,7 @@ program
   )
   .addOption(new Option("--contractAddress <address>", "address of token contract").makeOptionMandatory())
   .addOption(new Option("--accountAddress <address>", "mint token to this account address").makeOptionMandatory())
-  .addOption(new Option("--tokenId <number>", "token id of token minted (e.g. abcdefg)").argParser(parseFloat).makeOptionMandatory())
+  .addOption(new Option("--uri <string>", "URI of the token").makeOptionMandatory())
   .parse();
 const options = program.opts();
 
