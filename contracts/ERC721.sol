@@ -5,4 +5,8 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 contract MyFirstToken is ERC721 {
     constructor() ERC721("MyFirstToken", "MFT") {}
+
+    function safeMint(address to, uint256 tokenId) public {
+        _safeMint(to, tokenId);
+    }
 }
