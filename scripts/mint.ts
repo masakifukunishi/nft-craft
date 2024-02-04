@@ -24,7 +24,7 @@ function transactionExplorerUrl(network: string, txHash: string): string {
   }
 }
 
-async function main(network: string, contractAddress: string, accountAddress: string, tokenId: number) {
+async function main(network: string, contractAddress: string, accountAddress: string, uri: string) {
   const privateKey: string = process.env.PRIVATE_KEY ?? "";
   if (privateKey === "") {
     throw new Error("No value set for environement variable PRIVATE_KEY");
@@ -38,7 +38,7 @@ async function main(network: string, contractAddress: string, accountAddress: st
   const signer = new ethers.Wallet(privateKey, provider);
 
   const contract = new ethers.Contract(contractAddress, myFirstToken.abi, signer);
-  const tx = await contract.mint(accountAddress, tokenId);
+  const tx = await contract.safeMint(accountAddress, uri);
   console.log(`Transaction URL: ${transactionExplorerUrl(network, tx.hash)}`);
 
   const receipt = await tx.wait();
@@ -60,11 +60,11 @@ program
   )
   .addOption(new Option("--contractAddress <address>", "address of token contract").makeOptionMandatory())
   .addOption(new Option("--accountAddress <address>", "mint token to this account address").makeOptionMandatory())
-  .addOption(new Option("--tokenId <number>", "token id of token minted (e.g. abcdefg)").argParser(parseFloat).makeOptionMandatory())
+  .addOption(new Option("--uri <string>", "URI of the token").makeOptionMandatory())
   .parse();
 const options = program.opts();
 
-main(options.network, options.contractAddress, options.accountAddress, options.amount).catch((error) => {
+main(options.network, options.contractAddress, options.accountAddress, options.uri).catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });
