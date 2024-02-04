@@ -33,10 +33,6 @@ async function main(network: string, collectionAddress: string, accountAddress: 
   if (rpcUrl === "") {
     throw new Error("No value set for environement variable SEPOLIA_URL");
   }
-  console.log(`rpcUrl: ${rpcUrl}`);
-  console.log(`contractAddress: ${collectionAddress}`);
-  console.log(`accountAddress: ${accountAddress}`);
-  console.log(`uri: ${uri}`);
 
   const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
   const signer = new ethers.Wallet(privateKey, provider);

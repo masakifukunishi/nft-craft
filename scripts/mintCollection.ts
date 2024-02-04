@@ -36,11 +36,15 @@ async function main(network: string, contractAddress: string, accountAddress: st
 
   const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
   const signer = new ethers.Wallet(privateKey, provider);
-
   const contract = new ethers.Contract(contractAddress, ERC721Factory.abi, signer);
-  const address = await contract.createERC721(accountAddress, name, symbol);
-  console.log(`deployed at ${address.to}`);
-  console.log(`Transaction URL: ${transactionExplorerUrl(network, address.hash)}`);
+  const tx = await contract.createERC721(name, symbol);
+  const receipt = await tx.wait();
+  const event = receipt.events?.find((e: any) => e.event === "ERC721Created");
+  if (!event) throw new Error("ERC721Created event not found");
+
+  const newContractAddress = event.args[0];
+  console.log(`Deployed at ${newContractAddress}`);
+  console.log(`Transaction URL: ${transactionExplorerUrl(network, tx.hash)}`);
 }
 
 program
