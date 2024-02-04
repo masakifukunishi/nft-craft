@@ -4,7 +4,7 @@ pragma solidity ^0.8.19;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
-contract ERC721Token is ERC721, ERC721URIStorage {
+contract ERC721Collection is ERC721, ERC721URIStorage {
     address immutable public factory;
     uint256 private tokenIdCounter;
 

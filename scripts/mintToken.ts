@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import ERC721Token from "../artifacts/contracts/ERC721Token.sol/ERC721Token.json";
+import ERC721Collection from "../artifacts/contracts/ERC721Collection.sol/ERC721Collection.json";
 import { program, Option } from "commander";
 import * as dotenv from "dotenv";
 dotenv.config();
@@ -24,7 +24,7 @@ function transactionExplorerUrl(network: string, txHash: string): string {
   }
 }
 
-async function main(network: string, contractAddress: string, accountAddress: string, uri: string) {
+async function main(network: string, collectionAddress: string, accountAddress: string, uri: string) {
   const privateKey: string = process.env.PRIVATE_KEY ?? "";
   if (privateKey === "") {
     throw new Error("No value set for environement variable PRIVATE_KEY");
@@ -34,16 +34,14 @@ async function main(network: string, contractAddress: string, accountAddress: st
     throw new Error("No value set for environement variable SEPOLIA_URL");
   }
   console.log(`rpcUrl: ${rpcUrl}`);
-  console.log(`contractAddress: ${contractAddress}`);
+  console.log(`contractAddress: ${collectionAddress}`);
   console.log(`accountAddress: ${accountAddress}`);
   console.log(`uri: ${uri}`);
 
   const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
   const signer = new ethers.Wallet(privateKey, provider);
 
-  console.log(11111);
-  const contract = new ethers.Contract(contractAddress, ERC721Token.abi, signer);
-  console.log(22222);
+  const contract = new ethers.Contract(collectionAddress, ERC721Collection.abi, signer);
   const tx = await contract.safeMint(accountAddress, uri);
   console.log(`Transaction URL: ${transactionExplorerUrl(network, tx.hash)}`);
 
@@ -64,13 +62,13 @@ program
       .choices(["polygon", "sepolia"])
       .makeOptionMandatory()
   )
-  .addOption(new Option("--contractAddress <address>", "address of token contract").makeOptionMandatory())
+  .addOption(new Option("--collectionAddress <address>", "address of token contract").makeOptionMandatory())
   .addOption(new Option("--accountAddress <address>", "mint token to this account address").makeOptionMandatory())
   .addOption(new Option("--uri <string>", "URI of the token").makeOptionMandatory())
   .parse();
 const options = program.opts();
 
-main(options.network, options.contractAddress, options.accountAddress, options.uri).catch((error) => {
+main(options.network, options.collectionAddress, options.accountAddress, options.uri).catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });
