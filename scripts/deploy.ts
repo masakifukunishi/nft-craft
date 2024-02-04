@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { ethers } from "hardhat";
 import myFirstToken from "../artifacts/contracts/ERC721.sol/MyFirstToken.json";
 import * as dotenv from "dotenv";
 dotenv.config();
