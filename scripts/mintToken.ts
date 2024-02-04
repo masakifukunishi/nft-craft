@@ -33,11 +33,17 @@ async function main(network: string, contractAddress: string, accountAddress: st
   if (rpcUrl === "") {
     throw new Error("No value set for environement variable SEPOLIA_URL");
   }
+  console.log(`rpcUrl: ${rpcUrl}`);
+  console.log(`contractAddress: ${contractAddress}`);
+  console.log(`accountAddress: ${accountAddress}`);
+  console.log(`uri: ${uri}`);
 
   const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
   const signer = new ethers.Wallet(privateKey, provider);
 
+  console.log(11111);
   const contract = new ethers.Contract(contractAddress, ERC721Token.abi, signer);
+  console.log(22222);
   const tx = await contract.safeMint(accountAddress, uri);
   console.log(`Transaction URL: ${transactionExplorerUrl(network, tx.hash)}`);
 

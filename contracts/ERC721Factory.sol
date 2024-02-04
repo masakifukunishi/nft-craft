@@ -11,6 +11,6 @@ contract ERC721Factory {
         // bytes32 salt = keccak256(abi.encodePacked(token0, token1));
         ERC721Token erc721Contract = new ERC721Token(name, symbol);
         erc721 = address(erc721Contract);
-        // emit ERC721Created(to, erc721);
+        emit ERC721Created(to, erc721);
     }
 }
