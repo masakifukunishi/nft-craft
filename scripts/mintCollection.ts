@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import myFirstToken from "../artifacts/contracts/ERC721.sol/MyFirstToken.json";
+import ERC721Factory from "../artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
 import { program, Option } from "commander";
 import * as dotenv from "dotenv";
 dotenv.config();
@@ -24,7 +24,7 @@ function transactionExplorerUrl(network: string, txHash: string): string {
   }
 }
 
-async function main(network: string, contractAddress: string, accountAddress: string, uri: string) {
+async function main(network: string, contractAddress: string, accountAddress: string, name: string, symbol: string) {
   const privateKey: string = process.env.PRIVATE_KEY ?? "";
   if (privateKey === "") {
     throw new Error("No value set for environement variable PRIVATE_KEY");
@@ -36,20 +36,15 @@ async function main(network: string, contractAddress: string, accountAddress: st
 
   const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
   const signer = new ethers.Wallet(privateKey, provider);
-
-  const contract = new ethers.Contract(contractAddress, myFirstToken.abi, signer);
-  const tx = await contract.safeMint(accountAddress, uri);
-  console.log(`Transaction URL: ${transactionExplorerUrl(network, tx.hash)}`);
-
+  const contract = new ethers.Contract(contractAddress, ERC721Factory.abi, signer);
+  const tx = await contract.createERC721(name, symbol);
   const receipt = await tx.wait();
-  console.log("completed");
-  for (let log of receipt.logs) {
-    try {
-      const event = contract.interface.parseLog(log);
-      console.log(`Event Name: ${event["name"]}`);
-      console.log(`      Args: ${event["args"]}`);
-    } catch (e) {}
-  }
+  const event = receipt.events?.find((e: any) => e.event === "ERC721Created");
+  if (!event) throw new Error("ERC721Created event not found");
+
+  const newContractAddress = event.args[0];
+  console.log(`Deployed at ${newContractAddress}`);
+  console.log(`Transaction URL: ${transactionExplorerUrl(network, tx.hash)}`);
 }
 
 program
@@ -60,11 +55,12 @@ program
   )
   .addOption(new Option("--contractAddress <address>", "address of token contract").makeOptionMandatory())
   .addOption(new Option("--accountAddress <address>", "mint token to this account address").makeOptionMandatory())
-  .addOption(new Option("--uri <string>", "URI of the token").makeOptionMandatory())
+  .addOption(new Option("--name <string>", "name of the collection").makeOptionMandatory())
+  .addOption(new Option("--symbol <string>", "symbol of the collection").makeOptionMandatory())
   .parse();
 const options = program.opts();
 
-main(options.network, options.contractAddress, options.accountAddress, options.uri).catch((error) => {
+main(options.network, options.contractAddress, options.accountAddress, options.name, options.symbol).catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });
