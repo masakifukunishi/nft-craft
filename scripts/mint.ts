@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import myFirstToken from "../artifacts/contracts/ERC721.sol/MyFirstToken.json";
+import ERC721Token from "../artifacts/contracts/ERC721Token.sol/ERC721Token.json";
 import { program, Option } from "commander";
 import * as dotenv from "dotenv";
 dotenv.config();
@@ -37,7 +37,7 @@ async function main(network: string, contractAddress: string, accountAddress: st
   const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
   const signer = new ethers.Wallet(privateKey, provider);
 
-  const contract = new ethers.Contract(contractAddress, myFirstToken.abi, signer);
+  const contract = new ethers.Contract(contractAddress, ERC721Token.abi, signer);
   const tx = await contract.safeMint(accountAddress, uri);
   console.log(`Transaction URL: ${transactionExplorerUrl(network, tx.hash)}`);
 
