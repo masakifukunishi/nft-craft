@@ -30,9 +30,6 @@ const Home: NextPage = () => {
       // signer
       const signer = ethersProvider.getSigner();
       setSigner(signer);
-      // // contract address
-      // setFactoryAddress(loadContractData(chainId)?.factory);
-      // setRouterAddress(loadContractData(chainId)?.router);
 
       provider.on("chainChanged", () => {
         window.location.reload();
