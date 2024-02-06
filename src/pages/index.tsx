@@ -93,7 +93,41 @@ const Home: NextPage = () => {
     }
   };
 
-  const uploadToNFTStorage = async () => {};
+  const uploadToNFTStorage = async () => {
+    if (!nftImage) {
+      alert("Image is required");
+      return;
+    }
+    const reader = new FileReader();
+    reader.readAsDataURL(nftImage);
+    reader.onloadend = async () => {
+      const base64Data = reader.result;
+      const base64Content = base64Data?.toString().split(";base64,")[1];
+      if (base64Content) {
+        try {
+          const response = await fetch("/api/upload", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: nftName,
+              description: nftDescription,
+              imageBase64: base64Content,
+            }),
+          });
+          const data = await response.json();
+          if (response.ok) {
+            console.log("Upload successful", data);
+          } else {
+            console.error("Upload failed", data.error);
+          }
+        } catch (error) {
+          console.error("Error uploading the image", error);
+        }
+      }
+    };
+  };
 
   return (
     <div className="bg-gray-900 text-gray-50 min-h-screen px-4">
