@@ -4,7 +4,7 @@ import type { Signer, Contract } from "ethers";
 import { ethers, providers, BigNumber } from "ethers";
 import detectEthereumProvider from "@metamask/detect-provider";
 
-import { loadContractData } from "../lib/load";
+import { loadContractData } from "../libs/load";
 import ERC721Factory from "../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
 
 type Collection = {
