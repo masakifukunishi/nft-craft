@@ -1,14 +1,37 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-import './ERC721Collection.sol';
+import "./ERC721Collection.sol";
 
 contract ERC721Factory {
-    event ERC721Created(address erc721);
+    event ERC721CollectionCreated(address indexed creator, address collectionAddress);
 
-    function createERC721(string memory name, string memory symbol) external returns (address erc721) {  
+    struct CollectionInfo {
+        address collectionAddress;
+        string name;
+        string symbol;
+    }
+
+    mapping(address => CollectionInfo[]) private creatorCollections;
+
+    function createERC721Collection(string memory name, string memory symbol) external returns (address collectionAddress) {
         ERC721Collection erc721Contract = new ERC721Collection(name, symbol);
-        erc721 = address(erc721Contract);
-        emit ERC721Created(erc721);
+        collectionAddress = address(erc721Contract);
+
+        CollectionInfo memory newCollectionInfo = CollectionInfo({
+            collectionAddress: collectionAddress,
+            name: name,
+            symbol: symbol
+        });
+
+        creatorCollections[msg.sender].push(newCollectionInfo);
+
+        emit ERC721CollectionCreated(msg.sender, collectionAddress);
+
+        return collectionAddress;
+    }
+
+    function getCreatorCollections(address creator) external view returns (CollectionInfo[] memory) {
+        return creatorCollections[creator];
     }
 }
