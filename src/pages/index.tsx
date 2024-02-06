@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { NextPage } from "next";
 import type { Signer, Contract } from "ethers";
-import { ethers, providers, BigNumber } from "ethers";
+import { ethers, providers } from "ethers";
 import detectEthereumProvider from "@metamask/detect-provider";
 
 import { loadContractData } from "../libs/load";
@@ -14,6 +14,7 @@ type Collection = {
 };
 
 const Home: NextPage = () => {
+  // wallet
   const [chainId, setChainId] = useState<number>();
   const [currentAccount, setCurrentAccount] = useState<string>();
   const [signer, setSigner] = useState<Signer>();
@@ -22,14 +23,12 @@ const Home: NextPage = () => {
     const provider = await detectEthereumProvider({ silent: true });
     if (provider) {
       const ethersProvider = new providers.Web3Provider(provider);
-      console.log("ethersProvider", ethersProvider);
       // account
       const accountList: string[] = await ethersProvider.listAccounts();
       if (accountList.length === 0) {
         alert("Please unlock Metamask Wallet and/or connect to an account.");
         return;
       }
-      console.log("accountList", accountList);
       setCurrentAccount(ethers.utils.getAddress(accountList[0]));
       // chainId
       const network = await ethersProvider.getNetwork();
@@ -52,7 +51,7 @@ const Home: NextPage = () => {
       alert("Please install Metamask Wallet.");
     }
   };
-
+  // create collection
   const [collectionName, setCollectionName] = useState<string>();
   const [collectionSymbol, setCollectionSymbol] = useState<string>();
   const createCollection = async () => {
@@ -61,9 +60,9 @@ const Home: NextPage = () => {
     console.log("tx", tx);
   };
 
+  // select collection
   const [collections, setCollections] = useState<Collection[]>([]);
   const [selectedCollectionAddress, setSelectedCollectionAddress] = useState("");
-
   const handleCollectionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCollectionAddress(event.target.value);
   };
@@ -82,6 +81,19 @@ const Home: NextPage = () => {
 
     fetchCollections();
   }, [currentAccount, factoryAddress, signer]);
+
+  // mint
+  const [nftName, setNftName] = useState("");
+  const [nftDescription, setNftDescription] = useState("");
+  const [nftImage, setNftImage] = useState<File | null>(null);
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setNftImage(event.target.files[0]);
+    }
+  };
+
+  const uploadToNFTStorage = async () => {};
 
   return (
     <div className="bg-gray-900 text-gray-50 min-h-screen px-4">
@@ -109,6 +121,17 @@ const Home: NextPage = () => {
               </option>
             ))}
           </select>
+        </div>
+        <div>
+          <div>
+            <div>NFT Name</div>
+            <input type="text" onChange={(e) => setNftName(e.target.value)} value={nftName} className="text-black" />
+            <div>Description</div>
+            <textarea onChange={(e) => setNftDescription(e.target.value)} value={nftDescription} className="text-black" />
+            <div>Image</div>
+            <input type="file" onChange={handleImageChange} className="text-black" />
+          </div>
+          <button onClick={uploadToNFTStorage}>Upload to NFT.Storage</button>
         </div>
       </div>
     </div>
