@@ -7,12 +7,17 @@ import detectEthereumProvider from "@metamask/detect-provider";
 import { loadContractData } from "../lib/load";
 import ERC721Factory from "../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
 
+type Collection = {
+  collectionAddress: string;
+  name: string;
+  symbol: string;
+};
+
 const Home: NextPage = () => {
   const [chainId, setChainId] = useState<number>();
   const [currentAccount, setCurrentAccount] = useState<string>();
   const [signer, setSigner] = useState<Signer>();
   const [factoryAddress, setFactoryAddress] = useState<string>();
-  const [routerAddress, setRouterAddress] = useState<string>();
   const connectWallet = async () => {
     const provider = await detectEthereumProvider({ silent: true });
     if (provider) {
@@ -56,7 +61,12 @@ const Home: NextPage = () => {
     console.log("tx", tx);
   };
 
-  const [collections, setCollections] = useState<string[]>([]);
+  const [collections, setCollections] = useState<Collection[]>([]);
+  const [selectedCollectionAddress, setSelectedCollectionAddress] = useState("");
+
+  const handleCollectionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCollectionAddress(event.target.value);
+  };
   useEffect(() => {
     const fetchCollections = async () => {
       if (!currentAccount || !factoryAddress || !signer) return;
@@ -81,16 +91,6 @@ const Home: NextPage = () => {
         <div className="text-gray-50">Account: {currentAccount}</div>
         <div className="text-gray-50">Factory: {factoryAddress}</div>
         <div>
-          <div>Your Collections</div>
-          <select className="text-black">
-            {collections.map((collectionAddress, index) => (
-              <option key={index} value={collectionAddress}>
-                {collectionAddress}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
           <div>new collection</div>
           <div>name</div>
           <input type="text" className="text-black" onChange={(e) => setCollectionName(e.target.value)} value={collectionName} />
@@ -99,6 +99,16 @@ const Home: NextPage = () => {
           <div>
             <button onClick={() => createCollection()}>Create</button>
           </div>
+        </div>
+        <div>
+          <div>Your Collections</div>
+          <select className="text-black" onChange={handleCollectionChange} value={selectedCollectionAddress}>
+            {collections.map((collection, index) => (
+              <option key={index} value={collection.collectionAddress}>
+                {collection.name} ({collection.symbol}) - {collection.collectionAddress}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
     </div>
