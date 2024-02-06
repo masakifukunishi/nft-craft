@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NextPage } from "next";
 import type { Signer, Contract } from "ethers";
 import { ethers, providers, BigNumber } from "ethers";
@@ -56,6 +56,23 @@ const Home: NextPage = () => {
     console.log("tx", tx);
   };
 
+  const [collections, setCollections] = useState<string[]>([]);
+  useEffect(() => {
+    const fetchCollections = async () => {
+      if (!currentAccount || !factoryAddress || !signer) return;
+
+      const factoryContract = new ethers.Contract(factoryAddress, ERC721Factory.abi, signer);
+      try {
+        const collections = await factoryContract.getCreatorCollections(currentAccount);
+        setCollections(collections);
+      } catch (error) {
+        console.error("Failed to fetch collections", error);
+      }
+    };
+
+    fetchCollections();
+  }, [currentAccount, factoryAddress, signer]);
+
   return (
     <div className="bg-gray-900 text-gray-50 min-h-screen px-4">
       <div onClick={() => connectWallet()}>
@@ -63,6 +80,16 @@ const Home: NextPage = () => {
         <div className="text-gray-50">ChainId: {chainId}</div>
         <div className="text-gray-50">Account: {currentAccount}</div>
         <div className="text-gray-50">Factory: {factoryAddress}</div>
+        <div>
+          <div>Your Collections</div>
+          <select className="text-black">
+            {collections.map((collectionAddress, index) => (
+              <option key={index} value={collectionAddress}>
+                {collectionAddress}
+              </option>
+            ))}
+          </select>
+        </div>
         <div>
           <div>new collection</div>
           <div>name</div>
