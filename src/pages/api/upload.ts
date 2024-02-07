@@ -15,8 +15,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const imageFile = new File([imageBuffer], "nft.png", { type: "image/png" });
 
-    console.log(metadata);
-    console.log(imageFile);
     const storedMetadata = await client.store({
       ...metadata,
       image: imageFile,
