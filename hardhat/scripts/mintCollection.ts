@@ -24,7 +24,7 @@ function transactionExplorerUrl(network: string, txHash: string): string {
   }
 }
 
-async function main(network: string, contractAddress: string, accountAddress: string, name: string, symbol: string) {
+async function main(network: string, contractAddress: string, name: string, symbol: string) {
   const privateKey: string = process.env.PRIVATE_KEY ?? "";
   if (privateKey === "") {
     throw new Error("No value set for environement variable PRIVATE_KEY");
@@ -54,13 +54,12 @@ program
       .makeOptionMandatory()
   )
   .addOption(new Option("--contractAddress <address>", "address of token contract").makeOptionMandatory())
-  .addOption(new Option("--accountAddress <address>", "mint token to this account address").makeOptionMandatory())
   .addOption(new Option("--name <string>", "name of the collection").makeOptionMandatory())
   .addOption(new Option("--symbol <string>", "symbol of the collection").makeOptionMandatory())
   .parse();
 const options = program.opts();
 
-main(options.network, options.contractAddress, options.accountAddress, options.name, options.symbol).catch((error) => {
+main(options.network, options.contractAddress, options.name, options.symbol).catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });

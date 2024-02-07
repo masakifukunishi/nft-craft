@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { NFTStorage, File } from "nft.storage";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  console.log("Request Body");
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
@@ -15,12 +16,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const imageFile = new File([imageBuffer], "nft.png", { type: "image/png" });
 
+    console.log("starting to store");
     const storedMetadata = await client.store({
       ...metadata,
       image: imageFile,
     });
 
-    res.status(200).json({ metadata: storedMetadata });
+    console.log("Stored Metadata:", storedMetadata);
+    res.status(200).json({ ipfsMetadataUrl: storedMetadata.url });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });

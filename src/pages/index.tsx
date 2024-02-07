@@ -7,6 +7,7 @@ import { NFTStorage, File } from "nft.storage";
 
 import { loadContractData } from "../libs/load";
 import ERC721Factory from "../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
+import ERC721Collection from "../../hardhat/artifacts/contracts/ERC721Collection.sol/ERC721Collection.json";
 
 type Collection = {
   collectionAddress: string;
@@ -17,7 +18,7 @@ type Collection = {
 const Home: NextPage = () => {
   // wallet
   const [chainId, setChainId] = useState<number>();
-  const [currentAccount, setCurrentAccount] = useState<string>();
+  const [accountAddress, setAccountAddress] = useState<string>();
   const [signer, setSigner] = useState<Signer>();
   const [factoryAddress, setFactoryAddress] = useState<string>();
   const connectWallet = async () => {
@@ -30,7 +31,7 @@ const Home: NextPage = () => {
         alert("Please unlock Metamask Wallet and/or connect to an account.");
         return;
       }
-      setCurrentAccount(ethers.utils.getAddress(accountList[0]));
+      setAccountAddress(ethers.utils.getAddress(accountList[0]));
       // chainId
       const network = await ethersProvider.getNetwork();
       const chainId = network.chainId;
@@ -69,11 +70,11 @@ const Home: NextPage = () => {
   };
   useEffect(() => {
     const fetchCollections = async () => {
-      if (!currentAccount || !factoryAddress || !signer) return;
+      if (!accountAddress || !factoryAddress || !signer) return;
 
       const factoryContract = new ethers.Contract(factoryAddress, ERC721Factory.abi, signer);
       try {
-        const collections = await factoryContract.getCreatorCollections(currentAccount);
+        const collections = await factoryContract.getCreatorCollections(accountAddress);
         setCollections(collections);
       } catch (error) {
         console.error("Failed to fetch collections", error);
@@ -81,12 +82,13 @@ const Home: NextPage = () => {
     };
 
     fetchCollections();
-  }, [currentAccount, factoryAddress, signer]);
+  }, [accountAddress, factoryAddress, signer]);
 
   // mint
   const [nftName, setNftName] = useState("");
   const [nftDescription, setNftDescription] = useState("");
   const [nftImage, setNftImage] = useState<File | null>(null);
+  const [ipfsMetadataUrl, setIpfsMetadataUrl] = useState("");
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -118,6 +120,7 @@ const Home: NextPage = () => {
             }),
           });
           const data = await response.json();
+          setIpfsMetadataUrl(data.ipfsMetadataUrl);
           if (response.ok) {
             console.log("Upload successful", data);
           } else {
@@ -129,13 +132,29 @@ const Home: NextPage = () => {
       }
     };
   };
-
+  const mintNFt = async () => {
+    if (!selectedCollectionAddress) {
+      alert("Please select a collection");
+      return;
+    }
+    if (!nftImage) {
+      alert("Image is required");
+      return;
+    }
+    if (!ipfsMetadataUrl) {
+      alert("Please upload the image to NFT.Storage");
+      return;
+    }
+    const collectionContract = new ethers.Contract(selectedCollectionAddress, ERC721Collection.abi, signer);
+    const tx = await collectionContract.safeMint(accountAddress, ipfsMetadataUrl);
+    console.log("tx", tx);
+  };
   return (
     <div className="bg-gray-900 text-gray-50 min-h-screen px-4">
       <div onClick={() => connectWallet()}>
         <div className="text-gray-50 cursor-pointer">Connect Wallet</div>
         <div className="text-gray-50">ChainId: {chainId}</div>
-        <div className="text-gray-50">Account: {currentAccount}</div>
+        <div className="text-gray-50">Account: {accountAddress}</div>
         <div className="text-gray-50">Factory: {factoryAddress}</div>
         <div>
           <div>new collection</div>
@@ -166,7 +185,12 @@ const Home: NextPage = () => {
             <div>Image</div>
             <input type="file" onChange={handleImageChange} className="text-black" />
           </div>
-          <button onClick={uploadToNFTStorage}>Upload to NFT.Storage</button>
+          <div>
+            <button onClick={uploadToNFTStorage}>Upload to NFT.Storage</button>
+          </div>
+          <div>
+            <button onClick={mintNFt}>Mint NFT</button>
+          </div>
         </div>
       </div>
     </div>
