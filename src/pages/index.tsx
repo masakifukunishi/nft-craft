@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import type { Signer, Contract } from "ethers";
 import { ethers, providers } from "ethers";
 import detectEthereumProvider from "@metamask/detect-provider";
+import { NFTStorage, File } from "nft.storage";
 
 import { loadContractData } from "../libs/load";
 import ERC721Factory from "../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
@@ -98,35 +99,43 @@ const Home: NextPage = () => {
       alert("Image is required");
       return;
     }
-    const reader = new FileReader();
-    reader.readAsDataURL(nftImage);
-    reader.onloadend = async () => {
-      const base64Data = reader.result;
-      const base64Content = base64Data?.toString().split(";base64,")[1];
-      if (base64Content) {
-        try {
-          const response = await fetch("/api/upload", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              name: nftName,
-              description: nftDescription,
-              imageBase64: base64Content,
-            }),
-          });
-          const data = await response.json();
-          if (response.ok) {
-            console.log("Upload successful", data);
-          } else {
-            console.error("Upload failed", data.error);
-          }
-        } catch (error) {
-          console.error("Error uploading the image", error);
-        }
-      }
-    };
+    const client = new NFTStorage({
+      token: "api_key",
+    });
+    console.log("nftImage", nftImage);
+    const storedMetadata = await client.store({
+      image: nftImage,
+      name: nftName,
+      description: nftDescription,
+    });
+    // const reader = new FileReader();
+    // reader.readAsDataURL(nftImage);
+    // reader.onloadend = async () => {
+    //   const base64Data = reader.result;
+    //   const base64Content = base64Data?.toString().split(";base64,")[1];
+    //   if (base64Content) {
+    //     try {
+    //       const response = await fetch("/api/upload", {
+    //         method: "POST",
+    //         headers: {
+    //           "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify({
+    //           name: nftName,
+    //           description: nftDescription,
+    //           imageBase64: base64Content,
+    //         }),
+    //       });
+    //       const data = await response.json();
+    //       if (response.ok) {
+    //         console.log("Upload successful", data);
+    //       } else {
+    //         console.error("Upload failed", data.error);
+    //       }
+    //     } catch (error) {
+    //       console.error("Error uploading the image", error);
+    //     }
+    //   }
   };
 
   return (
