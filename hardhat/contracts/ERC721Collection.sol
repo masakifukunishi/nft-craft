@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract ERC721Collection is ERC721, ERC721URIStorage, Ownable {
     uint256 private tokenIdCounter = 0;
-    uint256 constant MAX_SUPPLY = 1000;
+    uint256 constant MAX_SUPPLY = 100;
 
     constructor(string memory _name, string memory _symbol, address creator) 
         ERC721(_name, _symbol) 
