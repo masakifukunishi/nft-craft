@@ -9,7 +9,9 @@ contract ERC721Collection is ERC721, ERC721URIStorage, Ownable {
     uint256 private tokenIdCounter = 0;
     uint256 constant MAX_SUPPLY = 1000;
 
-    constructor(string memory _name, string memory _symbol, address creator) ERC721(_name, _symbol) {
+    constructor(string memory _name, string memory _symbol, address creator) 
+        ERC721(_name, _symbol) 
+    {
         transferOwnership(creator);
     }
 
@@ -18,6 +20,10 @@ contract ERC721Collection is ERC721, ERC721URIStorage, Ownable {
         uint256 tokenId = tokenIdCounter++;
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
+    }
+
+    function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
+        super._burn(tokenId);
     }
 
     function tokenURI(uint256 tokenId)
