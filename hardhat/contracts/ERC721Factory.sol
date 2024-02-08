@@ -4,7 +4,12 @@ pragma solidity ^0.8.19;
 import "./ERC721Collection.sol";
 
 contract ERC721Factory {
-    event ERC721CollectionCreated(address indexed creator, address collectionAddress);
+    event ERC721CollectionCreated(
+        address indexed creator,
+        address collectionAddress,
+        string name,
+        string symbol
+    );
 
     struct CollectionInfo {
         address collectionAddress;
@@ -12,10 +17,10 @@ contract ERC721Factory {
         string symbol;
     }
 
-    mapping(address => CollectionInfo[]) private creatorCollections;
+    mapping(address => CollectionInfo[]) public creatorCollections;
 
     function createERC721Collection(string memory name, string memory symbol) external returns (address collectionAddress) {
-        ERC721Collection erc721Contract = new ERC721Collection(name, symbol);
+        ERC721Collection erc721Contract = new ERC721Collection(name, symbol, msg.sender);
         collectionAddress = address(erc721Contract);
 
         CollectionInfo memory newCollectionInfo = CollectionInfo({
@@ -26,7 +31,7 @@ contract ERC721Factory {
 
         creatorCollections[msg.sender].push(newCollectionInfo);
 
-        emit ERC721CollectionCreated(msg.sender, collectionAddress);
+        emit ERC721CollectionCreated(msg.sender, collectionAddress, name, symbol);
 
         return collectionAddress;
     }
