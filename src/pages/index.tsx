@@ -5,7 +5,7 @@ import { ethers, providers } from "ethers";
 import detectEthereumProvider from "@metamask/detect-provider";
 import { NFTStorage, File } from "nft.storage";
 
-import { loadContractData } from "../libs/load";
+import { loadContractData } from "../lib/load";
 import ERC721Factory from "../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
 import ERC721Collection from "../../hardhat/artifacts/contracts/ERC721Collection.sol/ERC721Collection.json";
 
