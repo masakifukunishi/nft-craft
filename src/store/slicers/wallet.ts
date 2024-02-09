@@ -12,7 +12,7 @@ const walletSlice = createSlice({
   name: "wallet",
   initialState,
   reducers: {
-    connect: (state, action) => {
+    setWallet: (state, action) => {
       state.chainId = action.payload.chainId;
       state.accountAddress = action.payload.accountAddress;
       state.signer = action.payload.signer;
@@ -21,7 +21,7 @@ const walletSlice = createSlice({
   },
 });
 
-export const { connect } = walletSlice.actions;
+export const { setWallet } = walletSlice.actions;
 
 export const selectWallet = (state: RootState) => state.wallet;
 
