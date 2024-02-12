@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 
 import Layout from "@/components/organisms/layout";
 import BlockchainCardList from "@/components/organisms/card-lists/Blockchain";
@@ -8,6 +8,7 @@ const blockchains = [
   { id: 137, imagePath: "/icons/blockchains/polygon.png", name: "Polygon" },
 ];
 const CreateCollection = () => {
+  const [selectedBlockhain, setSelectedBlockhain] = useState(0);
   return (
     <Layout title="Create collection">
       <div className="flex flex-col items-center mt-2">
@@ -20,7 +21,11 @@ const CreateCollection = () => {
           <div className="mt-4">
             <div className="text-lg font-semibold">Choose blockchain</div>
             <div className="mt-4">
-              <BlockchainCardList blockchains={blockchains} />
+              <BlockchainCardList
+                blockchains={blockchains}
+                selectedBlockhain={selectedBlockhain}
+                setSelectedBlockhain={setSelectedBlockhain}
+              />
             </div>
           </div>
         </form>

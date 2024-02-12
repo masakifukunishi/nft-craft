@@ -8,14 +8,23 @@ type Blockchain = {
 
 type Props = {
   blockchains: Blockchain[];
+  selectedBlockhain: number;
+  setSelectedBlockhain: (selectedBlockhain: number) => void;
 };
 
-const BlockchainCardList = ({ blockchains }: Props) => {
+const BlockchainCardList = ({ blockchains, selectedBlockhain, setSelectedBlockhain }: Props) => {
   return (
     <div className="flex">
       {blockchains.map((blockchain) => (
         <div className="mr-3">
-          <BlockchainCard key={blockchain.id} imagePath={blockchain.imagePath} name={blockchain.name} />
+          <BlockchainCard
+            key={blockchain.id}
+            id={blockchain.id}
+            imagePath={blockchain.imagePath}
+            name={blockchain.name}
+            selectedBlockhain={selectedBlockhain}
+            setSelectedBlockhain={setSelectedBlockhain}
+          />
         </div>
       ))}
     </div>
