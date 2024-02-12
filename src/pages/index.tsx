@@ -5,9 +5,10 @@ import { ethers, providers } from "ethers";
 import detectEthereumProvider from "@metamask/detect-provider";
 import { NFTStorage, File } from "nft.storage";
 
-import { loadContractData } from "../libs/load";
+import { loadContractData } from "../lib/load";
 import ERC721Factory from "../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
 import ERC721Collection from "../../hardhat/artifacts/contracts/ERC721Collection.sol/ERC721Collection.json";
+import Header from "../components/header";
 
 type Collection = {
   collectionAddress: string;
@@ -21,38 +22,6 @@ const Home: NextPage = () => {
   const [accountAddress, setAccountAddress] = useState<string>();
   const [signer, setSigner] = useState<Signer>();
   const [factoryAddress, setFactoryAddress] = useState<string>();
-  const connectWallet = async () => {
-    const provider = await detectEthereumProvider({ silent: true });
-    if (provider) {
-      const ethersProvider = new providers.Web3Provider(provider);
-      // account
-      const accountList: string[] = await ethersProvider.listAccounts();
-      if (accountList.length === 0) {
-        alert("Please unlock Metamask Wallet and/or connect to an account.");
-        return;
-      }
-      setAccountAddress(ethers.utils.getAddress(accountList[0]));
-      // chainId
-      const network = await ethersProvider.getNetwork();
-      const chainId = network.chainId;
-      setChainId(chainId);
-      // signer
-      const signer = ethersProvider.getSigner();
-      setSigner(signer);
-
-      // contract address
-      setFactoryAddress(loadContractData(chainId)?.factory);
-
-      provider.on("chainChanged", () => {
-        window.location.reload();
-      });
-      provider.on("accountsChanged", () => {
-        window.location.reload();
-      });
-    } else {
-      alert("Please install Metamask Wallet.");
-    }
-  };
   // create collection
   const [collectionName, setCollectionName] = useState<string>();
   const [collectionSymbol, setCollectionSymbol] = useState<string>();
@@ -151,8 +120,8 @@ const Home: NextPage = () => {
   };
   return (
     <div className="bg-gray-900 text-gray-50 min-h-screen px-4">
-      <div onClick={() => connectWallet()}>
-        <div className="text-gray-50 cursor-pointer">Connect Wallet</div>
+      <Header />
+      <div>
         <div className="text-gray-50">ChainId: {chainId}</div>
         <div className="text-gray-50">Account: {accountAddress}</div>
         <div className="text-gray-50">Factory: {factoryAddress}</div>
