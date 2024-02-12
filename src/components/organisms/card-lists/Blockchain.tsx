@@ -16,9 +16,8 @@ const BlockchainCardList = ({ blockchains, selectedBlockhain, setSelectedBlockha
   return (
     <div className="flex">
       {blockchains.map((blockchain) => (
-        <div className="mr-3">
+        <div className="mr-3" key={blockchain.id}>
           <BlockchainCard
-            key={blockchain.id}
             id={blockchain.id}
             imagePath={blockchain.imagePath}
             name={blockchain.name}
