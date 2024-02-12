@@ -119,7 +119,7 @@ const Home: NextPage = () => {
     console.log("tx", tx);
   };
   return (
-    <div className="min-h-screen px-4">
+    <div className="min-h-screen">
       <Header />
       <div>
         <div className="text-gray-50">ChainId: {chainId}</div>
