@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { FaRegUserCircle } from "react-icons/fa";
 
-import WalletModal from "../modals/Wallet";
-import { selectWallet } from "../../store/slicers/wallet";
+import WalletModal from "@/components/organisms/modals/Wallet";
+import { selectWallet } from "@/store/slicers/wallet";
 
 const User = () => {
   const wallet = useSelector(selectWallet);

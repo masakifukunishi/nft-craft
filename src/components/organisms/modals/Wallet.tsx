@@ -5,8 +5,8 @@ import detectEthereumProvider from "@metamask/detect-provider";
 import { useDispatch } from "react-redux";
 import { IoMdClose } from "react-icons/io";
 
-import { setWallet } from "../../store/slicers/wallet";
-import { loadContractData } from "../../lib/load";
+import { setWallet } from "@/store/slicers/wallet";
+import { loadContractData } from "@/lib/load";
 
 type Props = {
   isModalOpen: boolean;
@@ -84,7 +84,7 @@ const WalletModal = ({ isModalOpen, closeModal }: Props) => {
           </div>
           <div className="mt-2">
             <div className="bg-gray-700 p-1 rounded-md flex cursor-pointer items-center" onClick={connectWallet}>
-              <Image src="/icons/metamask.png" width={32} height={32} alt="Metamask icon" />
+              <Image src="/icons/wallets/metamask.png" width={32} height={32} alt="Metamask icon" />
               <div className="ml-2">MetaMask</div>
             </div>
           </div>

@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
 import { NextPage } from "next";
 import type { Signer, Contract } from "ethers";
-import { ethers, providers } from "ethers";
-import detectEthereumProvider from "@metamask/detect-provider";
-import { NFTStorage, File } from "nft.storage";
+import { ethers } from "ethers";
+import { File } from "nft.storage";
 
-import { loadContractData } from "../lib/load";
 import ERC721Factory from "../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
 import ERC721Collection from "../../hardhat/artifacts/contracts/ERC721Collection.sol/ERC721Collection.json";
-import Header from "../components/header";
+import Header from "@/components/organisms/layout/Header";
 
 type Collection = {
   collectionAddress: string;
