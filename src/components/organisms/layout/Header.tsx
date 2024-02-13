@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Link from "next/link";
 
 import User from "@/components/organisms/buttons/User";
 import CreateMenu from "@/components/organisms/drop-down/CreateMenu";
@@ -7,7 +8,9 @@ const Header = () => {
   const [isOpenCreateMenu, setIsOpenCreateMenu] = useState(false);
   return (
     <header className="flex items-center p-2">
-      <h1 className="text-2xl font-bold">NFT MINTING</h1>
+      <h1 className="text-2xl font-bold">
+        <Link href="/">NFT MINTING</Link>
+      </h1>
       <div className="ml-3 relative">
         <div
           className="font-semibold cursor-pointer hover:bg-gray-800 p-2 rounded"

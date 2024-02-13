@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import Layout from "@/components/organisms/layout";
 import BlockchainCardList from "@/components/organisms/card-lists/Blockchain";
 import Input from "@/components/molecules/form/Input";
+import Textarea from "@/components/molecules/form/Textarea";
 
 const blockchains = [
   { id: 1, imagePath: "/icons/blockchains/ethereum.png", name: "Ethereum" },
@@ -48,6 +49,9 @@ const CreateCollection = () => {
             </div>
             <div className="mt-4">
               <Input label="Symbol" id="symbol" register={register} required="Symbol is required" errors={errors} />
+            </div>
+            <div className="mt-4">
+              <Textarea label="Description" id="description" register={register} required="Description is required" errors={errors} />
             </div>
           </div>
           <input type="submit" />
