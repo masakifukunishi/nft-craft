@@ -54,7 +54,11 @@ const CreateCollection = () => {
               <Textarea label="Description" id="description" register={register} required="Description is required" errors={errors} />
             </div>
           </div>
-          <input type="submit" />
+          <div className="mt-4 flex justify-end">
+            <button type="submit" className="bg-blue-600 rounded p-2">
+              Create collection
+            </button>
+          </div>
         </form>
       </div>
     </Layout>
