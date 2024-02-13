@@ -15,7 +15,7 @@ type FormInput = {
 };
 
 const CreateCollection = () => {
-  const [selectedBlockhain, setSelectedBlockhain] = useState(0);
+  const [selectedBlockhainId, setSelectedBlockhainId] = useState(0);
   const {
     register,
     handleSubmit,
@@ -40,8 +40,8 @@ const CreateCollection = () => {
             <div className="mt-4">
               <BlockchainCardList
                 blockchains={blockchains}
-                selectedBlockhain={selectedBlockhain}
-                setSelectedBlockhain={setSelectedBlockhain}
+                selectedBlockhainId={selectedBlockhainId}
+                setSelectedBlockhainId={setSelectedBlockhainId}
               />
             </div>
             <div className="mt-4">
