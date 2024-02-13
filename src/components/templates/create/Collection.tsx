@@ -31,11 +31,11 @@ const CreateCollection = () => {
       <div className="flex flex-col items-center mt-2">
         <form className="w-1/3" onSubmit={handleSubmit(onSubmit)}>
           <h2 className="text-xl font-semibold">Create new collection</h2>
-          <div className="mt-4">
+          <div className="mt-8">
             <div className="text-lg font-semibold">Standard</div>
             <div className="text-lg">ERC-721</div>
           </div>
-          <div className="mt-4">
+          <div className="mt-8">
             <div className="text-lg font-semibold">Choose blockchain</div>
             <div className="mt-4">
               <BlockchainCardList
@@ -44,13 +44,13 @@ const CreateCollection = () => {
                 setSelectedBlockhainId={setSelectedBlockhainId}
               />
             </div>
-            <div className="mt-4">
+            <div className="mt-8">
               <Input label="Name" id="name" register={register} required="Username is required" errors={errors} />
             </div>
-            <div className="mt-4">
+            <div className="mt-8">
               <Input label="Symbol" id="symbol" register={register} required="Symbol is required" errors={errors} />
             </div>
-            <div className="mt-4">
+            <div className="mt-8">
               <Textarea label="Description" id="description" register={register} required="Description is required" errors={errors} />
             </div>
           </div>

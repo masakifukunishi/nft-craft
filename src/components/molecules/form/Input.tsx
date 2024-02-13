@@ -15,7 +15,7 @@ const LabeledInputField = ({ label, id, register, required = false, errors }: Pr
   return (
     <>
       <Label htmlFor={id} label={label} />
-      <div className="mt-2">
+      <div className="mt-4">
         <Input id={id} register={register} required={required} />
       </div>
       <div className="mt-1">

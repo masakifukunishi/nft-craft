@@ -46,18 +46,18 @@ const CreateNFT = () => {
             <div className="text-lg font-semibold">Standard</div>
             <div className="text-lg">ERC-721</div>
           </div>
-          <div className="mt-4">
+          <div className="mt-8">
             <div className="text-lg font-semibold">Choose blockchain</div>
-            <div className="mt-2">
+            <div className="mt-4">
               <BlockchainCardList
                 blockchains={blockchains}
                 selectedBlockhainId={selectedBlockhainId}
                 setSelectedBlockhainId={setSelectedBlockhainId}
               />
             </div>
-            <div className="mt-4">
+            <div className="mt-8">
               <div className="text-lg font-semibold">Choose collection</div>
-              <div className="mt-2">
+              <div className="mt-4">
                 <CollectionCardList
                   collections={collections}
                   selectedCollectionAddress={selectedCollectionAddress}
@@ -65,10 +65,20 @@ const CreateNFT = () => {
                 />
               </div>
             </div>
-            <div className="mt-4">
+            <div className="mt-8">
+              <div className="text-lg font-semibold">Upload file</div>
+              <div className="mt-2">
+                <div className="border border-dashed h-48 flex justify-center items-center rounded">
+                  <button type="submit" className="bg-gray-700 rounded p-2">
+                    Choose file
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className="mt-8">
               <Input label="Name" id="name" register={register} required="Username is required" errors={errors} />
             </div>
-            <div className="mt-4">
+            <div className="mt-8">
               <Textarea label="Description" id="description" register={register} required="Description is required" errors={errors} />
             </div>
           </div>
