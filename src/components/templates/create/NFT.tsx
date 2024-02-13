@@ -27,11 +27,23 @@ type FormInput = {
 const CreateNFT = () => {
   const [selectedBlockhainId, setSelectedBlockhainId] = useState(0);
   const [selectedCollectionAddress, setSelectedCollectionAddress] = useState("");
+  const [filePreview, setFilePreview] = useState("");
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormInput>();
+
+  const onFileChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setFilePreview(URL.createObjectURL(file));
+    }
+  };
+
+  const removeFilePreview = () => {
+    setFilePreview("");
+  };
 
   const onSubmit: SubmitHandler<FormInput> = (data) => {
     console.log(data);
@@ -68,10 +80,29 @@ const CreateNFT = () => {
             <div className="mt-8">
               <div className="text-lg font-semibold">Upload file</div>
               <div className="mt-2">
-                <div className="border border-dashed h-48 flex justify-center items-center rounded">
-                  <button type="submit" className="bg-gray-700 rounded p-2">
-                    Choose file
-                  </button>
+                <div
+                  className={`border border-dashed flex flex-col justify-center items-center rounded relative ${
+                    filePreview ? "h-80" : "h-48"
+                  }`}
+                >
+                  {filePreview && (
+                    <>
+                      <img src={filePreview} alt="Preview" className="max-h-64" />
+                      <button
+                        type="button"
+                        className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded"
+                        onClick={removeFilePreview}
+                      >
+                        削除
+                      </button>
+                    </>
+                  )}
+                  {!filePreview && (
+                    <label htmlFor="file-upload" className="bg-gray-700 text-white rounded p-2 cursor-pointer">
+                      Choose file
+                    </label>
+                  )}
+                  <input id="file-upload" type="file" className="hidden" onChange={onFileChange} />
                 </div>
               </div>
             </div>
