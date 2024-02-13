@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 import Layout from "@/components/organisms/layout";
-import BlockchainCardList from "@/components/organisms/card-lists/Blockchain";
-import CollectionCardList from "@/components/organisms/card-lists/Collection";
+import BlockchainCardList from "@/components/organisms/form/card-lists/Blockchain";
+import CollectionCardList from "@/components/organisms/form/card-lists/Collection";
 import Input from "@/components/molecules/form/Input";
 import Textarea from "@/components/molecules/form/Textarea";
 
@@ -22,6 +22,9 @@ const collections = [
 ];
 type FormInput = {
   name: string;
+  description: string;
+  blockchainId: number;
+  collectionAddress: string;
 };
 
 const CreateNFT = () => {
@@ -31,8 +34,24 @@ const CreateNFT = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<FormInput>();
+
+  const handleBlockchainChange = (id: number) => {
+    setSelectedBlockhainId(id);
+    setValue("blockchainId", id, { shouldValidate: true });
+  };
+
+  const handleCollectionChange = (address: string) => {
+    setSelectedCollectionAddress(address);
+    setValue("collectionAddress", address, { shouldValidate: true });
+  };
+
+  useEffect(() => {
+    register("blockchainId", { required: "Blockchain is required" });
+    register("collectionAddress", { required: "Collection is required" });
+  }, [register]);
 
   const onFileChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const file = event.target.files?.[0];
@@ -64,7 +83,8 @@ const CreateNFT = () => {
               <BlockchainCardList
                 blockchains={blockchains}
                 selectedBlockhainId={selectedBlockhainId}
-                setSelectedBlockhainId={setSelectedBlockhainId}
+                handleBlockchainChange={handleBlockchainChange}
+                errorMessage={errors.blockchainId?.message}
               />
             </div>
             <div className="mt-8">
@@ -73,7 +93,8 @@ const CreateNFT = () => {
                 <CollectionCardList
                   collections={collections}
                   selectedCollectionAddress={selectedCollectionAddress}
-                  setSelectedCollectionAddress={setSelectedCollectionAddress}
+                  handleCollectionChange={handleCollectionChange}
+                  errorMessage={errors.collectionAddress?.message}
                 />
               </div>
             </div>

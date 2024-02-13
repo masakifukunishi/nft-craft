@@ -15,12 +15,10 @@ const LabeledTextareaField = ({ label, id, register, required = false, errors }:
   return (
     <>
       <Label htmlFor={id} label={label} />
-      <div className="mt-2">
+      <div className="mt-4">
         <Textarea id={id} register={register} required={required} />
       </div>
-      <div className="mt-1">
-        <ErrorMessage error={errors[id]?.message as string} />
-      </div>
+      <ErrorMessage error={errors[id]?.message as string} />
     </>
   );
 };

@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 import Layout from "@/components/organisms/layout";
-import BlockchainCardList from "@/components/organisms/card-lists/Blockchain";
+import BlockchainCardList from "@/components/organisms/form/card-lists/Blockchain";
 import Input from "@/components/molecules/form/Input";
 import Textarea from "@/components/molecules/form/Textarea";
 
@@ -12,6 +12,9 @@ const blockchains = [
 ];
 type FormInput = {
   name: string;
+  symbol: string;
+  description: string;
+  blockchainId: number;
 };
 
 const CreateCollection = () => {
@@ -19,8 +22,18 @@ const CreateCollection = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<FormInput>();
+
+  const handleBlockchainChange = (id: number) => {
+    setSelectedBlockhainId(id);
+    setValue("blockchainId", id, { shouldValidate: true });
+  };
+
+  useEffect(() => {
+    register("blockchainId", { required: "Blockchain is required" });
+  }, [register]);
 
   const onSubmit: SubmitHandler<FormInput> = (data) => {
     console.log(data);
@@ -41,7 +54,8 @@ const CreateCollection = () => {
               <BlockchainCardList
                 blockchains={blockchains}
                 selectedBlockhainId={selectedBlockhainId}
-                setSelectedBlockhainId={setSelectedBlockhainId}
+                handleBlockchainChange={handleBlockchainChange}
+                errorMessage={errors.blockchainId?.message}
               />
             </div>
             <div className="mt-8">
