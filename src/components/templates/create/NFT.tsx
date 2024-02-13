@@ -72,8 +72,8 @@ const CreateNFT = () => {
     <Layout title="Create NFT">
       <div className="flex flex-col items-center mt-2">
         <form className="w-1/3" onSubmit={handleSubmit(onSubmit)}>
-          <h2 className="text-xl font-semibold">Create new NFT</h2>
-          <div className="mt-4">
+          <h2 className="text-2xl font-semibold">Create new NFT</h2>
+          <div className="mt-3">
             <div className="text-lg font-semibold">Standard</div>
             <div className="text-lg">ERC-721</div>
           </div>
