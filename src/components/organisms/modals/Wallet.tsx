@@ -32,10 +32,8 @@ const customStyles = {
 const WalletModal = ({ isModalOpen, closeModal }: Props) => {
   const dispatch = useDispatch();
   const connectWallet = async () => {
-    console.log("11111");
     const provider = await detectEthereumProvider({ silent: true });
     if (provider) {
-      console.log("222222");
       const ethersProvider = new providers.Web3Provider(provider);
       // account
       const accountList: string[] = await ethersProvider.listAccounts();
@@ -48,14 +46,14 @@ const WalletModal = ({ isModalOpen, closeModal }: Props) => {
       const chainId = network.chainId;
       // signer
       const signer = ethersProvider.getSigner();
-      console.log("33333");
-      console.log("chainId", chainId);
-      console.log("accountList", accountList);
-      console.log("signer", signer);
 
       const message = "Please sign this message to confirm your identity.";
       try {
         const signature = await signer.signMessage(message);
+        console.log("chainId", chainId);
+        console.log("accountList", accountList);
+        console.log("signer", signer);
+        console.log("signature", signature);
         dispatch(
           setWallet({
             chainId: chainId,

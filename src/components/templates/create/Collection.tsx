@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useSelector } from "react-redux";
+import type { Signer, Contract } from "ethers";
+import { ethers, providers } from "ethers";
+import detectEthereumProvider from "@metamask/detect-provider";
 
 import { selectWallet } from "@/store/slicers/wallet";
 import Layout from "@/components/organisms/layout";
@@ -8,6 +11,8 @@ import BlockchainCardList from "@/components/organisms/form/card-lists/Blockchai
 import Input from "@/components/molecules/form/Input";
 import Textarea from "@/components/molecules/form/Textarea";
 import fetchData from "@/lib/fetchData";
+import { loadContractData } from "@/lib/load";
+import ERC721Factory from "../../../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
 
 const blockchains = [
   { id: 1, imagePath: "/icons/blockchains/ethereum.png", name: "Ethereum" },
@@ -40,7 +45,10 @@ const CreateCollection = () => {
   }, [register]);
 
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
-    const res = await fetchData("/api/collections", "POST", data);
+    const factoryAddress = loadContractData(wallet?.chainId)?.factory;
+    const factoryContract: Contract = new ethers.Contract(factoryAddress!, ERC721Factory.abi, wallet.signer!.provider);
+    const tx = await factoryContract.connect(wallet.signer!).createERC721Collection(data.name, data.symbol);
+    console.log("tx", tx);
   };
 
   return (

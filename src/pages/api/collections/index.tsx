@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import type { Signer, Contract } from "ethers";
-import { ethers } from "ethers";
-import ERC721Factory from "../../../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
+import { ethers, providers } from "ethers";
+import detectEthereumProvider from "@metamask/detect-provider";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req;
@@ -28,7 +27,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 }
 
-const handlePOST = async (req: NextApiRequest, res: NextApiResponse) => {
-  console.log("11111");
-  return res.status(200).json({ message: "success" });
-};
+const handlePOST = async (req: NextApiRequest, res: NextApiResponse) => {};
