@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useSelector } from "react-redux";
 
+import { selectWallet } from "@/store/slicers/wallet";
 import Layout from "@/components/organisms/layout";
 import BlockchainCardList from "@/components/organisms/form/card-lists/Blockchain";
 import Input from "@/components/molecules/form/Input";
 import Textarea from "@/components/molecules/form/Textarea";
+import fetchData from "@/lib/fetchData";
 
 const blockchains = [
   { id: 1, imagePath: "/icons/blockchains/ethereum.png", name: "Ethereum" },
@@ -18,6 +21,7 @@ type FormInput = {
 };
 
 const CreateCollection = () => {
+  const wallet = useSelector(selectWallet);
   const [selectedBlockhainId, setSelectedBlockhainId] = useState(0);
   const {
     register,
@@ -35,8 +39,8 @@ const CreateCollection = () => {
     register("blockchainId", { required: "Blockchain is required" });
   }, [register]);
 
-  const onSubmit: SubmitHandler<FormInput> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<FormInput> = async (data) => {
+    const res = await fetchData("/api/collections", "POST", data);
   };
 
   return (
