@@ -6,6 +6,7 @@ import BlockchainCardList from "@/components/organisms/form/card-lists/Blockchai
 import CollectionCardList from "@/components/organisms/form/card-lists/Collection";
 import Input from "@/components/molecules/form/Input";
 import Textarea from "@/components/molecules/form/Textarea";
+import UploadImageFile from "@/components/molecules/form/UploadImageFile";
 
 const blockchains = [
   { id: 1, imagePath: "/icons/blockchains/ethereum.png", name: "Ethereum" },
@@ -25,12 +26,13 @@ type FormInput = {
   description: string;
   blockchainId: number;
   collectionAddress: string;
+  nftImage: File | null;
 };
 
 const CreateNFT = () => {
   const [selectedBlockhainId, setSelectedBlockhainId] = useState(0);
   const [selectedCollectionAddress, setSelectedCollectionAddress] = useState("");
-  const [filePreview, setFilePreview] = useState("");
+  const [nftImagePreview, setNftImagePreview] = useState("");
   const {
     register,
     handleSubmit,
@@ -48,25 +50,28 @@ const CreateNFT = () => {
     setValue("collectionAddress", address, { shouldValidate: true });
   };
 
-  useEffect(() => {
-    register("blockchainId", { required: "Blockchain is required" });
-    register("collectionAddress", { required: "Collection is required" });
-  }, [register]);
-
-  const onFileChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+  const handleNftImageChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const file = event.target.files?.[0];
     if (file) {
-      setFilePreview(URL.createObjectURL(file));
+      setNftImagePreview(URL.createObjectURL(file));
+      setValue("nftImage", file, { shouldValidate: true });
     }
   };
 
-  const removeFilePreview = () => {
-    setFilePreview("");
+  const handleNftImageRemove = () => {
+    setNftImagePreview("");
+    setValue("nftImage", null, { shouldValidate: true });
   };
 
   const onSubmit: SubmitHandler<FormInput> = (data) => {
     console.log(data);
   };
+
+  useEffect(() => {
+    register("blockchainId", { required: "Blockchain is required" });
+    register("collectionAddress", { required: "Collection is required" });
+    register("nftImage", { required: "NFT image is required" });
+  }, [register]);
 
   return (
     <Layout title="Create NFT">
@@ -99,33 +104,12 @@ const CreateNFT = () => {
               </div>
             </div>
             <div className="mt-8">
-              <div className="text-lg font-semibold">Upload file</div>
-              <div className="mt-2">
-                <div
-                  className={`border border-dashed flex flex-col justify-center items-center rounded relative ${
-                    filePreview ? "h-80" : "h-48"
-                  }`}
-                >
-                  {filePreview && (
-                    <>
-                      <img src={filePreview} alt="Preview" className="max-h-64" />
-                      <button
-                        type="button"
-                        className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded"
-                        onClick={removeFilePreview}
-                      >
-                        削除
-                      </button>
-                    </>
-                  )}
-                  {!filePreview && (
-                    <label htmlFor="file-upload" className="bg-gray-700 text-white rounded p-2 cursor-pointer">
-                      Choose file
-                    </label>
-                  )}
-                  <input id="file-upload" type="file" className="hidden" onChange={onFileChange} />
-                </div>
-              </div>
+              <UploadImageFile
+                imagePreview={nftImagePreview}
+                handleImageChange={handleNftImageChange}
+                handleImageRemove={handleNftImageRemove}
+                errorMessage={errors.nftImage?.message}
+              />
             </div>
             <div className="mt-8">
               <Input label="Name" id="name" register={register} required="Username is required" errors={errors} />
