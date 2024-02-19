@@ -1,10 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
+import type { Signer } from "ethers";
 import { RootState } from "../store";
 
-const initialState = {
-  chainId: "",
+type WalletState = {
+  chainId: number;
+  accountAddress: string;
+  signer: Signer | null;
+  contractAddress: string;
+};
+
+const initialState: WalletState = {
+  chainId: 0,
   accountAddress: "",
-  signer: "",
+  signer: null,
   contractAddress: "",
 };
 
@@ -18,10 +26,13 @@ const walletSlice = createSlice({
       state.signer = action.payload.signer;
       state.contractAddress = action.payload.contractAddress;
     },
+    setChainId: (state, action) => {
+      state.chainId = action.payload.chainId;
+    },
   },
 });
 
-export const { setWallet } = walletSlice.actions;
+export const { setWallet, setChainId } = walletSlice.actions;
 
 export const selectWallet = (state: RootState) => state.wallet;
 
