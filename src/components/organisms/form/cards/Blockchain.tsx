@@ -4,12 +4,12 @@ type Props = {
   id: number;
   name: string;
   imagePath: string;
-  selectedBlockhainId: number;
+  selectedChainId: number;
   handleBlockchainChange: (selectedBlockhain: number) => void;
 };
 
-const BlockchainCard = ({ id, name, imagePath, selectedBlockhainId, handleBlockchainChange }: Props) => {
-  const isSelected = selectedBlockhainId === id;
+const BlockchainCard = ({ id, name, imagePath, selectedChainId, handleBlockchainChange }: Props) => {
+  const isSelected = selectedChainId === id;
   return (
     <div
       className={`flex flex-col justify-center items-center border w-28 h-28 rounded-md cursor-pointer ${

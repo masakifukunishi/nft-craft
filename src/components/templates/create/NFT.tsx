@@ -30,7 +30,7 @@ type FormInput = {
 };
 
 const CreateNFT = () => {
-  const [selectedBlockhainId, setSelectedBlockhainId] = useState(0);
+  const [selectedChainId, setSelectedChainId] = useState(0);
   const [selectedCollectionAddress, setSelectedCollectionAddress] = useState("");
   const [nftImagePreview, setNftImagePreview] = useState("");
   const {
@@ -41,7 +41,7 @@ const CreateNFT = () => {
   } = useForm<FormInput>();
 
   const handleBlockchainChange = (id: number) => {
-    setSelectedBlockhainId(id);
+    setSelectedChainId(id);
     setValue("blockchainId", id, { shouldValidate: true });
   };
 
@@ -87,7 +87,7 @@ const CreateNFT = () => {
             <div className="mt-4">
               <BlockchainCardList
                 blockchains={blockchains}
-                selectedBlockhainId={selectedBlockhainId}
+                selectedChainId={selectedChainId}
                 handleBlockchainChange={handleBlockchainChange}
                 errorMessage={errors.blockchainId?.message}
               />

@@ -9,12 +9,12 @@ type Blockchain = {
 
 type Props = {
   blockchains: Blockchain[];
-  selectedBlockhainId: number;
+  selectedChainId: number;
   handleBlockchainChange: (selectedBlockhain: number) => void;
   errorMessage?: string;
 };
 
-const BlockchainCardList = ({ blockchains, selectedBlockhainId, handleBlockchainChange, errorMessage }: Props) => {
+const BlockchainCardList = ({ blockchains, selectedChainId, handleBlockchainChange, errorMessage }: Props) => {
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -24,7 +24,7 @@ const BlockchainCardList = ({ blockchains, selectedBlockhainId, handleBlockchain
               id={blockchain.id}
               imagePath={blockchain.imagePath}
               name={blockchain.name}
-              selectedBlockhainId={selectedBlockhainId}
+              selectedChainId={selectedChainId}
               handleBlockchainChange={handleBlockchainChange}
             />
           </div>
