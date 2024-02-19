@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useSelector } from "react-redux";
 import type { Contract } from "ethers";
 import { ethers } from "ethers";
+import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from "wagmi";
 
 import { selectWallet } from "@/store/slicers/wallet";
 import Layout from "@/components/organisms/layout";
@@ -25,6 +26,15 @@ type FormInput = {
 };
 
 const CreateCollection = () => {
+  const { address } = useAccount();
+  const { disconnect } = useDisconnect();
+  const { data: ensName } = useEnsName({ address });
+  const { data: ensAvatar } = useEnsAvatar({ name: ensName! });
+
+  console.log("ensName", ensName);
+  console.log("ensAvatar", ensAvatar);
+  console.log("address", address);
+  console.log("disconnect", disconnect);
   const wallet = useSelector(selectWallet);
   const [selectedBlockhainId, setSelectedBlockhainId] = useState(0);
   const {
