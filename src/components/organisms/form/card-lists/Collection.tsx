@@ -2,7 +2,7 @@ import CollectionCard from "@/components/organisms/form/cards/Collection";
 import ErrorMessage from "@/components/atoms/form/ErrorMessage";
 
 type Collection = {
-  address: string;
+  collectionAddress: string;
   symbol: string;
   name: string;
 };
@@ -19,9 +19,9 @@ const CollectionCardList = ({ collections, selectedCollectionAddress, handleColl
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
         {collections.map((collection) => (
-          <div className="mr-3" key={collection.address}>
+          <div className="mr-3" key={collection.collectionAddress}>
             <CollectionCard
-              address={collection.address}
+              collectionAddress={collection.collectionAddress}
               symbol={collection.symbol}
               name={collection.name}
               selectedCollectionAddress={selectedCollectionAddress}

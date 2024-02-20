@@ -1,11 +1,13 @@
 import { NextPage } from "next";
+
+import Layout from "@/components/templates/Layout";
 import CreateCollectionTemplate from "@/components/templates/create/Collection";
 
 const createCollection: NextPage = () => {
   return (
-    <div>
+    <Layout title="Create collection">
       <CreateCollectionTemplate />
-    </div>
+    </Layout>
   );
 };
 

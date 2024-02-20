@@ -1,11 +1,13 @@
 import { NextPage } from "next";
+
+import Layout from "@/components/templates/Layout";
 import CreateNFTTemplate from "@/components/templates/create/NFT";
 
 const createNFT: NextPage = () => {
   return (
-    <div>
+    <Layout title="Create NFT">
       <CreateNFTTemplate />
-    </div>
+    </Layout>
   );
 };
 
