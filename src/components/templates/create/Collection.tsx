@@ -10,6 +10,7 @@ import Input from "@/components/molecules/form/Input";
 import Textarea from "@/components/molecules/form/Textarea";
 import ERC721Factory from "../../../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
 import { config } from "../../../../config";
+
 type FormInput = {
   name: string;
   symbol: string;
@@ -30,21 +31,20 @@ const CreateCollection = () => {
     formState: { errors },
   } = useForm<FormInput>();
 
+  useEffect(() => {
+    register("blockchainId", { required: "Blockchain is required" });
+  }, [register]);
+
   const handleBlockchainChange = (id: number) => {
     setSelectedChainId(id);
     setValue("blockchainId", id, { shouldValidate: true });
   };
 
-  useEffect(() => {
-    register("blockchainId", { required: "Blockchain is required" });
-  }, [register]);
-
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
-    console.log(chainId);
     if (!chainId) {
       return;
     }
-    // await switchChain(config, { chainId: 11155111 });
+    // await switchChain(config, { chainId: selectedChainId });
     writeContract({
       address: loadContractData(chainId)?.factory!,
       abi: ERC721Factory.abi,

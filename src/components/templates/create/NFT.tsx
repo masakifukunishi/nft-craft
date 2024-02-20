@@ -1,17 +1,13 @@
 import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
+import { loadContractData, loadChainList } from "@/lib/load";
 import Layout from "@/components/organisms/layout";
 import BlockchainCardList from "@/components/organisms/form/card-lists/Blockchain";
 import CollectionCardList from "@/components/organisms/form/card-lists/Collection";
 import Input from "@/components/molecules/form/Input";
 import Textarea from "@/components/molecules/form/Textarea";
 import UploadImageFile from "@/components/molecules/form/UploadImageFile";
-
-const blockchains = [
-  { id: 1, imagePath: "/icons/blockchains/ethereum.png", name: "Ethereum" },
-  { id: 137, imagePath: "/icons/blockchains/polygon.png", name: "Polygon" },
-];
 
 const collections = [
   { address: "0x1", name: "Collection 1", symbol: "C1" },
@@ -30,6 +26,7 @@ type FormInput = {
 };
 
 const CreateNFT = () => {
+  const chainList = loadChainList();
   const [selectedChainId, setSelectedChainId] = useState(0);
   const [selectedCollectionAddress, setSelectedCollectionAddress] = useState("");
   const [nftImagePreview, setNftImagePreview] = useState("");
@@ -39,6 +36,12 @@ const CreateNFT = () => {
     setValue,
     formState: { errors },
   } = useForm<FormInput>();
+
+  useEffect(() => {
+    register("blockchainId", { required: "Blockchain is required" });
+    register("collectionAddress", { required: "Collection is required" });
+    register("nftImage", { required: "NFT image is required" });
+  }, [register]);
 
   const handleBlockchainChange = (id: number) => {
     setSelectedChainId(id);
@@ -66,13 +69,6 @@ const CreateNFT = () => {
   const onSubmit: SubmitHandler<FormInput> = (data) => {
     console.log(data);
   };
-
-  useEffect(() => {
-    register("blockchainId", { required: "Blockchain is required" });
-    register("collectionAddress", { required: "Collection is required" });
-    register("nftImage", { required: "NFT image is required" });
-  }, [register]);
-
   return (
     <Layout title="Create NFT">
       <div className="flex flex-col items-center mt-2">
@@ -86,7 +82,7 @@ const CreateNFT = () => {
             <div className="text-lg font-semibold">Choose blockchain</div>
             <div className="mt-4">
               <BlockchainCardList
-                blockchains={blockchains}
+                blockchains={chainList}
                 selectedChainId={selectedChainId}
                 handleBlockchainChange={handleBlockchainChange}
                 errorMessage={errors.blockchainId?.message}
