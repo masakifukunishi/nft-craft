@@ -5,26 +5,11 @@ import { IoMdClose } from "react-icons/io";
 import { FaRegUserCircle } from "react-icons/fa";
 import { Connector, useConnect, useAccount } from "wagmi";
 
+import customModalStyles from "@/styles/modal";
+
 type Props = {
   isModalOpen: boolean;
   closeModal: () => void;
-};
-
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    transform: "translate(-50%, -50%)",
-    border: "none",
-    backgroundColor: "#1F2937",
-    color: "#F9FAFB",
-    width: "330px",
-  },
-  overlay: {
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-  },
 };
 
 const WalletModal = ({ isModalOpen, closeModal }: Props) => {
@@ -40,7 +25,7 @@ const WalletModal = ({ isModalOpen, closeModal }: Props) => {
   }, [isConnected]);
 
   return (
-    <Modal isOpen={isModalOpen} onRequestClose={closeModal} style={customStyles}>
+    <Modal isOpen={isModalOpen} onRequestClose={closeModal} style={customModalStyles}>
       <div className="flex justify-between items-center">
         <div className="text-lg font-bold">Connect Wallet</div>
         <div className="bg-gray-700 p-1 rounded-2xl cursor-pointer">

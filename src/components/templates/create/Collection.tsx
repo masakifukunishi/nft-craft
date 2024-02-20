@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { type BaseError, useWriteContract, useAccount } from "wagmi";
 import { switchChain } from "@wagmi/core";
@@ -6,6 +7,7 @@ import { loadContractData, loadChainList } from "@/lib/load";
 import BlockchainCardList from "@/components/organisms/form/card-lists/Blockchain";
 import Input from "@/components/molecules/form/Input";
 import Textarea from "@/components/molecules/form/Textarea";
+import CreatingCollectionModal from "@/components/organisms/modals/CreatingCollection";
 import ERC721Factory from "../../../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
 import { config } from "../../../../config";
 
@@ -16,6 +18,7 @@ type FormInput = {
 };
 
 const CreateCollection = () => {
+  const [isCreatingModalOpen, setIsCreatingModalOpen] = useState(false);
   const chainList = loadChainList();
   const { chainId } = useAccount();
   const { data: hash, error, isPending, writeContract } = useWriteContract();
@@ -75,6 +78,8 @@ const CreateCollection = () => {
           {error && <div>Error: {(error as BaseError).shortMessage || error.message}</div>}
         </div>
       </form>
+      {/* <CreatingCollectionModal isModalOpen={isCreatingModalOpen || isPending} closeModal={() => setIsCreatingModalOpen(false)} /> */}
+      <CreatingCollectionModal isModalOpen={true} closeModal={() => setIsCreatingModalOpen(false)} />
     </div>
   );
 };
