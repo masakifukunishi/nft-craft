@@ -8,7 +8,7 @@ type Props = {
   closeModal: () => void;
 };
 
-const CreatingCollectionModal = ({ isModalOpen, closeModal }: Props) => {
+const CreatingModal = ({ isModalOpen, closeModal }: Props) => {
   return (
     <Modal isOpen={isModalOpen} onRequestClose={closeModal} style={customModalStyles}>
       <div className="flex flex-col items-center">
@@ -25,4 +25,4 @@ const CreatingCollectionModal = ({ isModalOpen, closeModal }: Props) => {
   );
 };
 
-export default CreatingCollectionModal;
+export default CreatingModal;

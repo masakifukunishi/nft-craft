@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, use } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { type BaseError, useWriteContract, useAccount } from "wagmi";
 import { switchChain } from "@wagmi/core";
@@ -7,7 +7,8 @@ import { loadContractData, loadChainList } from "@/lib/load";
 import BlockchainCardList from "@/components/organisms/form/card-lists/Blockchain";
 import Input from "@/components/molecules/form/Input";
 import Textarea from "@/components/molecules/form/Textarea";
-import CreatingCollectionModal from "@/components/organisms/modals/CreatingCollection";
+import CreatingModal from "@/components/organisms/modals/collection/Creating";
+import CreatingErrorModal from "@/components/organisms/modals/collection/CreatingError";
 import ERC721Factory from "../../../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
 import { config } from "../../../../config";
 
@@ -19,6 +20,7 @@ type FormInput = {
 
 const CreateCollection = () => {
   const [isCreatingModalOpen, setIsCreatingModalOpen] = useState(false);
+  const [isCreatingErrorModalOpen, setIsCreatingErrorModalOpen] = useState(false);
   const chainList = loadChainList();
   const { chainId } = useAccount();
   const { data: hash, error, isPending, writeContract } = useWriteContract();
@@ -27,6 +29,22 @@ const CreateCollection = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormInput>();
+
+  useEffect(() => {
+    if (isPending && !error) {
+      setIsCreatingModalOpen(true);
+    } else {
+      setIsCreatingModalOpen(false);
+    }
+  }, [isPending, error]);
+
+  useEffect(() => {
+    if (error) {
+      setIsCreatingErrorModalOpen(true);
+    } else {
+      setIsCreatingErrorModalOpen(false);
+    }
+  }, [error]);
 
   const handleBlockchainChange = async (id: number) => {
     if (chainId === id) return;
@@ -79,7 +97,8 @@ const CreateCollection = () => {
         </div>
       </form>
       {/* <CreatingCollectionModal isModalOpen={isCreatingModalOpen || isPending} closeModal={() => setIsCreatingModalOpen(false)} /> */}
-      <CreatingCollectionModal isModalOpen={true} closeModal={() => setIsCreatingModalOpen(false)} />
+      <CreatingModal isModalOpen={isCreatingModalOpen} closeModal={() => setIsCreatingModalOpen(false)} />
+      <CreatingErrorModal isModalOpen={isCreatingErrorModalOpen} closeModal={() => setIsCreatingErrorModalOpen(false)} retry={() => {}} />
     </div>
   );
 };
