@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { NextPage } from "next";
-import type { Signer, Contract } from "ethers";
-import { ethers } from "ethers";
 import { File } from "nft.storage";
 
 import ERC721Factory from "../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
@@ -18,15 +16,15 @@ const Home: NextPage = () => {
   // wallet
   const [chainId, setChainId] = useState<number>();
   const [accountAddress, setAccountAddress] = useState<string>();
-  const [signer, setSigner] = useState<Signer>();
+  // const [signer, setSigner] = useState<Signer>();
   const [factoryAddress, setFactoryAddress] = useState<string>();
   // create collection
   const [collectionName, setCollectionName] = useState<string>();
   const [collectionSymbol, setCollectionSymbol] = useState<string>();
   const createCollection = async () => {
-    const factoryContract: Contract = new ethers.Contract(factoryAddress!, ERC721Factory.abi, signer!.provider);
-    const tx = await factoryContract.connect(signer!).createERC721Collection(collectionName, collectionSymbol);
-    console.log("tx", tx);
+    // const factoryContract: Contract = new ethers.Contract(factoryAddress!, ERC721Factory.abi, signer!.provider);
+    // const tx = await factoryContract.connect(signer!).createERC721Collection(collectionName, collectionSymbol);
+    // console.log("tx", tx);
   };
 
   // select collection
@@ -35,21 +33,21 @@ const Home: NextPage = () => {
   const handleCollectionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCollectionAddress(event.target.value);
   };
-  useEffect(() => {
-    const fetchCollections = async () => {
-      if (!accountAddress || !factoryAddress || !signer) return;
+  // useEffect(() => {
+  //   const fetchCollections = async () => {
+  //     if (!accountAddress || !factoryAddress || !signer) return;
 
-      const factoryContract = new ethers.Contract(factoryAddress, ERC721Factory.abi, signer);
-      try {
-        const collections = await factoryContract.getCreatorCollections(accountAddress);
-        setCollections(collections);
-      } catch (error) {
-        console.error("Failed to fetch collections", error);
-      }
-    };
+  //     const factoryContract = new ethers.Contract(factoryAddress, ERC721Factory.abi, signer);
+  //     try {
+  //       const collections = await factoryContract.getCreatorCollections(accountAddress);
+  //       setCollections(collections);
+  //     } catch (error) {
+  //       console.error("Failed to fetch collections", error);
+  //     }
+  //   };
 
-    fetchCollections();
-  }, [accountAddress, factoryAddress, signer]);
+  //   fetchCollections();
+  // }, [accountAddress, factoryAddress, signer]);
 
   // mint
   const [nftName, setNftName] = useState("");
@@ -112,9 +110,9 @@ const Home: NextPage = () => {
       alert("Please upload the image to NFT.Storage");
       return;
     }
-    const collectionContract = new ethers.Contract(selectedCollectionAddress, ERC721Collection.abi, signer);
-    const tx = await collectionContract.safeMint(accountAddress, ipfsMetadataUrl);
-    console.log("tx", tx);
+    // const collectionContract = new ethers.Contract(selectedCollectionAddress, ERC721Collection.abi, signer);
+    // const tx = await collectionContract.safeMint(accountAddress, ipfsMetadataUrl);
+    // console.log("tx", tx);
   };
   return (
     <div className="min-h-screen">
