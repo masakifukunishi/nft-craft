@@ -12,8 +12,8 @@ const BlockchainCard = ({ id, name, imagePath, selectedChainId, handleBlockchain
   const isSelected = selectedChainId === id;
   return (
     <div
-      className={`flex flex-col justify-center items-center border w-28 h-28 rounded-md cursor-pointer ${
-        isSelected ? "border-2 border-blue-500" : "border-gray-50"
+      className={`flex flex-col justify-center items-center border w-28 h-28 rounded-md  ${
+        isSelected ? "border-2 border-blue-500" : "border-gray-50 cursor-pointer"
       }`}
       onClick={() => handleBlockchainChange(id)}
     >

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { type BaseError, useWriteContract, useAccount } from "wagmi";
 import { switchChain } from "@wagmi/core";
@@ -22,28 +22,22 @@ const CreateCollection = () => {
   const chainList = loadChainList();
   const { chainId } = useAccount();
   const { data: hash, error, isPending, writeContract } = useWriteContract();
-
-  const [selectedChainId, setSelectedChainId] = useState(0);
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm<FormInput>();
 
-  useEffect(() => {
-    register("blockchainId", { required: "Blockchain is required" });
-  }, [register]);
-
-  const handleBlockchainChange = (id: number) => {
-    setSelectedChainId(id);
-    setValue("blockchainId", id, { shouldValidate: true });
+  const handleBlockchainChange = async (id: number) => {
+    if (chainId === id) return;
+    try {
+      await switchChain(config, { chainId: id });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
-    if (!chainId) {
-      return;
-    }
     // await switchChain(config, { chainId: selectedChainId });
     writeContract({
       address: loadContractData(chainId)?.factory!,
@@ -67,7 +61,7 @@ const CreateCollection = () => {
             <div className="mt-4">
               <BlockchainCardList
                 blockchains={chainList}
-                selectedChainId={selectedChainId}
+                selectedChainId={chainId}
                 handleBlockchainChange={handleBlockchainChange}
                 errorMessage={errors.blockchainId?.message}
               />

@@ -29,7 +29,6 @@ const customStyles = {
 
 const WalletModal = ({ isModalOpen, closeModal }: Props) => {
   const { connectors, connect } = useConnect();
-  console.log(connectors);
 
   const connectWallet = (connector: Connector) => {
     connect({ connector });

@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useAccount, useReadContract } from "wagmi";
+import { switchChain } from "@wagmi/core";
 
 import { loadContractData, loadChainList } from "@/lib/load";
 import Layout from "@/components/organisms/layout";
@@ -8,6 +10,8 @@ import CollectionCardList from "@/components/organisms/form/card-lists/Collectio
 import Input from "@/components/molecules/form/Input";
 import Textarea from "@/components/molecules/form/Textarea";
 import UploadImageFile from "@/components/molecules/form/UploadImageFile";
+import ERC721Factory from "../../../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
+import { config } from "../../../../config";
 
 const collections = [
   { address: "0x1", name: "Collection 1", symbol: "C1" },
@@ -27,7 +31,8 @@ type FormInput = {
 
 const CreateNFT = () => {
   const chainList = loadChainList();
-  const [selectedChainId, setSelectedChainId] = useState(0);
+  const { chainId, address } = useAccount();
+  const [creatorCollections, setCreatorCollections] = useState([]);
   const [selectedCollectionAddress, setSelectedCollectionAddress] = useState("");
   const [nftImagePreview, setNftImagePreview] = useState("");
   const {
@@ -37,18 +42,39 @@ const CreateNFT = () => {
     formState: { errors },
   } = useForm<FormInput>();
 
+  const fetchCollections = () => {
+    const { data } = useReadContract({
+      address: loadContractData(chainId)?.factory!,
+      abi: ERC721Factory.abi,
+      functionName: "getCreatorCollections",
+      args: [address],
+    });
+    return data;
+  };
+
+  const collections = fetchCollections();
+  useEffect(() => {
+    if (collections) setCreatorCollections(collections);
+  }, [collections]);
+
   useEffect(() => {
     register("blockchainId", { required: "Blockchain is required" });
     register("collectionAddress", { required: "Collection is required" });
     register("nftImage", { required: "NFT image is required" });
   }, [register]);
 
-  const handleBlockchainChange = (id: number) => {
-    setSelectedChainId(id);
-    setValue("blockchainId", id, { shouldValidate: true });
+  const handleBlockchainChange = async (id: number) => {
+    if (chainId === id) return;
+    try {
+      await switchChain(config, { chainId: id });
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleCollectionChange = (address: string) => {
+    if (selectedCollectionAddress === address) return;
     setSelectedCollectionAddress(address);
     setValue("collectionAddress", address, { shouldValidate: true });
   };
@@ -69,6 +95,8 @@ const CreateNFT = () => {
   const onSubmit: SubmitHandler<FormInput> = (data) => {
     console.log(data);
   };
+
+  console.log("creatorCollections", creatorCollections);
   return (
     <Layout title="Create NFT">
       <div className="flex flex-col items-center mt-2">
@@ -83,7 +111,7 @@ const CreateNFT = () => {
             <div className="mt-4">
               <BlockchainCardList
                 blockchains={chainList}
-                selectedChainId={selectedChainId}
+                selectedChainId={chainId}
                 handleBlockchainChange={handleBlockchainChange}
                 errorMessage={errors.blockchainId?.message}
               />
@@ -92,7 +120,7 @@ const CreateNFT = () => {
               <div className="text-lg font-semibold">Choose collection</div>
               <div className="mt-4">
                 <CollectionCardList
-                  collections={collections}
+                  collections={creatorCollections}
                   selectedCollectionAddress={selectedCollectionAddress}
                   handleCollectionChange={handleCollectionChange}
                   errorMessage={errors.collectionAddress?.message}
