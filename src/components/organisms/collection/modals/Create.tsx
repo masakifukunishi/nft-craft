@@ -1,6 +1,6 @@
 import Modal from "react-modal";
 
-import Miting from "@/components/organisms/collection/modals/inner/Minting";
+import Creating from "@/components/organisms/collection/modals/inner/Creating";
 import Error from "@/components/organisms/collection/modals/inner/Error";
 import Completed from "@/components/organisms/collection/modals/inner/Completed";
 
@@ -14,18 +14,18 @@ type Props = {
   retry: () => void;
 };
 
-const CreatingModal = ({ isModalOpen, closeModal, uploadingStatus, hash, retry }: Props) => {
+const Create = ({ isModalOpen, closeModal, uploadingStatus, hash, retry }: Props) => {
   return (
-    <Modal isOpen={isModalOpen} onRequestClose={closeModal} style={customModalStyles}>
+    <Modal isOpen={isModalOpen} onRequestClose={closeModal} style={customModalStyles} shouldCloseOnOverlayClick={false}>
       {uploadingStatus === "idle" || uploadingStatus === "minting" ? (
-        <Miting closeModal={closeModal} />
+        <Creating closeModal={closeModal} />
       ) : uploadingStatus === "error" ? (
         <Error closeModal={closeModal} retry={retry} />
-      ) : (
+      ) : uploadingStatus === "done" ? (
         <Completed closeModal={closeModal} hash={hash} />
-      )}
+      ) : null}
     </Modal>
   );
 };
 
-export default CreatingModal;
+export default Create;

@@ -4,7 +4,7 @@ type Props = {
   closeModal: () => void;
 };
 
-const Minting = ({ closeModal }: Props) => {
+const Creating = ({ closeModal }: Props) => {
   return (
     <div>
       <div className="flex flex-col items-center">
@@ -21,4 +21,4 @@ const Minting = ({ closeModal }: Props) => {
   );
 };
 
-export default Minting;
+export default Creating;

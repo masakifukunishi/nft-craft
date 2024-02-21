@@ -8,7 +8,7 @@ import BlockchainCardList from "@/components/molecules/form/card-lists/Blockchai
 import CollectionCardList from "@/components/molecules/form/card-lists/Collection";
 import Input from "@/components/molecules/form/Input";
 import Textarea from "@/components/molecules/form/Textarea";
-import CreatingModal from "@/components/organisms/nft/CreateModal";
+import CreateModal from "@/components/organisms/nft/modals/Create";
 import UploadImageFile from "@/components/molecules/form/UploadImageFile";
 import uploadToNFTStorage from "@/lib/uploadToNFTStorage";
 import ERC721Factory from "../../../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
@@ -24,7 +24,7 @@ type FormInput = {
 
 const CreateNFT = () => {
   const [isOpenCreatingModal, setIsOpenCreatingModal] = useState(false);
-  const [uploadingStatus, setUploadingStatus] = useState<"idle" | "uploadingToIPFS" | "minting" | "done">("idle");
+  const [uploadingStatus, setUploadingStatus] = useState<"idle" | "uploadingToIPFS" | "minting" | "error" | "done">("idle");
   const chainList = loadChainList();
   const { chainId, address } = useAccount();
   const { data: hash, error, isPending, isSuccess, writeContract } = useWriteContract();
@@ -91,6 +91,7 @@ const CreateNFT = () => {
 
   useEffect(() => {
     if (isPending) setUploadingStatus("minting");
+    else if (error) setUploadingStatus("error");
     else if (isSuccess) setUploadingStatus("done");
     else setUploadingStatus("idle");
   }, [isPending, isSuccess]);
@@ -149,17 +150,13 @@ const CreateNFT = () => {
         <div className="mt-4 flex justify-end">
           <button type="submit" className="bg-blue-600 rounded p-2">
             Create NFT
-            {hash && <div>Transaction Hash: {hash}</div>}
-            {isPending ? "Confirming..." : "Mint"}
           </button>
-          {error && <div>Error: {(error as BaseError).shortMessage || error.message}</div>}
         </div>
       </form>
-      <CreatingModal
+      <CreateModal
         isModalOpen={isOpenCreatingModal}
         closeModal={() => setIsOpenCreatingModal(false)}
         uploadingStatus={uploadingStatus}
-        error={error}
         hash={hash}
       />
     </div>
