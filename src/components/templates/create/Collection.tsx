@@ -9,6 +9,7 @@ import Input from "@/components/molecules/form/Input";
 import Textarea from "@/components/molecules/form/Textarea";
 import CreatingModal from "@/components/organisms/modals/collection/Creating";
 import CreatingErrorModal from "@/components/organisms/modals/collection/CreatingError";
+import CreationCompleteModal from "@/components/organisms/modals/collection/CreationComplete";
 import ERC721Factory from "../../../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
 import { config } from "../../../../config";
 
@@ -19,11 +20,12 @@ type FormInput = {
 };
 
 const CreateCollection = () => {
-  const [isCreatingModalOpen, setIsCreatingModalOpen] = useState(false);
-  const [isCreatingErrorModalOpen, setIsCreatingErrorModalOpen] = useState(false);
+  const [isOpenCreatingModal, setIsOpenCreatingModal] = useState(false);
+  const [isOpenCreatingErrorModal, setIsOpenCreatingErrorModal] = useState(false);
+  const [isOpenCreationCompleteModal, setIsOpenCreationCompleteModal] = useState(false);
   const chainList = loadChainList();
   const { chainId } = useAccount();
-  const { data: hash, error, isPending, writeContract } = useWriteContract();
+  const { data: hash, error, isPending, isSuccess, writeContract } = useWriteContract();
   const {
     register,
     handleSubmit,
@@ -31,20 +33,10 @@ const CreateCollection = () => {
   } = useForm<FormInput>();
 
   useEffect(() => {
-    if (isPending && !error) {
-      setIsCreatingModalOpen(true);
-    } else {
-      setIsCreatingModalOpen(false);
-    }
-  }, [isPending, error]);
-
-  useEffect(() => {
-    if (error) {
-      setIsCreatingErrorModalOpen(true);
-    } else {
-      setIsCreatingErrorModalOpen(false);
-    }
-  }, [error]);
+    setIsOpenCreatingModal(isPending && !error);
+    setIsOpenCreatingErrorModal(!!error);
+    setIsOpenCreationCompleteModal(isSuccess);
+  }, [isPending, error, isSuccess]);
 
   const handleBlockchainChange = async (id: number) => {
     if (chainId === id) return;
@@ -90,15 +82,20 @@ const CreateCollection = () => {
         <div className="mt-4 flex justify-end">
           <button type="submit" className="bg-blue-600 rounded p-2">
             Create collection
-            {hash && <div>Transaction Hash: {hash}</div>}
-            {isPending ? "Confirming..." : "Mint"}
           </button>
-          {error && <div>Error: {(error as BaseError).shortMessage || error.message}</div>}
         </div>
       </form>
-      {/* <CreatingCollectionModal isModalOpen={isCreatingModalOpen || isPending} closeModal={() => setIsCreatingModalOpen(false)} /> */}
-      <CreatingModal isModalOpen={isCreatingModalOpen} closeModal={() => setIsCreatingModalOpen(false)} />
-      <CreatingErrorModal isModalOpen={isCreatingErrorModalOpen} closeModal={() => setIsCreatingErrorModalOpen(false)} retry={() => {}} />
+      <CreatingModal isModalOpen={isOpenCreatingModal} closeModal={() => setIsOpenCreatingModal(false)} />
+      <CreatingErrorModal
+        isModalOpen={isOpenCreatingErrorModal}
+        closeModal={() => setIsOpenCreatingErrorModal(false)}
+        retry={handleSubmit(onSubmit)}
+      />
+      <CreationCompleteModal
+        isModalOpen={isOpenCreationCompleteModal}
+        closeModal={() => setIsOpenCreationCompleteModal(false)}
+        hash={hash}
+      />
     </div>
   );
 };
