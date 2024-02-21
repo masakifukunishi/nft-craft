@@ -13,7 +13,7 @@ const CreatingModal = ({ isModalOpen, closeModal }: Props) => {
     <Modal isOpen={isModalOpen} onRequestClose={closeModal} style={customModalStyles}>
       <div className="flex flex-col items-center">
         <div className="mt-3">
-          <Spinner />
+          <Spinner size={14} borderWidth={5} />
         </div>
         <div className="text-xl font-bold mt-8">Loading...</div>
         <div className="text-center mt-4">To continue send transaction with your wallet</div>

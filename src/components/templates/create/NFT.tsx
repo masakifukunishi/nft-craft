@@ -8,6 +8,7 @@ import BlockchainCardList from "@/components/organisms/form/card-lists/Blockchai
 import CollectionCardList from "@/components/organisms/form/card-lists/Collection";
 import Input from "@/components/molecules/form/Input";
 import Textarea from "@/components/molecules/form/Textarea";
+import CreatingModal from "@/components/organisms/modals/nft/{";
 import UploadImageFile from "@/components/molecules/form/UploadImageFile";
 import uploadToNFTStorage from "@/lib/uploadToNFTStorage";
 import ERC721Factory from "../../../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
@@ -22,9 +23,11 @@ type FormInput = {
 };
 
 const CreateNFT = () => {
+  const [isOpenCreatingModal, setIsOpenCreatingModal] = useState(false);
+  const [uploadingStatus, setUploadingStatus] = useState<"idle" | "uploadingToIPFS" | "minting" | "done">("idle");
   const chainList = loadChainList();
   const { chainId, address } = useAccount();
-  const { data: hash, error, isPending, writeContract } = useWriteContract();
+  const { data: hash, error, isPending, isSuccess, writeContract } = useWriteContract();
   const [creatorCollections, setCreatorCollections] = useState([]);
   const [selectedCollectionAddress, setSelectedCollectionAddress] = useState("");
   const [nftImage, setNftImage] = useState<File | null>(null);
@@ -86,7 +89,15 @@ const CreateNFT = () => {
     setValue("nftImage", null, { shouldValidate: true });
   };
 
+  useEffect(() => {
+    if (isPending) setUploadingStatus("minting");
+    else if (isSuccess) setUploadingStatus("done");
+    else setUploadingStatus("idle");
+  }, [isPending, isSuccess]);
+
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
+    setIsOpenCreatingModal(true);
+    setUploadingStatus("uploadingToIPFS");
     const ipfsMetadataUrl = await uploadToNFTStorage(data.name, data.description, nftImage!);
     writeContract({
       address: data.collectionAddress,
@@ -145,6 +156,13 @@ const CreateNFT = () => {
           {error && <div>Error: {(error as BaseError).shortMessage || error.message}</div>}
         </div>
       </form>
+      <CreatingModal
+        isModalOpen={isOpenCreatingModal}
+        closeModal={() => setIsOpenCreatingModal(false)}
+        uploadingStatus={uploadingStatus}
+        error={error}
+        hash={hash}
+      />
     </div>
   );
 };
