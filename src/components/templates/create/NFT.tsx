@@ -107,7 +107,6 @@ const CreateNFT = () => {
     });
   };
 
-  console.log("creatorCollections", creatorCollections);
   return (
     <div className="flex flex-col items-center mt-2">
       <form className="w-1/3" onSubmit={handleSubmit(onSubmit)}>

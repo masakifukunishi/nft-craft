@@ -42,13 +42,6 @@ const CreatingModal = ({ isModalOpen, closeModal, uploadingStatus, error, hash }
             <div className="text-sm">Send transaction to create your NFT</div>
           </div>
         </div>
-        {/* {uploadingStatus === "done" && <div className="text-xl font-bold mt-4">NFT created</div>}
-        {hash && (
-          <div className="mt-4">
-            <div className="text-xl font-bold">Transaction Hash</div>
-            <div className="text-sm">{hash}</div>
-          </div>
-        )} */}
         <div className="flex justify-center mt-4">
           <button className="border border-0.5 rounded w-32 py-2 mt-4" onClick={closeModal}>
             Cancel

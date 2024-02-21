@@ -1,15 +1,13 @@
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { type BaseError, useWriteContract, useAccount } from "wagmi";
+import { useWriteContract, useAccount } from "wagmi";
 import { switchChain } from "@wagmi/core";
 
 import { loadContractData, loadChainList } from "@/lib/load";
 import BlockchainCardList from "@/components/molecules/form/card-lists/Blockchain";
 import Input from "@/components/molecules/form/Input";
 import Textarea from "@/components/molecules/form/Textarea";
-import CreatingModal from "@/components/organisms/collection/CreatingModal";
-import CreatingErrorModal from "@/components/organisms/collection/CreatingErrorModal";
-import CreationCompleteModal from "@/components/organisms/collection/CreationCompleteModal";
+import CreatingModal from "@/components/organisms/collection/modals/Create";
 import ERC721Factory from "../../../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
 import { config } from "../../../../config";
 
@@ -20,9 +18,8 @@ type FormInput = {
 };
 
 const CreateCollection = () => {
+  const [uploadingStatus, setUploadingStatus] = useState<"idle" | "minting" | "error" | "done">("idle");
   const [isOpenCreatingModal, setIsOpenCreatingModal] = useState(false);
-  const [isOpenCreatingErrorModal, setIsOpenCreatingErrorModal] = useState(false);
-  const [isOpenCreationCompleteModal, setIsOpenCreationCompleteModal] = useState(false);
   const chainList = loadChainList();
   const { chainId } = useAccount();
   const { data: hash, error, isPending, isSuccess, writeContract } = useWriteContract();
@@ -33,9 +30,10 @@ const CreateCollection = () => {
   } = useForm<FormInput>();
 
   useEffect(() => {
-    setIsOpenCreatingModal(isPending && !error);
-    setIsOpenCreatingErrorModal(!!error);
-    setIsOpenCreationCompleteModal(isSuccess);
+    if (isPending) setUploadingStatus("minting");
+    else if (error) setUploadingStatus("error");
+    else if (isSuccess) setUploadingStatus("done");
+    else setUploadingStatus("idle");
   }, [isPending, error, isSuccess]);
 
   const handleBlockchainChange = async (id: number) => {
@@ -48,6 +46,7 @@ const CreateCollection = () => {
   };
 
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
+    setIsOpenCreatingModal(true);
     writeContract({
       address: loadContractData(chainId)?.factory!,
       abi: ERC721Factory.abi,
@@ -85,16 +84,12 @@ const CreateCollection = () => {
           </button>
         </div>
       </form>
-      <CreatingModal isModalOpen={isOpenCreatingModal} closeModal={() => setIsOpenCreatingModal(false)} />
-      <CreatingErrorModal
-        isModalOpen={isOpenCreatingErrorModal}
-        closeModal={() => setIsOpenCreatingErrorModal(false)}
-        retry={handleSubmit(onSubmit)}
-      />
-      <CreationCompleteModal
-        isModalOpen={isOpenCreationCompleteModal}
-        closeModal={() => setIsOpenCreationCompleteModal(false)}
+      <CreatingModal
+        isModalOpen={isOpenCreatingModal}
+        closeModal={() => setIsOpenCreatingModal(false)}
+        uploadingStatus={uploadingStatus}
         hash={hash}
+        retry={handleSubmit(onSubmit)}
       />
     </div>
   );

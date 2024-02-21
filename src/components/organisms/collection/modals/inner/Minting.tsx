@@ -1,19 +1,15 @@
-import Modal from "react-modal";
-
 import Spinner from "@/components/atoms/Spinner";
-import customModalStyles from "@/styles/modal";
 
 type Props = {
-  isModalOpen: boolean;
   closeModal: () => void;
 };
 
-const CreatingModal = ({ isModalOpen, closeModal }: Props) => {
+const Minting = ({ closeModal }: Props) => {
   return (
-    <Modal isOpen={isModalOpen} onRequestClose={closeModal} style={customModalStyles}>
+    <div>
       <div className="flex flex-col items-center">
         <div className="mt-3">
-          <Spinner size={14} borderWidth={5} />
+          <Spinner size={42} borderWidth={5} />
         </div>
         <div className="text-xl font-bold mt-8">Loading...</div>
         <div className="text-center mt-4">To continue send transaction with your wallet</div>
@@ -21,8 +17,8 @@ const CreatingModal = ({ isModalOpen, closeModal }: Props) => {
           Cancel
         </button>
       </div>
-    </Modal>
+    </div>
   );
 };
 
-export default CreatingModal;
+export default Minting;
