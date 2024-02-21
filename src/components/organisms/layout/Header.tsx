@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Link from "next/link";
 
-import User from "@/components/organisms/buttons/User";
-import CreateMenu from "@/components/organisms/drop-down/CreateMenu";
+import User from "@/components/organisms/user/UserIconMenu";
+import CreateMenu from "@/components/organisms/drop-down-menu/CreateMenu";
 
 const Header = () => {
   const [isOpenCreateMenu, setIsOpenCreateMenu] = useState(false);

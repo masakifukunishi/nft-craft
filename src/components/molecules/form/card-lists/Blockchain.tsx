@@ -1,4 +1,4 @@
-import BlockchainCard from "@/components/organisms/form/cards/Blockchain";
+import BlockchainCard from "@/components/molecules/form/cards/Blockchain";
 import ErrorMessage from "@/components/atoms/form/ErrorMessage";
 
 type Blockchain = {

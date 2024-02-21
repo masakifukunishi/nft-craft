@@ -1,11 +1,13 @@
+import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { type BaseError, useWriteContract, useAccount } from "wagmi";
+import { useWriteContract, useAccount } from "wagmi";
 import { switchChain } from "@wagmi/core";
 
 import { loadContractData, loadChainList } from "@/lib/load";
-import BlockchainCardList from "@/components/organisms/form/card-lists/Blockchain";
+import BlockchainCardList from "@/components/molecules/form/card-lists/Blockchain";
 import Input from "@/components/molecules/form/Input";
 import Textarea from "@/components/molecules/form/Textarea";
+import CreatingModal from "@/components/organisms/collection/modals/Create";
 import ERC721Factory from "../../../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
 import { config } from "../../../../config";
 
@@ -16,14 +18,23 @@ type FormInput = {
 };
 
 const CreateCollection = () => {
+  const [uploadingStatus, setUploadingStatus] = useState<"idle" | "minting" | "error" | "done">("idle");
+  const [isOpenCreatingModal, setIsOpenCreatingModal] = useState(false);
   const chainList = loadChainList();
   const { chainId } = useAccount();
-  const { data: hash, error, isPending, writeContract } = useWriteContract();
+  const { data: hash, error, isPending, isSuccess, writeContract } = useWriteContract();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormInput>();
+
+  useEffect(() => {
+    if (isPending) setUploadingStatus("minting");
+    else if (error) setUploadingStatus("error");
+    else if (isSuccess) setUploadingStatus("done");
+    else setUploadingStatus("idle");
+  }, [isPending, error, isSuccess]);
 
   const handleBlockchainChange = async (id: number) => {
     if (chainId === id) return;
@@ -35,6 +46,7 @@ const CreateCollection = () => {
   };
 
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
+    setIsOpenCreatingModal(true);
     writeContract({
       address: loadContractData(chainId)?.factory!,
       abi: ERC721Factory.abi,
@@ -69,12 +81,16 @@ const CreateCollection = () => {
         <div className="mt-4 flex justify-end">
           <button type="submit" className="bg-blue-600 rounded p-2">
             Create collection
-            {hash && <div>Transaction Hash: {hash}</div>}
-            {isPending ? "Confirming..." : "Mint"}
           </button>
-          {error && <div>Error: {(error as BaseError).shortMessage || error.message}</div>}
         </div>
       </form>
+      <CreatingModal
+        isModalOpen={isOpenCreatingModal}
+        closeModal={() => setIsOpenCreatingModal(false)}
+        uploadingStatus={uploadingStatus}
+        hash={hash}
+        retry={handleSubmit(onSubmit)}
+      />
     </div>
   );
 };

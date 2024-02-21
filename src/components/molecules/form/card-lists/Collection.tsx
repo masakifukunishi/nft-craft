@@ -1,4 +1,4 @@
-import CollectionCard from "@/components/organisms/form/cards/Collection";
+import CollectionCard from "@/components/molecules/form/cards/Collection";
 import ErrorMessage from "@/components/atoms/form/ErrorMessage";
 
 type Collection = {
