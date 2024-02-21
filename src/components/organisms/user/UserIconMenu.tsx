@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaRegUserCircle } from "react-icons/fa";
 
-import WalletModal from "@/components/organisms/modals/Wallet";
+import WalletModal from "@/components/organisms/wallet/WalletModal";
 import { useAccount, useDisconnect } from "wagmi";
 
 const User = () => {

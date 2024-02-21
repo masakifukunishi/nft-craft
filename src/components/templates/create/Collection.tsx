@@ -4,12 +4,12 @@ import { type BaseError, useWriteContract, useAccount } from "wagmi";
 import { switchChain } from "@wagmi/core";
 
 import { loadContractData, loadChainList } from "@/lib/load";
-import BlockchainCardList from "@/components/organisms/form/card-lists/Blockchain";
+import BlockchainCardList from "@/components/molecules/form/card-lists/Blockchain";
 import Input from "@/components/molecules/form/Input";
 import Textarea from "@/components/molecules/form/Textarea";
-import CreatingModal from "@/components/organisms/modals/collection/Creating";
-import CreatingErrorModal from "@/components/organisms/modals/collection/CreatingError";
-import CreationCompleteModal from "@/components/organisms/modals/collection/CreationComplete";
+import CreatingModal from "@/components/organisms/collection/CreatingModal";
+import CreatingErrorModal from "@/components/organisms/collection/CreatingErrorModal";
+import CreationCompleteModal from "@/components/organisms/collection/CreationCompleteModal";
 import ERC721Factory from "../../../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
 import { config } from "../../../../config";
 

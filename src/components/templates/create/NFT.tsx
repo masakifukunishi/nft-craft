@@ -4,11 +4,11 @@ import { type BaseError, useAccount, useReadContract, useWriteContract } from "w
 import { switchChain } from "@wagmi/core";
 
 import { loadContractData, loadChainList } from "@/lib/load";
-import BlockchainCardList from "@/components/organisms/form/card-lists/Blockchain";
-import CollectionCardList from "@/components/organisms/form/card-lists/Collection";
+import BlockchainCardList from "@/components/molecules/form/card-lists/Blockchain";
+import CollectionCardList from "@/components/molecules/form/card-lists/Collection";
 import Input from "@/components/molecules/form/Input";
 import Textarea from "@/components/molecules/form/Textarea";
-import CreatingModal from "@/components/organisms/modals/nft/{";
+import CreatingModal from "@/components/organisms/nft/CreationModal";
 import UploadImageFile from "@/components/molecules/form/UploadImageFile";
 import uploadToNFTStorage from "@/lib/uploadToNFTStorage";
 import ERC721Factory from "../../../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
