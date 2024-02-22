@@ -16,8 +16,14 @@ import ERC721Collection from "../../../../hardhat/artifacts/contracts/ERC721Coll
 type FormInput = {
   name: string;
   description: string;
-  collectionAddress: `0x${string}`;
+  collectionAddress: `0x${string}` | null;
   nftImage: File | null;
+};
+
+type Collection = {
+  collectionAddress: `0x${string}` | null;
+  symbol: string;
+  name: string;
 };
 
 const CreateNFT = () => {
@@ -27,8 +33,7 @@ const CreateNFT = () => {
   const { chainId, address } = useAccount();
   const { switchChain } = useSwitchChain();
   const { data: hash, error, isPending, isSuccess, writeContract } = useWriteContract();
-  const [creatorCollections, setCreatorCollections] = useState([]);
-  const [selectedCollectionAddress, setSelectedCollectionAddress] = useState("");
+  const [selectedCollectionAddress, setSelectedCollectionAddress] = useState<`0x${string}` | null>(null);
   const [nftImage, setNftImage] = useState<File | null>(null);
   const [nftImagePreview, setNftImagePreview] = useState("");
   const {
@@ -38,20 +43,12 @@ const CreateNFT = () => {
     formState: { errors },
   } = useForm<FormInput>();
 
-  const fetchCollections = () => {
-    const { data } = useReadContract({
-      address: loadContractData(chainId)?.factory!,
-      abi: ERC721Factory.abi,
-      functionName: "getCreatorCollections",
-      args: [address],
-    });
-    return data;
-  };
-
-  const collections = fetchCollections();
-  useEffect(() => {
-    if (collections) setCreatorCollections(collections);
-  }, [collections]);
+  const { data: collections } = useReadContract({
+    address: loadContractData(chainId!)?.factory!,
+    abi: ERC721Factory.abi,
+    functionName: "getCreatorCollections",
+    args: [address],
+  });
 
   useEffect(() => {
     register("collectionAddress", { required: "Collection is required" });
@@ -62,13 +59,12 @@ const CreateNFT = () => {
     if (chainId === id) return;
     try {
       switchChain({ chainId: id });
-      window.location.reload();
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleCollectionChange = (address: string) => {
+  const handleCollectionChange = (address: `0x${string}` | null) => {
     if (selectedCollectionAddress === address) return;
     setSelectedCollectionAddress(address);
     setValue("collectionAddress", address, { shouldValidate: true });
@@ -98,9 +94,11 @@ const CreateNFT = () => {
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
     setIsOpenCreatingModal(true);
     setUploadingStatus("uploadingToIPFS");
+
     const ipfsMetadataUrl = await uploadToNFTStorage(data.name, data.description, nftImage!);
+
     writeContract({
-      address: data.collectionAddress,
+      address: data.collectionAddress!,
       abi: ERC721Collection.abi,
       functionName: "safeMint",
       args: [address, ipfsMetadataUrl],
@@ -124,7 +122,7 @@ const CreateNFT = () => {
             <div className="text-lg font-semibold">Choose collection</div>
             <div className="mt-4">
               <CollectionCardList
-                collections={creatorCollections}
+                collections={collections as Collection[] | undefined}
                 selectedCollectionAddress={selectedCollectionAddress}
                 handleCollectionChange={handleCollectionChange}
                 errorMessage={errors.collectionAddress?.message}

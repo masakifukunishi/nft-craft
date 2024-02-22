@@ -1,9 +1,9 @@
 type Props = {
-  collectionAddress: string;
+  collectionAddress: `0x${string}` | null;
   name: string;
   symbol: string;
-  selectedCollectionAddress: string;
-  handleCollectionChange: (selectedCollectionAddress: string) => void;
+  selectedCollectionAddress: `0x${string}` | null;
+  handleCollectionChange: (selectedCollectionAddress: `0x${string}` | null) => void;
 };
 
 const CollectionCard = ({ collectionAddress, name, symbol, selectedCollectionAddress, handleCollectionChange }: Props) => {

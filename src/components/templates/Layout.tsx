@@ -26,7 +26,7 @@ const Layout = ({ children, title, requireWalletConnection = false }: Props) => 
         </Head>
         <div>
           <Header />
-          {isConnected || (!requireWalletConnection && <div>{children}</div>)}
+          {(isConnected || !requireWalletConnection) && <div>{children}</div>}
         </div>
       </>
       <WalletModal isModalOpen={isConnected === false && requireWalletConnection} closeModal={() => router.push("/")} />
