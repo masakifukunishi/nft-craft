@@ -4,7 +4,7 @@ type Props = {
   id: number;
   name: string;
   imagePath: string;
-  selectedChainId: number;
+  selectedChainId: number | undefined;
   handleBlockchainChange: (selectedBlockhain: number) => void;
 };
 

@@ -5,7 +5,7 @@ import CreateNFTTemplate from "@/components/templates/create/NFT";
 
 const createNFT: NextPage = () => {
   return (
-    <Layout title="Create NFT">
+    <Layout title="Create collection" requireWalletConnection={true}>
       <CreateNFTTemplate />
     </Layout>
   );

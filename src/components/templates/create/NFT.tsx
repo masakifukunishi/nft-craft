@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { type BaseError, useAccount, useReadContract, useWriteContract } from "wagmi";
-import { switchChain } from "@wagmi/core";
+import { useAccount, useReadContract, useWriteContract, useSwitchChain } from "wagmi";
 
 import { loadContractData, loadChainList } from "@/lib/load";
 import BlockchainCardList from "@/components/molecules/form/card-lists/Blockchain";
@@ -13,7 +12,6 @@ import UploadImageFile from "@/components/molecules/form/UploadImageFile";
 import uploadToNFTStorage from "@/lib/uploadToNFTStorage";
 import ERC721Factory from "../../../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
 import ERC721Collection from "../../../../hardhat/artifacts/contracts/ERC721Collection.sol/ERC721Collection.json";
-import { config } from "../../../../config";
 
 type FormInput = {
   name: string;
@@ -27,6 +25,7 @@ const CreateNFT = () => {
   const [uploadingStatus, setUploadingStatus] = useState<"idle" | "uploadingToIPFS" | "minting" | "error" | "done">("idle");
   const chainList = loadChainList();
   const { chainId, address } = useAccount();
+  const { switchChain } = useSwitchChain();
   const { data: hash, error, isPending, isSuccess, writeContract } = useWriteContract();
   const [creatorCollections, setCreatorCollections] = useState([]);
   const [selectedCollectionAddress, setSelectedCollectionAddress] = useState("");
@@ -62,7 +61,7 @@ const CreateNFT = () => {
   const handleBlockchainChange = async (id: number) => {
     if (chainId === id) return;
     try {
-      await switchChain(config, { chainId: id });
+      switchChain({ chainId: id });
       window.location.reload();
     } catch (error) {
       console.error(error);

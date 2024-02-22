@@ -1,9 +1,8 @@
-import { useEffect } from "react";
 import Image from "next/image";
 import Modal from "react-modal";
 import { IoMdClose } from "react-icons/io";
 import { FaRegUserCircle } from "react-icons/fa";
-import { Connector, useConnect, useAccount } from "wagmi";
+import { Connector, useConnect } from "wagmi";
 
 import customModalStyles from "@/styles/modal";
 
@@ -18,11 +17,6 @@ const WalletModal = ({ isModalOpen, closeModal }: Props) => {
   const connectWallet = (connector: Connector) => {
     connect({ connector });
   };
-
-  const { isConnected } = useAccount();
-  useEffect(() => {
-    isConnected && closeModal();
-  }, [isConnected]);
 
   return (
     <Modal isOpen={isModalOpen} onRequestClose={closeModal} style={customModalStyles} shouldCloseOnOverlayClick={false}>

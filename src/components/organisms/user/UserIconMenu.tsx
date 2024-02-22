@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaRegUserCircle } from "react-icons/fa";
 
-import WalletModal from "@/components/organisms/wallet/SelectModal";
+import WalletModal from "@/components/organisms/wallet/Modal";
 import { useAccount, useDisconnect } from "wagmi";
 
 const User = () => {
@@ -12,6 +12,10 @@ const User = () => {
   const closeWalletModal = () => {
     setIsWalletModalOpen(false);
   };
+
+  useEffect(() => {
+    isConnected && closeWalletModal();
+  }, [isConnected]);
 
   return (
     <>

@@ -1,15 +1,13 @@
 import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useWriteContract, useAccount } from "wagmi";
-import { switchChain } from "@wagmi/core";
+import { useWriteContract, useAccount, useSwitchChain } from "wagmi";
 
 import { loadContractData, loadChainList } from "@/lib/load";
 import BlockchainCardList from "@/components/molecules/form/card-lists/Blockchain";
 import Input from "@/components/molecules/form/Input";
 import Textarea from "@/components/molecules/form/Textarea";
-import CreatingModal from "@/components/organisms/collection/modals/Create";
+import CreateModal from "@/components/organisms/collection/modals/Create";
 import ERC721Factory from "../../../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
-import { config } from "../../../../config";
 
 type FormInput = {
   name: string;
@@ -22,6 +20,7 @@ const CreateCollection = () => {
   const [isOpenCreatingModal, setIsOpenCreatingModal] = useState(false);
   const chainList = loadChainList();
   const { chainId } = useAccount();
+  const { switchChain } = useSwitchChain();
   const { data: hash, error, isPending, isSuccess, writeContract } = useWriteContract();
   const {
     register,
@@ -39,13 +38,14 @@ const CreateCollection = () => {
   const handleBlockchainChange = async (id: number) => {
     if (chainId === id) return;
     try {
-      await switchChain(config, { chainId: id });
+      switchChain({ chainId: id });
     } catch (error) {
       console.error(error);
     }
   };
 
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
+    if (!chainId) return;
     setIsOpenCreatingModal(true);
     writeContract({
       address: loadContractData(chainId)?.factory!,
@@ -84,7 +84,7 @@ const CreateCollection = () => {
           </button>
         </div>
       </form>
-      <CreatingModal
+      <CreateModal
         isModalOpen={isOpenCreatingModal}
         closeModal={() => setIsOpenCreatingModal(false)}
         uploadingStatus={uploadingStatus}

@@ -5,7 +5,7 @@ import CreateCollectionTemplate from "@/components/templates/create/Collection";
 
 const createCollection: NextPage = () => {
   return (
-    <Layout title="Create collection">
+    <Layout title="Create collection" requireWalletConnection={true}>
       <CreateCollectionTemplate />
     </Layout>
   );
