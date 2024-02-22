@@ -9,7 +9,7 @@ type Blockchain = {
 
 type Props = {
   blockchains: Blockchain[];
-  selectedChainId: number;
+  selectedChainId: number | undefined;
   handleBlockchainChange: (selectedBlockhain: number) => void;
   errorMessage?: string;
 };

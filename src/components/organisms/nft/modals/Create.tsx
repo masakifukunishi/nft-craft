@@ -13,7 +13,6 @@ type Props = {
 };
 
 const Create = ({ isModalOpen, closeModal, uploadingStatus, hash }: Props) => {
-  console.log(uploadingStatus);
   return (
     <Modal isOpen={isModalOpen} onRequestClose={closeModal} style={customModalStyles} shouldCloseOnOverlayClick={false}>
       {uploadingStatus === "idle" || uploadingStatus === "uploadingToIPFS" || uploadingStatus === "minting" ? (
