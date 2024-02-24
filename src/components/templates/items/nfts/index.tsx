@@ -1,12 +1,17 @@
 import { useAccount } from "wagmi";
-import { useEvmNativeBalance } from "@moralisweb3/next";
 
 import Tab from "@/components/organisms/items/tab";
+import getWalletNFTs from "@/lib/moralis/get-wallet-nfts";
 
 const itemsNFTs = () => {
   const { address } = useAccount();
-  const { data: nativeBalance } = useEvmNativeBalance({ address });
-  console.log(nativeBalance);
+
+  const fetchNFTs = async () => {
+    if (!address) return;
+    const data = await getWalletNFTs(address);
+  };
+
+  fetchNFTs();
 
   return (
     <>

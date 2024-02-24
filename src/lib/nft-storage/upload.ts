@@ -1,3 +1,5 @@
+import APIUtils from "@/lib/apiUtils";
+
 const uploadToNFTStorage = (name: string, description: string, nftImage: File): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -7,18 +9,11 @@ const uploadToNFTStorage = (name: string, description: string, nftImage: File): 
       const base64Content = base64Data?.toString().split(";base64,")[1];
       if (base64Content) {
         try {
-          const response = await fetch("/api/upload", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              name: name,
-              description: description,
-              imageBase64: base64Content,
-            }),
+          const data = await APIUtils.post("/api/upload", {
+            name: name,
+            description: description,
+            imageBase64: base64Content,
           });
-          const data = await response.json();
           resolve(data.ipfsMetadataUrl);
         } catch (error) {
           console.error("Error uploading the image", error);
