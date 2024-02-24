@@ -7,7 +7,7 @@ import BlockchainCardList from "@/components/molecules/form/card-lists/Blockchai
 import CollectionCardList from "@/components/molecules/form/card-lists/Collection";
 import Input from "@/components/molecules/form/Input";
 import Textarea from "@/components/molecules/form/Textarea";
-import CreateModal from "@/components/organisms/nft/modals/Create";
+import CreateModal from "@/components/organisms/create/nft/modals";
 import UploadImageFile from "@/components/molecules/form/UploadImageFile";
 import uploadToNFTStorage from "@/lib/uploadToNFTStorage";
 import ERC721Factory from "../../../../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";

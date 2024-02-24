@@ -7,7 +7,7 @@ import CreateMenu from "@/components/organisms/header/drop-down-menu/CreateMenu"
 const Header = () => {
   const [isCreateMenuOpen, setIsCreateMenuOpen] = useState(false);
   return (
-    <header className="flex items-center p-2">
+    <header className="flex items-center px-4 py-2">
       <h1 className="text-2xl font-bold">
         <Link href="/">NFT MINTING</Link>
       </h1>
