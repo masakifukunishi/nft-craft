@@ -14,7 +14,7 @@ type Props = {
 
 const Create = ({ isModalOpen, closeModal, uploadingStatus, hash }: Props) => {
   return (
-    <Modal isOpen={isModalOpen} onRequestClose={closeModal} style={customModalStyles} shouldCloseOnOverlayClick={false}>
+    <Modal isOpen={isModalOpen} onRequestClose={closeModal} style={customModalStyles} shouldCloseOnOverlayClick={false} ariaHideApp={false}>
       {uploadingStatus === "idle" || uploadingStatus === "uploadingToIPFS" || uploadingStatus === "minting" ? (
         <Creating closeModal={closeModal} uploadingStatus={uploadingStatus} />
       ) : uploadingStatus === "error" ? (
