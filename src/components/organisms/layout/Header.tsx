@@ -5,7 +5,7 @@ import User from "@/components/organisms/user/UserIconMenu";
 import CreateMenu from "@/components/organisms/drop-down-menu/CreateMenu";
 
 const Header = () => {
-  const [isOpenCreateMenu, setIsOpenCreateMenu] = useState(false);
+  const [isCreateMenuOpen, setIsCreateMenuOpen] = useState(false);
   return (
     <header className="flex items-center p-2">
       <h1 className="text-2xl font-bold">
@@ -14,12 +14,12 @@ const Header = () => {
       <div className="ml-3 relative">
         <div
           className="font-semibold cursor-pointer hover:bg-gray-800 p-2 rounded"
-          onMouseEnter={() => setIsOpenCreateMenu(true)}
-          onMouseLeave={() => setIsOpenCreateMenu(false)}
+          onMouseEnter={() => setIsCreateMenuOpen(true)}
+          onMouseLeave={() => setIsCreateMenuOpen(false)}
         >
           Create
         </div>
-        {isOpenCreateMenu && <CreateMenu setIsOpen={setIsOpenCreateMenu} />}
+        {isCreateMenuOpen && <CreateMenu setIsOpen={setIsCreateMenuOpen} />}
       </div>
       <div className="ml-auto">
         <User />
