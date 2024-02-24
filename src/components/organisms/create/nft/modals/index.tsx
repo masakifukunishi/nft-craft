@@ -1,8 +1,8 @@
 import Modal from "react-modal";
 
-import Creating from "@/components/organisms/nft/modals/inner/Creating";
-import Error from "@/components/organisms/nft/modals/inner/Error";
-import Completed from "@/components/organisms/nft/modals/inner/Completed";
+import Creating from "@/components/organisms/create/nft/modals/inner/Creating";
+import Error from "@/components/organisms/create/nft/modals/inner/Error";
+import Completed from "@/components/organisms/create/nft/modals/inner/Completed";
 import customModalStyles from "@/styles/modal";
 
 type Props = {

@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useAccount } from "wagmi";
 import { useRouter } from "next/router";
 
-import Header from "@/components/organisms/layout/Header";
+import Header from "@/components/organisms/header";
 import WalletModal from "@/components/organisms/wallet/Modal";
 
 type Props = {

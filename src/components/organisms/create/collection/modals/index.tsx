@@ -1,8 +1,8 @@
 import Modal from "react-modal";
 
-import Creating from "@/components/organisms/collection/modals/inner/Creating";
-import Error from "@/components/organisms/collection/modals/inner/Error";
-import Completed from "@/components/organisms/collection/modals/inner/Completed";
+import Creating from "@/components/organisms/create/collection/modals/inner/Creating";
+import Error from "@/components/organisms/create/collection/modals/inner/Error";
+import Completed from "@/components/organisms/create/collection/modals/inner/Completed";
 
 import customModalStyles from "@/styles/modal";
 

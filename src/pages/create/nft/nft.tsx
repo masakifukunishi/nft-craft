@@ -1,9 +1,9 @@
 import { NextPage } from "next";
 
 import Layout from "@/components/templates/Layout";
-import CreateNFTTemplate from "@/components/templates/create/NFT";
+import CreateNFTTemplate from "@/components/templates/create/nft";
 
-const createNFT: NextPage = () => {
+const CreateNFT: NextPage = () => {
   return (
     <Layout title="Create collection" requireWalletConnection={true}>
       <CreateNFTTemplate />
@@ -11,4 +11,4 @@ const createNFT: NextPage = () => {
   );
 };
 
-export default createNFT;
+export default CreateNFT;

@@ -3,7 +3,7 @@ import { useAccount, useDisconnect } from "wagmi";
 import { FaRegUserCircle } from "react-icons/fa";
 
 import WalletModal from "@/components/organisms/wallet/Modal";
-import UserMenu from "@/components/organisms/drop-down-menu/UserMenu";
+import UserMenu from "@/components/organisms/header/drop-down-menu/UserMenu";
 
 const User = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);

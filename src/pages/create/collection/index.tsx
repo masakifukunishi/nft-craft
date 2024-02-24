@@ -1,9 +1,9 @@
 import { NextPage } from "next";
 
 import Layout from "@/components/templates/Layout";
-import CreateCollectionTemplate from "@/components/templates/create/Collection";
+import CreateCollectionTemplate from "@/components/templates/create/collection";
 
-const createCollection: NextPage = () => {
+const CreateCollection: NextPage = () => {
   return (
     <Layout title="Create collection" requireWalletConnection={true}>
       <CreateCollectionTemplate />
@@ -11,4 +11,4 @@ const createCollection: NextPage = () => {
   );
 };
 
-export default createCollection;
+export default CreateCollection;
