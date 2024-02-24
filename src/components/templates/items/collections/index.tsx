@@ -1,5 +1,11 @@
+import Tab from "@/components/organisms/items/tab";
+
 const itemsCollections = () => {
-  return <div>itemsCollections</div>;
+  return (
+    <>
+      <Tab />
+    </>
+  );
 };
 
 export default itemsCollections;
