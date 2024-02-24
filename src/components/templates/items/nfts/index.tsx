@@ -1,7 +1,7 @@
 import { useAccount } from "wagmi";
 
 import Tab from "@/components/organisms/items/tab";
-import getWalletNFTs from "@/lib/moralis/get-wallet-nfts";
+import { getWalletNFTs } from "@/lib/moralis";
 
 const itemsNFTs = () => {
   const { address } = useAccount();

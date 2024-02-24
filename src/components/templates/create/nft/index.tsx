@@ -9,7 +9,7 @@ import Input from "@/components/molecules/form/Input";
 import Textarea from "@/components/molecules/form/Textarea";
 import CreateModal from "@/components/organisms/create/nft/modals";
 import UploadImageFile from "@/components/molecules/form/UploadImageFile";
-import uploadToNFTStorage from "@/lib/nft-storage/upload";
+import { uploadNFT } from "@/lib/nftStorage";
 import ERC721Factory from "../../../../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
 import ERC721Collection from "../../../../../hardhat/artifacts/contracts/ERC721Collection.sol/ERC721Collection.json";
 
@@ -96,7 +96,7 @@ const CreateNFT = () => {
     setIsOpenCreatingModal(true);
     setUploadingStatus("uploadingToIPFS");
 
-    const ipfsMetadataUrl = await uploadToNFTStorage(data.name, data.description, nftImage!);
+    const ipfsMetadataUrl = await uploadNFT(data.name, data.description, nftImage!);
 
     writeContract({
       address: data.collectionAddress!,
