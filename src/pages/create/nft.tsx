@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 
 import Layout from "@/components/templates/Layout";
-import CreateNFTTemplate from "@/components/templates/create/erc-721/NFT";
+import CreateNFTTemplate from "@/components/templates/create/NFT";
 
 const createNFT: NextPage = () => {
   return (

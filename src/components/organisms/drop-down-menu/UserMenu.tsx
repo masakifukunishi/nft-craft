@@ -15,10 +15,10 @@ const UserMenu = ({ setIsOpen }: Props) => {
         onMouseLeave={() => setIsOpen(false)}
       >
         <li className="cursor-pointer">
-          <Link href="/create/items/nfts">My NFTs</Link>
+          <Link href="/items/nfts">My NFTs</Link>
         </li>
         <li className="cursor-pointer mt-3">
-          <Link href="/create/items/collections">My Collection</Link>
+          <Link href="/items/collections">My Collection</Link>
         </li>
         <li className="cursor-pointer mt-3">
           <div onClick={() => disconnect()}>Logout</div>

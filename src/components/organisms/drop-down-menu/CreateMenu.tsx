@@ -13,10 +13,10 @@ const CreateMenu = ({ setIsOpen }: Props) => {
         onMouseLeave={() => setIsOpen(false)}
       >
         <li className="cursor-pointer">
-          <Link href="/create/erc-721/collection">Collection</Link>
+          <Link href="/create/collection">Collection</Link>
         </li>
         <li className="cursor-pointer mt-3">
-          <Link href="/create/erc-721/nft">NFT</Link>
+          <Link href="/create/nft">NFT</Link>
         </li>
       </ul>
     </>
