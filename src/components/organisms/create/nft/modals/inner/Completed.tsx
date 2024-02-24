@@ -1,4 +1,4 @@
-import shortenString from "@/lib/shortenString";
+import shortenString from "@/utills/shortenString";
 
 type Props = {
   closeModal: () => void;

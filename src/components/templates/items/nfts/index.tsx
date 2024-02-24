@@ -1,17 +1,21 @@
+import { useState, useEffect } from "react";
 import { useAccount } from "wagmi";
 
 import Tab from "@/components/organisms/items/tab";
-import { getWalletNFTs } from "@/lib/moralis";
+import { getWalletNFTs } from "@/utills/moralis";
 
 const itemsNFTs = () => {
   const { address } = useAccount();
+  const [nfts, setNfts] = useState(null);
 
-  const fetchNFTs = async () => {
+  useEffect(() => {
     if (!address) return;
-    const data = await getWalletNFTs(address);
-  };
-
-  fetchNFTs();
+    const fetchNFTs = async () => {
+      const data = await getWalletNFTs(address);
+      setNfts(data);
+    };
+    fetchNFTs();
+  }, [address]);
 
   return (
     <>

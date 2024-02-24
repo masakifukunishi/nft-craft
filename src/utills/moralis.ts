@@ -1,6 +1,6 @@
-import APIUtils from "@/lib/apiUtils";
+import APIUtils from "@/utills/apiUtils";
 
-export const getWalletNFTs = async (address: string): Promise<any> => {
+export const getWalletNFTs = async (address: `0x${string}`) => {
   try {
     const data = await APIUtils.get(`/api/nfts?address=${address}`);
     console.log("data", data.res);

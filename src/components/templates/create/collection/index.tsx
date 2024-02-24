@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useWriteContract, useAccount, useSwitchChain } from "wagmi";
 
-import { loadContractData, loadChainList } from "@/lib/load";
 import BlockchainCardList from "@/components/molecules/form/card-lists/Blockchain";
 import Input from "@/components/molecules/form/Input";
 import Textarea from "@/components/molecules/form/Textarea";
 import CreateModal from "@/components/organisms/create/collection/modals";
+import { loadContractData, loadChainList } from "@/utills/load";
 import ERC721Factory from "../../../../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
 
 type FormInput = {
