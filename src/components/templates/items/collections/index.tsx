@@ -1,9 +1,9 @@
-import Tab from "@/components/organisms/items/tab";
+import ItemsTab from "@/components/organisms/items/common/items-tab";
 
 const itemsCollections = () => {
   return (
     <>
-      <Tab />
+      <ItemsTab />
     </>
   );
 };

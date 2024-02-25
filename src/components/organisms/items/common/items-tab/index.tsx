@@ -1,6 +1,6 @@
-import TabItem from "@/components/organisms/items/tab/Item";
+import TabItem from "@/components/organisms/items/common/items-tab/Item";
 
-const Tab = () => {
+const ItemsTab = () => {
   return (
     <div className="text-sm font-medium text-center border-b text-gray-400 border-gray-700">
       <ul className="flex flex-wrap -mb-px">
@@ -15,4 +15,4 @@ const Tab = () => {
   );
 };
 
-export default Tab;
+export default ItemsTab;
