@@ -8,28 +8,30 @@ import WalletModal from "@/components/organisms/wallet/Modal";
 type Props = {
   children: React.ReactNode;
   title: string;
-  requireWalletConnection?: boolean;
+  isUseDefaultTitle?: boolean;
+  isRequireWalletConnection?: boolean;
 };
 
-const Layout = ({ children, title, requireWalletConnection = false }: Props) => {
+const Layout = ({ children, title, isUseDefaultTitle = true, isRequireWalletConnection = false }: Props) => {
   const router = useRouter();
   let isConnected = false;
-  if (requireWalletConnection) {
+  if (isRequireWalletConnection) {
     const { isConnected: connected } = useAccount();
     isConnected = connected;
   }
+  const effectiveTitle = isUseDefaultTitle ? `${title} | NFT MINTING` : title;
   return (
     <>
       <>
         <Head>
-          <title>{`${title} | NFT MINTINNG`}</title>
+          <title>{effectiveTitle}</title>
         </Head>
         <div>
           <Header />
-          {(isConnected || !requireWalletConnection) && <div className="px-4">{children}</div>}
+          {(isConnected || !isRequireWalletConnection) && <div className="px-4">{children}</div>}
         </div>
       </>
-      <WalletModal isModalOpen={isConnected === false && requireWalletConnection} closeModal={() => router.push("/")} />
+      <WalletModal isModalOpen={isConnected === false && isRequireWalletConnection} closeModal={() => router.push("/")} />
     </>
   );
 };
