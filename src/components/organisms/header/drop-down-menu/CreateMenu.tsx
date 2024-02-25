@@ -8,7 +8,7 @@ const CreateMenu = ({ setIsOpen }: Props) => {
   return (
     <>
       <ul
-        className="absolute bg-base-black-light text-lg font-semibold rounded left-0 border border-1 border-gray-600 w-48 py-4"
+        className="absolute bg-base-black-light font-semibold rounded left-0 border border-1 border-gray-600 w-48 py-4"
         onMouseEnter={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
       >
