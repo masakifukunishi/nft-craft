@@ -8,14 +8,14 @@ const CreateMenu = ({ setIsOpen }: Props) => {
   return (
     <>
       <ul
-        className="opacity-95 rounded absolute left-0 py-3 pl-4 pr-6 border"
+        className="absolute bg-base-black text-lg font-semibold rounded left-0 border border-1 border-gray-600 w-56 py-4"
         onMouseEnter={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
       >
-        <li className="cursor-pointer">
+        <li className="cursor-pointer py-2 pl-3 mx-2 rounded hover:bg-gray-700 hover:bg-opacity-25">
           <Link href="/create/collection">Collection</Link>
         </li>
-        <li className="cursor-pointer mt-3">
+        <li className="cursor-pointer py-2 pl-3 mx-2 rounded hover:bg-gray-700 hover:bg-opacity-25">
           <Link href="/create/nft">NFT</Link>
         </li>
       </ul>

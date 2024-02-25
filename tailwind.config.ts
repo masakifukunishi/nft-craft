@@ -11,6 +11,9 @@ const config: Config = {
       height: {
         18: "4.5rem",
       },
+      border: {
+        1: "1px",
+      },
     },
   },
   plugins: [],

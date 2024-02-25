@@ -14,7 +14,7 @@ const Header = () => {
       <div className="w-px h-7 bg-base-white mx-5"></div>
       <div className="relative">
         <div
-          className="font-semibold cursor-pointer"
+          className="font-semibold cursor-pointer hover:opacity-80 py-4"
           onMouseEnter={() => setIsCreateMenuOpen(true)}
           onMouseLeave={() => setIsCreateMenuOpen(false)}
         >
