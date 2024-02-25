@@ -10,7 +10,7 @@ import CardList from "@/components/organisms/items/nfts/CardList";
 
 const itemsNFTs = () => {
   const { chainId, address } = useAccount();
-  const { fetch: fetchNFT } = useEvmWalletNFTs();
+  const { fetch: fetchNFTs } = useEvmWalletNFTs();
   const [nfts, setNfts] = useState<EvmNft[]>([]);
   const [selectedChainId, setSelectedChainId] = useState(chainId);
 
@@ -20,7 +20,7 @@ const itemsNFTs = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetchNFT({
+      const res = await fetchNFTs({
         address: address as EvmAddressInput,
         chain: selectedChainId,
       });

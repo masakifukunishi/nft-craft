@@ -6,8 +6,6 @@ type Props = {
 };
 
 const TabItem = ({ selectedChainId, chainId, chainName, handleChainChange }: Props) => {
-  console.log("selectedChainId", selectedChainId);
-  console.log("chainId", chainId);
   const isActive = selectedChainId === chainId;
   const className = isActive
     ? "inline-block p-4 border-b-2 rounded-t-lg text-blue-500 border-blue-500"
