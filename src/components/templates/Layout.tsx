@@ -28,7 +28,11 @@ const Layout = ({ children, title, isUseDefaultTitle = true, isRequireWalletConn
       <div>
         <Header />
         {(isConnected || !isRequireWalletConnection) && <div>{children}</div>}
-        <WalletModal isModalOpen={isConnected === false && isRequireWalletConnection} closeModal={() => router.push("/")} />
+        <WalletModal
+          isModalOpen={isConnected === false && isRequireWalletConnection}
+          closeModal={() => router.push("/")}
+          isShouldCloseOnOverlayClick={false}
+        />
       </div>
     </>
   );
