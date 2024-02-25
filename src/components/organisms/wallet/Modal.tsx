@@ -1,9 +1,8 @@
-import Image from "next/image";
 import Modal from "react-modal";
 import { IoMdClose } from "react-icons/io";
-import { FaRegUserCircle } from "react-icons/fa";
 import { Connector, useConnect } from "wagmi";
 
+import Item from "@/components/organisms/wallet/Item";
 import customModalStyles from "@/styles/modal";
 
 type Props = {
@@ -27,21 +26,20 @@ const WalletModal = ({ isModalOpen, closeModal, isShouldCloseOnOverlayClick = tr
       shouldCloseOnOverlayClick={isShouldCloseOnOverlayClick}
       ariaHideApp={false}
     >
-      <div className="flex justify-between items-center">
-        <div className="text-lg font-bold">Connect Wallet</div>
-        <div className="bg-gray-700 p-1 rounded-2xl cursor-pointer">
-          <IoMdClose size={20} className="cursor-pointer" onClick={closeModal} />
-        </div>
-      </div>
-      <div className="mt-2">
-        {connectors.map((connector) => (
-          <div className="my-3" key={connector.uid}>
-            <div className="bg-gray-700 p-2 rounded-md flex cursor-pointer items-center" onClick={() => connectWallet(connector)}>
-              {connector.icon ? <Image src={connector.icon} width={32} height={32} alt="Metamask icon" /> : <FaRegUserCircle size={32} />}
-              <div className="ml-2"> {connector.name}</div>
-            </div>
+      <div className="my-3 p-1">
+        <div className="flex justify-between items-center">
+          <div className="text-xl font-semibold ">Connect Wallet</div>
+          <div className="bg-base-black-light p-2 rounded-full cursor-pointer">
+            <IoMdClose size={20} className="cursor-pointer" onClick={closeModal} />
           </div>
-        ))}
+        </div>
+        <div className="text-sm text-gray-400 mt-3">Connect with one of our available wallet providers or create a new one.</div>
+
+        <div className="mt-5">
+          {connectors.map((connector) => (
+            <Item key={connector.uid} connector={connector} connectWallet={connectWallet} />
+          ))}
+        </div>
       </div>
     </Modal>
   );
