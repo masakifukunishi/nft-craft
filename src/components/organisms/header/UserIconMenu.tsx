@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useAccount, useDisconnect } from "wagmi";
+import { useAccount } from "wagmi";
 import { FaRegUserCircle } from "react-icons/fa";
 
 import WalletModal from "@/components/organisms/wallet/Modal";
@@ -9,7 +9,6 @@ const User = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const { isConnected } = useAccount();
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
-  const { disconnect } = useDisconnect();
 
   const closeWalletModal = () => {
     setIsWalletModalOpen(false);
@@ -25,7 +24,7 @@ const User = () => {
         {isConnected ? (
           <div className="relative">
             <div onMouseEnter={() => setIsUserMenuOpen(true)} onMouseLeave={() => setIsUserMenuOpen(false)}>
-              <div className="bg-green-300 w-7 h-7 rounded-full" onClick={() => disconnect()} />
+              <div className="bg-green-300 w-7 h-7 rounded-full" />
             </div>
             {isUserMenuOpen && <UserMenu setIsOpen={setIsUserMenuOpen} />}
           </div>
