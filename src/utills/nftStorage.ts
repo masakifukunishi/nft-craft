@@ -1,4 +1,4 @@
-import APIUtils from "@/lib/apiUtils";
+import APIUtils from "@/utills/apiUtils";
 
 export const uploadNFT = (name: string, description: string, nftImage: File): Promise<string> => {
   return new Promise((resolve, reject) => {

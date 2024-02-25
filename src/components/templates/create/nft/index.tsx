@@ -49,7 +49,6 @@ const CreateNFT = () => {
     functionName: "getCreatorCollections",
     args: [address],
   });
-  console.log(collections);
 
   useEffect(() => {
     register("collectionAddress", { required: "Collection is required" });
