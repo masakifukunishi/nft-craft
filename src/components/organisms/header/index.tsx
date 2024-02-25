@@ -7,13 +7,14 @@ import CreateMenu from "@/components/organisms/header/drop-down-menu/CreateMenu"
 const Header = () => {
   const [isCreateMenuOpen, setIsCreateMenuOpen] = useState(false);
   return (
-    <header className="flex items-center px-4 py-2">
+    <header className="flex items-center px-6 h-18">
       <h1 className="text-2xl font-bold">
         <Link href="/">NFT MINTING</Link>
       </h1>
-      <div className="ml-3 relative">
+      <div className="w-px h-7 bg-base-white mx-5"></div>
+      <div className="relative">
         <div
-          className="font-semibold cursor-pointer hover:bg-gray-800 p-2 rounded"
+          className="font-semibold cursor-pointer"
           onMouseEnter={() => setIsCreateMenuOpen(true)}
           onMouseLeave={() => setIsCreateMenuOpen(false)}
         >

@@ -22,16 +22,14 @@ const Layout = ({ children, title, isUseDefaultTitle = true, isRequireWalletConn
   const effectiveTitle = isUseDefaultTitle ? `${title} | NFT MINTING` : title;
   return (
     <>
-      <>
-        <Head>
-          <title>{effectiveTitle}</title>
-        </Head>
-        <div>
-          <Header />
-          {(isConnected || !isRequireWalletConnection) && <div className="px-4">{children}</div>}
-        </div>
-      </>
-      <WalletModal isModalOpen={isConnected === false && isRequireWalletConnection} closeModal={() => router.push("/")} />
+      <Head>
+        <title>{effectiveTitle}</title>
+      </Head>
+      <div>
+        <Header />
+        {(isConnected || !isRequireWalletConnection) && <div>{children}</div>}
+        <WalletModal isModalOpen={isConnected === false && isRequireWalletConnection} closeModal={() => router.push("/")} />
+      </div>
     </>
   );
 };

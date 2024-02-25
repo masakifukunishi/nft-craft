@@ -8,6 +8,9 @@ const config: Config = {
         "base-white": "#F5F5F5",
         "base-black": "#1A1A1A",
       },
+      height: {
+        18: "4.5rem",
+      },
     },
   },
   plugins: [],
