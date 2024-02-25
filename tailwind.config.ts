@@ -7,6 +7,13 @@ const config: Config = {
       colors: {
         "base-white": "#F5F5F5",
         "base-black": "#1A1A1A",
+        "base-black-light": "#282828",
+      },
+      height: {
+        18: "4.5rem",
+      },
+      border: {
+        1: "1px",
       },
     },
   },
