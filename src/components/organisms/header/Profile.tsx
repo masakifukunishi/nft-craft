@@ -6,16 +6,16 @@ const User = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   return (
-    <>
-      <div className="bg-gray-700 p-2 rounded-md cursor-pointer">
-        <div className="relative">
-          <div onMouseEnter={() => setIsUserMenuOpen(true)} onMouseLeave={() => setIsUserMenuOpen(false)}>
-            <div className="bg-green-300 w-7 h-7 rounded-full" />
-          </div>
-          {isUserMenuOpen && <UserMenu setIsOpen={setIsUserMenuOpen} />}
-        </div>
+    <div className="relative">
+      <div
+        className="bg-gray-700 rounded-md cursor-pointer p-2.5"
+        onMouseEnter={() => setIsUserMenuOpen(true)}
+        onMouseLeave={() => setIsUserMenuOpen(false)}
+      >
+        <div className="bg-green-300 w-7 h-7 rounded-full" />
       </div>
-    </>
+      {isUserMenuOpen && <UserMenu setIsOpen={setIsUserMenuOpen} />}
+    </div>
   );
 };
 
