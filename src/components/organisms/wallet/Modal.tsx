@@ -19,7 +19,7 @@ const WalletModal = ({ isModalOpen, closeModal }: Props) => {
   };
 
   return (
-    <Modal isOpen={isModalOpen} onRequestClose={closeModal} style={customModalStyles} shouldCloseOnOverlayClick={false}>
+    <Modal isOpen={isModalOpen} onRequestClose={closeModal} style={customModalStyles} shouldCloseOnOverlayClick={false} ariaHideApp={false}>
       <div className="flex justify-between items-center">
         <div className="text-lg font-bold">Connect Wallet</div>
         <div className="bg-gray-700 p-1 rounded-2xl cursor-pointer">
