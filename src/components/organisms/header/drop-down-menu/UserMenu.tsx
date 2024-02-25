@@ -10,7 +10,7 @@ const UserMenu = ({ setIsOpen }: Props) => {
   return (
     <>
       <ul
-        className="absolute bg-base-black text-lg font-semibold rounded right-0 border border-1 border-gray-600 w-56 py-4"
+        className="absolute bg-base-black-light text-lg font-semibold rounded right-0 border border-1 border-gray-600 w-56 py-4"
         onMouseEnter={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
       >
