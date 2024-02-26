@@ -25,9 +25,9 @@ const Layout = ({ children, title, isUseDefaultTitle = true, isRequireWalletConn
       <Head>
         <title>{effectiveTitle}</title>
       </Head>
-      <div className="px-6">
+      <div>
         <Header />
-        {(isConnected || !isRequireWalletConnection) && <div>{children}</div>}
+        {(isConnected || !isRequireWalletConnection) && <div className="px-6">{children}</div>}
         <WalletModal
           isModalOpen={isConnected === false && isRequireWalletConnection}
           closeModal={() => router.push("/")}
