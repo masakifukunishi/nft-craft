@@ -16,7 +16,7 @@ const UserMenu = ({ setIsOpen }: Props) => {
       >
         <Link href="/items/nfts">
           <li className="cursor-pointer py-2 pl-3 mx-2 rounded hover:bg-gray-700 hover:bg-opacity-35">My NFTs</li>
-        </Link>{" "}
+        </Link>
         <Link href="/items/collections">
           <li className="cursor-pointer py-2 pl-3 mx-2 rounded hover:bg-gray-700 hover:bg-opacity-35">My Collection</li>
         </Link>
