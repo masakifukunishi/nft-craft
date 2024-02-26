@@ -17,13 +17,14 @@ type Props = {
 const Create = ({ isModalOpen, closeModal, uploadingStatus, hash, retry }: Props) => {
   return (
     <Modal isOpen={isModalOpen} onRequestClose={closeModal} style={customModalStyles} shouldCloseOnOverlayClick={false} ariaHideApp={false}>
-      {uploadingStatus === "idle" || uploadingStatus === "minting" ? (
+      <Completed closeModal={closeModal} hash={hash} />
+      {/* {uploadingStatus === "idle" || uploadingStatus === "minting" ? (
         <Creating closeModal={closeModal} />
       ) : uploadingStatus === "error" ? (
         <Error closeModal={closeModal} retry={retry} />
       ) : uploadingStatus === "done" ? (
         <Completed closeModal={closeModal} hash={hash} />
-      ) : null}
+      ) : null} */}
     </Modal>
   );
 };
