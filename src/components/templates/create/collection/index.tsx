@@ -57,7 +57,7 @@ const CreateCollection = () => {
 
   return (
     <div className="flex flex-col items-center mt-2">
-      <form className="w-1/3" onSubmit={handleSubmit(onSubmit)}>
+      <form className="w-full sm:w-140" onSubmit={handleSubmit(onSubmit)}>
         <h2 className="text-2xl font-semibold">Create new collection</h2>
         <div className="mt-3">
           <div className="text-lg font-semibold">Standard</div>
