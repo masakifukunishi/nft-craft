@@ -8,27 +8,29 @@ type Collection = {
 };
 
 type Props = {
-  collections: Collection[];
+  collections: Collection[] | undefined;
   selectedCollectionAddress: `0x${string}` | null;
   handleCollectionChange: (selectedBlockhain: `0x${string}` | null) => void;
-  errorMessage?: string;
+  errorMessage?: string | undefined;
 };
 
 const CollectionCardList = ({ collections, selectedCollectionAddress, handleCollectionChange, errorMessage }: Props) => {
   return (
     <>
       <div className="flex flex-wrap -m-2">
-        {collections.map((collection) => (
-          <div className="p-2" key={collection.collectionAddress}>
-            <CollectionCard
-              collectionAddress={collection.collectionAddress}
-              symbol={collection.symbol}
-              name={collection.name}
-              selectedCollectionAddress={selectedCollectionAddress}
-              handleCollectionChange={handleCollectionChange}
-            />
-          </div>
-        ))}
+        {collections &&
+          collections.length > 0 &&
+          collections.map((collection) => (
+            <div className="p-2" key={collection.collectionAddress}>
+              <CollectionCard
+                collectionAddress={collection.collectionAddress}
+                symbol={collection.symbol}
+                name={collection.name}
+                selectedCollectionAddress={selectedCollectionAddress}
+                handleCollectionChange={handleCollectionChange}
+              />
+            </div>
+          ))}
       </div>
       <ErrorMessage error={errorMessage} />
     </>

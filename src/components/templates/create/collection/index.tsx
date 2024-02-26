@@ -13,6 +13,7 @@ type FormInput = {
   name: string;
   symbol: string;
   description: string;
+  chainId: number | undefined;
 };
 
 const CreateCollection = () => {
@@ -25,8 +26,13 @@ const CreateCollection = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<FormInput>();
+
+  useEffect(() => {
+    register("chainId", { required: "Blockchain is required" });
+  }, [register]);
 
   useEffect(() => {
     if (isPending) setUploadingStatus("minting");
@@ -43,6 +49,13 @@ const CreateCollection = () => {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    if (chainList.some((chain) => chain.id === chainId)) {
+      console.log("chainId", chainId);
+      setValue("chainId", chainId, { shouldValidate: true });
+    }
+  }, [chainId]);
 
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
     if (!chainId) return;
@@ -66,7 +79,12 @@ const CreateCollection = () => {
         <div className="mt-8">
           <div className="text-lg font-semibold">Choose blockchain</div>
           <div className="mt-4">
-            <BlockchainCardList blockchains={chainList} selectedChainId={chainId} handleBlockchainChange={handleBlockchainChange} />
+            <BlockchainCardList
+              blockchains={chainList}
+              selectedChainId={chainId}
+              handleBlockchainChange={handleBlockchainChange}
+              errorMessage={errors.chainId?.message}
+            />
           </div>
           <div className="mt-8">
             <Input label="Name" id="name" register={register} required="Username is required" errors={errors} />
