@@ -15,7 +15,7 @@ export type ChainData = {
 const contracts: ContractData[] = _contracts as ContractData[];
 const chains: ChainData[] = _chains;
 
-export function loadContractData(chainId: number): ContractData | undefined {
+export function loadContractData(chainId: number): ContractData {
   return contracts.filter((d: ContractData) => d.chainId === chainId)[0];
 }
 

@@ -1,5 +1,5 @@
 type Props = {
-  name: string | undefined;
+  name: string;
 };
 
 const Card = ({ name }: Props) => {

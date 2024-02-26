@@ -43,12 +43,13 @@ const CreateNFT = () => {
     formState: { errors },
   } = useForm<FormInput>();
 
-  const { data: collections } = useReadContract({
+  const collectionsData = useReadContract({
     address: loadContractData(chainId!)?.factory!,
     abi: ERC721Factory.abi,
     functionName: "getCreatorCollections",
     args: [address],
   });
+  const collections = collectionsData.data as Collection[] | undefined;
 
   useEffect(() => {
     register("collectionAddress", { required: "Collection is required" });
@@ -121,12 +122,14 @@ const CreateNFT = () => {
           <div className="mt-8">
             <div className="text-lg font-semibold">Choose collection</div>
             <div className="mt-4">
-              <CollectionCardList
-                collections={collections as Collection[] | undefined}
-                selectedCollectionAddress={selectedCollectionAddress}
-                handleCollectionChange={handleCollectionChange}
-                errorMessage={errors.collectionAddress?.message}
-              />
+              {collections && collections.length > 0 && (
+                <CollectionCardList
+                  collections={collections}
+                  selectedCollectionAddress={selectedCollectionAddress}
+                  handleCollectionChange={handleCollectionChange}
+                  errorMessage={errors.collectionAddress?.message}
+                />
+              )}
             </div>
           </div>
           <div className="mt-8">
