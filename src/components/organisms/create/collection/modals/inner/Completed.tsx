@@ -12,7 +12,7 @@ const Completed = ({ closeModal, hash }: Props) => {
       <div className="text-xl font-bold">Transaction sent</div>
       <div className="text-center mt-4">Your collection is deployed! You can check the transaction</div>
       {hash && <div className="mt-4">Transaction Hash: {hashShortened}</div>}
-      <button className="text-sm font-semibold border border-0.5 rounded w-32 py-2 mt-6" onClick={closeModal}>
+      <button className="text-sm font-semibold border border-0.5 rounded-xl w-32 py-2 mt-6" onClick={closeModal}>
         Continue
       </button>
     </div>

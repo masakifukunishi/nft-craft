@@ -4,9 +4,9 @@ type Props = {
 
 const Error = ({ closeModal }: Props) => {
   return (
-    <div className="flex flex-col items-center">
-      <div className="text-xl font-bold mt-4">Error report</div>
-      <button className="border border-0.5 rounded w-48 py-2 mt-4" onClick={closeModal}>
+    <div className="flex flex-col items-center my-6">
+      <div className="text-xl font-bold mb-5">Error report</div>
+      <button className="text-sm font-semibold border border-0.5 rounded-xl w-44 py-2 mt-4" onClick={closeModal}>
         Close and continue
       </button>
     </div>

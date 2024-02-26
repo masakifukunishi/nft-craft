@@ -13,8 +13,8 @@ const Creating = ({ closeModal, uploadingStatus }: Props) => {
   const ExecutedIcon = <FaCheck size={30} className="text-blue-500" />;
 
   return (
-    <div>
-      <div className="text-xl font-bold">Follow steps</div>
+    <div className="my-3 mx-2">
+      <div className="text-2xl font-semibold">Follow steps</div>
       <div className="flex items-center mt-6">
         <div className="w-10">
           {uploadingStatus === "idle" && NotExecutedIcon}
@@ -23,7 +23,7 @@ const Creating = ({ closeModal, uploadingStatus }: Props) => {
         </div>
         <div className="w-64 ml-2">
           <div className="text-xl font-bold">Upload</div>
-          <div className="text-sm">Uploading of all media assets and metadata to IPFS</div>
+          <div className="text-sm text-gray-400">Uploading of all media assets and metadata to IPFS</div>
         </div>
       </div>
       <div className="flex items-center mt-6">
@@ -33,11 +33,11 @@ const Creating = ({ closeModal, uploadingStatus }: Props) => {
         </div>
         <div className="w-64 ml-2">
           <div className="text-xl font-bold">Mint</div>
-          <div className="text-sm">Send transaction to create your NFT</div>
+          <div className="text-sm text-gray-400">Send transaction to create your NFT</div>
         </div>
       </div>
-      <div className="flex justify-center mt-4">
-        <button className="border border-0.5 rounded w-32 py-2 mt-4" onClick={closeModal} disabled>
+      <div className="flex justify-center mt-6">
+        <button className="text-sm font-semibold border border-0.5 rounded-xl w-32 py-2 mt-4" onClick={closeModal} disabled>
           Cancel
         </button>
       </div>
