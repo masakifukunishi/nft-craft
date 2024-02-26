@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAccount, useReadContract, useWriteContract, useSwitchChain } from "wagmi";
 
@@ -17,6 +17,7 @@ type FormInput = {
   name: string;
   description: string;
   collectionAddress: `0x${string}` | null;
+  chainId: number | undefined;
   nftImage: File | null;
 };
 
@@ -43,14 +44,16 @@ const CreateNFT = () => {
     formState: { errors },
   } = useForm<FormInput>();
 
-  const { data: collections } = useReadContract({
+  const collectionsData = useReadContract({
     address: loadContractData(chainId!)?.factory!,
     abi: ERC721Factory.abi,
     functionName: "getCreatorCollections",
     args: [address],
   });
+  const collections = collectionsData.data as Collection[] | undefined;
 
   useEffect(() => {
+    register("chainId", { required: "Blockchain is required" });
     register("collectionAddress", { required: "Collection is required" });
     register("nftImage", { required: "NFT image is required" });
   }, [register]);
@@ -63,6 +66,13 @@ const CreateNFT = () => {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    if (chainList.some((chain) => chain.id === chainId)) {
+      console.log("chainId", chainId);
+      setValue("chainId", chainId, { shouldValidate: true });
+    }
+  }, [chainId]);
 
   const handleCollectionChange = (address: `0x${string}` | null) => {
     if (selectedCollectionAddress === address) return;
@@ -116,13 +126,18 @@ const CreateNFT = () => {
         <div className="mt-8">
           <div className="text-lg font-semibold">Choose blockchain</div>
           <div className="mt-4">
-            <BlockchainCardList blockchains={chainList} selectedChainId={chainId} handleBlockchainChange={handleBlockchainChange} />
+            <BlockchainCardList
+              blockchains={chainList}
+              selectedChainId={chainId}
+              handleBlockchainChange={handleBlockchainChange}
+              errorMessage={errors.chainId?.message}
+            />
           </div>
           <div className="mt-8">
             <div className="text-lg font-semibold">Choose collection</div>
             <div className="mt-4">
               <CollectionCardList
-                collections={collections as Collection[] | undefined}
+                collections={collections}
                 selectedCollectionAddress={selectedCollectionAddress}
                 handleCollectionChange={handleCollectionChange}
                 errorMessage={errors.collectionAddress?.message}

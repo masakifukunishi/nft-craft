@@ -1,8 +1,8 @@
 import Image from "next/image";
 
 type Props = {
-  collectionName: string | undefined;
-  name: string | undefined;
+  collectionName: string;
+  name: string;
   image: string | undefined;
 };
 

@@ -11,7 +11,7 @@ type Props = {
   collections: Collection[] | undefined;
   selectedCollectionAddress: `0x${string}` | null;
   handleCollectionChange: (selectedBlockhain: `0x${string}` | null) => void;
-  errorMessage?: string;
+  errorMessage?: string | undefined;
 };
 
 const CollectionCardList = ({ collections, selectedCollectionAddress, handleCollectionChange, errorMessage }: Props) => {
@@ -19,6 +19,7 @@ const CollectionCardList = ({ collections, selectedCollectionAddress, handleColl
     <>
       <div className="flex flex-wrap -m-2">
         {collections &&
+          collections.length > 0 &&
           collections.map((collection) => (
             <div className="p-2" key={collection.collectionAddress}>
               <CollectionCard
