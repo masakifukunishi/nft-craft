@@ -29,7 +29,7 @@ const WalletModal = ({ isModalOpen, closeModal, isShouldCloseOnOverlayClick = tr
       <div className="my-3 p-1">
         <div className="flex justify-between items-center">
           <div className="text-xl font-semibold ">Connect Wallet</div>
-          <div className="bg-base-black-light p-2 rounded-full cursor-pointer">
+          <div className="bg-base-black p-2 rounded-full cursor-pointer">
             <IoMdClose size={20} className="cursor-pointer" onClick={closeModal} />
           </div>
         </div>
