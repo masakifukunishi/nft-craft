@@ -17,9 +17,9 @@ type Props = {
 const BlockchainCardList = ({ blockchains, selectedChainId, handleBlockchainChange, errorMessage }: Props) => {
   return (
     <>
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap -m-2">
         {blockchains.map((blockchain) => (
-          <div className="pr-6" key={blockchain.id}>
+          <div className="p-2" key={blockchain.id}>
             <BlockchainCard
               id={blockchain.id}
               imagePath={blockchain.imagePath}

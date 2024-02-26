@@ -17,10 +17,10 @@ type Props = {
 const CollectionCardList = ({ collections, selectedCollectionAddress, handleCollectionChange, errorMessage }: Props) => {
   return (
     <>
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap -m-2">
         {collections &&
           collections.map((collection) => (
-            <div className="pr-6 pb-4" key={collection.collectionAddress}>
+            <div className="p-2" key={collection.collectionAddress}>
               <CollectionCard
                 collectionAddress={collection.collectionAddress}
                 symbol={collection.symbol}
