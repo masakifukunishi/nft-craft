@@ -25,7 +25,7 @@ const Layout = ({ children, title, isUseDefaultTitle = true, isRequireWalletConn
       <Head>
         <title>{effectiveTitle}</title>
       </Head>
-      <div>
+      <div className="px-6">
         <Header />
         {(isConnected || !isRequireWalletConnection) && <div>{children}</div>}
         <WalletModal

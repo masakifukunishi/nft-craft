@@ -10,7 +10,7 @@ const Header = () => {
 
   return (
     <>
-      <header className="flex items-center px-6 h-18">
+      <header className="flex items-center h-18">
         <h1 className="text-2xl font-bold">
           <Link href="/">NFT MINTING</Link>
         </h1>
