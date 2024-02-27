@@ -6,7 +6,7 @@ type Props = {
 };
 
 const Completed = ({ closeModal, hash }: Props) => {
-  const hashShortened = hash ? shortenString(hash, 10) : "";
+  const hashShortened = hash ? shortenString(hash, 11, "middle") : "";
   return (
     <div className="flex flex-col items-center my-6 mx-2">
       <div className="text-xl font-bold">Transaction sent</div>
