@@ -9,8 +9,8 @@ type Props = {
 const BlockchainsTab = ({ handleChainChange, selectedChainId }: Props) => {
   const chains = loadChainList();
   return (
-    <div className="text-sm font-medium text-center border-b text-gray-400 border-gray-700">
-      <ul className="flex flex-wrap -mb-px">
+    <div className="inline-block text-sm bg-gray-700 rounded-md p-1">
+      <ul className="flex flex-wrap">
         {chains.map((chain) => (
           <TabItem
             key={chain.id}
