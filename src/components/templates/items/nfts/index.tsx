@@ -18,24 +18,27 @@ const itemsNFTs = () => {
     setSelectedChainId(chainId);
   };
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const res = await fetchNFTs({
-  //       address: address as EvmAddressInput,
-  //       chain: selectedChainId,
-  //     });
-  //     console.log("res", res?.data);
-  //     if (res) setNfts(res.data);
-  //   };
-  //   fetchData();
-  // }, [address, selectedChainId]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetchNFTs({
+        address: address as EvmAddressInput,
+        chain: selectedChainId,
+      });
+      console.log("res", res?.data);
+      if (res) {
+        const filteredNfts = res.data.filter((nft: EvmNft) => !nft.possibleSpam);
+        setNfts(filteredNfts);
+      }
+    };
+    fetchData();
+  }, [address, selectedChainId]);
 
   return (
     <>
       <div>
         <Profile address={address} />
       </div>
-      {/* <div className="mt-1">
+      <div className="mt-1">
         <ItemsTab />
       </div>
       <div className="mt-5">
@@ -43,7 +46,7 @@ const itemsNFTs = () => {
       </div>
       <div className="mt-5">
         <CardList nfts={nfts} />
-      </div> */}
+      </div>
     </>
   );
 };
