@@ -1,4 +1,5 @@
-import { useState, useEffect, use } from "react";
+import Link from "next/link";
+import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAccount, useReadContract, useWriteContract, useSwitchChain } from "wagmi";
 
@@ -136,6 +137,15 @@ const CreateNFT = () => {
           <div className="mt-8">
             <div className="text-lg font-semibold">Choose collection</div>
             <div className="mt-4">
+              {(collections === undefined || collections.length === 0) && (
+                <div className="my-4">
+                  You don't have any collections yet.
+                  <Link href="/create/collection" className="text-blue-500 hover:underline mx-2">
+                    Create a collection
+                  </Link>
+                  to get started.
+                </div>
+              )}
               <CollectionCardList
                 collections={collections}
                 selectedCollectionAddress={selectedCollectionAddress}
