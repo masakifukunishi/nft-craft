@@ -11,7 +11,7 @@ import CreateModal from "@/components/organisms/create/nft/modals";
 import UploadImageFile from "@/components/molecules/form/UploadImageFile";
 import { uploadNFT } from "@/utills/nftStorage";
 import { loadContractData, loadChainList } from "@/utills/load";
-import ERC721Factory from "../../../../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
+import ERC721CollectionFactory from "../../../../../hardhat/artifacts/contracts/ERC721CollectionFactory.sol/ERC721CollectionFactory.json";
 import ERC721Collection from "../../../../../hardhat/artifacts/contracts/ERC721Collection.sol/ERC721Collection.json";
 
 type FormInput = {
@@ -47,7 +47,7 @@ const CreateNFT = () => {
 
   const collectionsData = useReadContract({
     address: loadContractData(chainId!)?.factory!,
-    abi: ERC721Factory.abi,
+    abi: ERC721CollectionFactory.abi,
     functionName: "getCreatorCollections",
     args: [address],
   });

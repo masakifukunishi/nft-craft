@@ -3,7 +3,7 @@ pragma solidity ^0.8.19;
 
 import "./ERC721Collection.sol";
 
-contract ERC721Factory {
+contract ERC721CollectionFactory {
     event ERC721CollectionCreated(
         address indexed creator,
         address collectionAddress,

@@ -15,9 +15,9 @@ const CollectionCard = ({ collectionAddress, name, symbol, selectedCollectionAdd
       }`}
       onClick={() => handleCollectionChange(collectionAddress)}
     >
-      <div className="bg-green-300 w-7 h-7 rounded-full"></div>
-      <div className="mt-3">{symbol}</div>
-      <div>{name}</div>
+      <div className="bg-green-300 w-3 h-3 rounded-full"></div>
+      <div className="mt-2 text-sm">{symbol}</div>
+      <div className="font-semibold text-lg">{name}</div>
     </div>
   );
 };

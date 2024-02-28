@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import ERC721Factory from "../artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
+import ERC721CollectionFactory from "../artifacts/contracts/ERC721CollectionFactory.sol/ERC721CollectionFactory.json";
 import { program, Option } from "commander";
 import * as dotenv from "dotenv";
 dotenv.config();
@@ -36,7 +36,7 @@ async function main(network: string, contractAddress: string, name: string, symb
 
   const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
   const signer = new ethers.Wallet(privateKey, provider);
-  const contract = new ethers.Contract(contractAddress, ERC721Factory.abi, signer);
+  const contract = new ethers.Contract(contractAddress, ERC721CollectionFactory.abi, signer);
   const tx = await contract.createERC721(name, symbol);
   const receipt = await tx.wait();
   const event = receipt.events?.find((e: any) => e.event === "ERC721Created");
