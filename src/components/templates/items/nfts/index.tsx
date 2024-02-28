@@ -3,7 +3,6 @@ import { useAccount } from "wagmi";
 import { useEvmWalletNFTs } from "@moralisweb3/next";
 import { type EvmAddressInput, type EvmNft } from "@moralisweb3/common-evm-utils";
 
-import ItemsTab from "@/components/organisms/items/common/items-tab";
 import BlockchainsTab from "@/components/organisms/items/common/blockchains-tab";
 import Profile from "@/components/organisms/items/common/profile";
 import CardList from "@/components/organisms/items/nfts/CardList";
@@ -36,12 +35,9 @@ const itemsNFTs = () => {
         <Profile address={address} />
       </div>
       <div className="mt-1">
-        <ItemsTab />
-      </div>
-      <div className="mt-5">
         <BlockchainsTab handleChainChange={handleChainChange} selectedChainId={selectedChainId!} />
       </div>
-      <div className="mt-5">
+      <div className="mt-8">
         <CardList nfts={nfts} />
       </div>
     </>

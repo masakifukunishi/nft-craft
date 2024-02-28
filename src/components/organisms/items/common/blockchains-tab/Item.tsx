@@ -7,11 +7,13 @@ type Props = {
 
 const TabItem = ({ selectedChainId, chainId, chainName, handleChainChange }: Props) => {
   const isActive = selectedChainId === chainId;
-  const tabItemClassName = isActive ? "bg-gray-500" : "";
+  const tabItemClassName = isActive
+    ? "text-blue-500 border-blue-500"
+    : "border-transparent hover:border-gray-300 hover:text-gray-600 cursor-pointer";
 
   return (
     <div
-      className={`rounded-md mx-1 py-1.5 px-3 cursor-pointer ${tabItemClassName}`}
+      className={`inline-block p-4 border-b-2 rounded-t-lg  ${tabItemClassName}`}
       aria-current={isActive ? "page" : undefined}
       onClick={() => handleChainChange(chainId)}
     >
