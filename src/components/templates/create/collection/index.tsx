@@ -4,7 +4,6 @@ import { useWriteContract, useAccount, useSwitchChain } from "wagmi";
 
 import BlockchainCardList from "@/components/molecules/form/card-lists/Blockchain";
 import Input from "@/components/molecules/form/Input";
-import Textarea from "@/components/molecules/form/Textarea";
 import CreateModal from "@/components/organisms/create/collection/modals";
 import { loadContractData, loadChainList } from "@/utills/load";
 import ERC721CollectionFactory from "../../../../../hardhat/artifacts/contracts/ERC721CollectionFactory.sol/ERC721CollectionFactory.json";
@@ -12,7 +11,6 @@ import ERC721CollectionFactory from "../../../../../hardhat/artifacts/contracts/
 type FormInput = {
   name: string;
   symbol: string;
-  description: string;
   chainId: number | undefined;
 };
 
@@ -91,11 +89,8 @@ const CreateCollection = () => {
           <div className="mt-8">
             <Input label="Symbol" id="symbol" register={register} required="Symbol is required" errors={errors} />
           </div>
-          <div className="mt-8">
-            <Textarea label="Description" id="description" register={register} required="Description is required" errors={errors} />
-          </div>
         </div>
-        <div className="mt-4 flex justify-end">
+        <div className="mt-8 flex justify-end">
           <button type="submit" className="bg-blue-600 rounded p-2">
             Create collection
           </button>
