@@ -23,12 +23,9 @@ const itemsNFTs = () => {
       const res = await fetchNFTs({
         address: address as EvmAddressInput,
         chain: selectedChainId,
+        excludeSpam: true,
       });
-      if (res) {
-        const filteredNfts = res.data.filter((nft: EvmNft) => !nft.possibleSpam);
-        console.log("filteredNfts", filteredNfts);
-        setNfts(filteredNfts);
-      }
+      if (res) setNfts(res.data);
     };
     fetchData();
   }, [address, selectedChainId]);

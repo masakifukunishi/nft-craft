@@ -23,6 +23,7 @@ const itemsCollections = () => {
       const res = await fetchCollections({
         address: address as EvmAddressInput,
         chain: selectedChainId,
+        excludeSpam: true,
       });
       console.log("res", res?.data);
       if (res) setCollections(res.data);
