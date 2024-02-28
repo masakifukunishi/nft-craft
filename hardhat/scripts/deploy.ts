@@ -8,7 +8,7 @@ async function main() {
 
   const chainId = (await account0.provider.getNetwork()).chainId;
 
-  const Factory = await ethers.getContractFactory("ERC721Factory");
+  const Factory = await ethers.getContractFactory("ERC721CollectionFactory");
   const factory = await Factory.deploy();
   await factory.deployed();
   console.log(JSON.stringify({ chainId, factory: factory.address }));

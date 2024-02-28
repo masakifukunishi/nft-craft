@@ -7,7 +7,7 @@ import Input from "@/components/molecules/form/Input";
 import Textarea from "@/components/molecules/form/Textarea";
 import CreateModal from "@/components/organisms/create/collection/modals";
 import { loadContractData, loadChainList } from "@/utills/load";
-import ERC721Factory from "../../../../../hardhat/artifacts/contracts/ERC721Factory.sol/ERC721Factory.json";
+import ERC721CollectionFactory from "../../../../../hardhat/artifacts/contracts/ERC721CollectionFactory.sol/ERC721CollectionFactory.json";
 
 type FormInput = {
   name: string;
@@ -61,7 +61,7 @@ const CreateCollection = () => {
     setIsOpenCreatingModal(true);
     writeContract({
       address: loadContractData(chainId)?.factory!,
-      abi: ERC721Factory.abi,
+      abi: ERC721CollectionFactory.abi,
       functionName: "createERC721Collection",
       args: [data.name, data.symbol],
     });
