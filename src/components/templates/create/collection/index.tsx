@@ -52,7 +52,6 @@ const CreateCollection = () => {
 
   useEffect(() => {
     if (chainList.some((chain) => chain.id === chainId)) {
-      console.log("chainId", chainId);
       setValue("chainId", chainId, { shouldValidate: true });
     }
   }, [chainId]);
