@@ -13,11 +13,6 @@ if (sepoliaUrl === "") {
   throw new Error("No value set for environement variable SEPOLIA_URL");
 }
 
-const goerliUrl: string = process.env.GOERLI_URL ?? "";
-if (goerliUrl === "") {
-  throw new Error("No value set for environement variable GOERLI_URL");
-}
-
 const config: HardhatUserConfig = {
   solidity: "0.8.19",
   networks: {
@@ -25,11 +20,6 @@ const config: HardhatUserConfig = {
       url: sepoliaUrl,
       accounts: [privateKey0],
       chainId: 11155111,
-    },
-    goerli: {
-      url: goerliUrl,
-      accounts: [privateKey0],
-      chainId: 5,
     },
   },
 };
