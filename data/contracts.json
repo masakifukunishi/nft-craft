@@ -1,1 +1,4 @@
-[{"chainId":11155111,"factory":"0x1480c9088104cdCaAFB0DEFF7676a971C5Ac65d9"}]
+[
+  { "chainId": 11155111, "factory": "0x1480c9088104cdCaAFB0DEFF7676a971C5Ac65d9" },
+  { "chainId": 5, "factory": "0xD26825DbD8F166Be905D145EF5dB63B06d9F76c1" }
+]
