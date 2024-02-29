@@ -70,7 +70,6 @@ const CreateNFT = () => {
 
   useEffect(() => {
     if (chainList.some((chain) => chain.id === chainId)) {
-      console.log("chainId", chainId);
       setValue("chainId", chainId, { shouldValidate: true });
     }
   }, [chainId]);
@@ -105,9 +104,13 @@ const CreateNFT = () => {
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
     setIsOpenCreatingModal(true);
     setUploadingStatus("uploadingToIPFS");
-
-    const ipfsMetadataUrl = await uploadNFT(data.name, data.description, nftImage!);
-
+    let ipfsMetadataUrl = "";
+    try {
+      ipfsMetadataUrl = await uploadNFT(data.name, data.description, nftImage!);
+    } catch (error) {
+      setUploadingStatus("error");
+      return;
+    }
     writeContract({
       address: data.collectionAddress!,
       abi: ERC721Collection.abi,
