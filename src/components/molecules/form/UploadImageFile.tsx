@@ -31,7 +31,10 @@ const UploadImageFile = ({ imagePreview, handleImageChange, handleImageRemove, e
               <label htmlFor="file-upload" className="bg-gray-700 text-white rounded-md py-2 px-3 cursor-pointer">
                 Choose file
               </label>
-              <p className="text-sm text-gray-300 mt-3">JPG, PNG, GIF, SVG</p>
+              <div className="text-sm text-gray-300 mt-3 text-center">
+                <p>Max Size: 10MB</p>
+                <p>JPG, PNG, GIF, SVG</p>
+              </div>
             </>
           )}
           <input
