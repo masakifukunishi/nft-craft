@@ -19,6 +19,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const imageBuffer = Buffer.from(imageBase64, "base64");
     const imageFile = new File([imageBuffer], `nft-image.${extention}`, { type: mimeType });
 
+    const maxImageSize = 1024 * 1024 * 10; // 10MB
+    if (imageBuffer.byteLength > maxImageSize) {
+      return res.status(400).json({ error: "Image size is too large" });
+    }
     console.log("starting to store");
     const storedMetadata = await client.store({
       name,
@@ -33,3 +37,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.status(500).json({ error: "Internal Server Error" });
   }
 }
+
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "10mb",
+    },
+  },
+};
