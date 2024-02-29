@@ -27,11 +27,20 @@ const UploadImageFile = ({ imagePreview, handleImageChange, handleImageRemove, e
             </>
           )}
           {!imagePreview && (
-            <label htmlFor="file-upload" className="bg-gray-700 text-white rounded p-2 cursor-pointer">
-              Choose file
-            </label>
+            <>
+              <label htmlFor="file-upload" className="bg-gray-700 text-white rounded-md py-2 px-3 cursor-pointer">
+                Choose file
+              </label>
+              <p className="text-sm text-gray-300 mt-3">JPG, PNG, GIF, SVG</p>
+            </>
           )}
-          <input id="file-upload" type="file" className="hidden" onChange={handleImageChange} />
+          <input
+            id="file-upload"
+            type="file"
+            className="hidden"
+            // accept="image/jpeg, image/png, image/gif, image/svg+xml"
+            onChange={handleImageChange}
+          />
         </div>
       </div>
       <ErrorMessage error={errorMessage} />
