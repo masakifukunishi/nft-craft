@@ -11,8 +11,10 @@ const config: Config = {
       },
       height: {
         18: "4.5rem",
+        118: "28rem",
       },
       width: {
+        118: "28rem",
         140: "35rem",
       },
       border: {
