@@ -38,7 +38,7 @@ const UploadImageFile = ({ imagePreview, handleImageChange, handleImageRemove, e
             id="file-upload"
             type="file"
             className="hidden"
-            // accept="image/jpeg, image/png, image/gif, image/svg+xml"
+            accept="image/jpeg, image/png, image/gif, image/svg+xml"
             onChange={handleImageChange}
           />
         </div>
