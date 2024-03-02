@@ -9,7 +9,7 @@ type Props = {
 
 const CardList = ({ nfts }: Props) => {
   return (
-    <div className="flex flex-wrap justify-start gap-4">
+    <div className="flex flex-wrap sm:justify-start justify-between gap-4">
       {nfts.map((nft: EvmNft) => {
         const metadata = typeof nft.metadata === "string" ? JSON.parse(nft.metadata) : nft.metadata;
         const image = normalizeImageUrl(metadata?.image);
