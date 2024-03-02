@@ -98,7 +98,7 @@ const CreateCollection = () => {
         </div>
       </form>
       <CreateModal
-        isModalOpen={true}
+        isModalOpen={isOpenCreatingModal}
         closeModal={() => setIsOpenCreatingModal(false)}
         uploadingStatus={uploadingStatus}
         hash={hash}
