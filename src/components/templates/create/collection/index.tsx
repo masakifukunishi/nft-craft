@@ -7,6 +7,7 @@ import Input from "@/components/molecules/form/Input";
 import CreateModal from "@/components/organisms/create/collection/modals";
 import { loadContractData, loadChainList } from "@/utills/load";
 import ERC721CollectionFactory from "../../../../../hardhat/artifacts/contracts/ERC721CollectionFactory.sol/ERC721CollectionFactory.json";
+import { cronos } from "viem/chains";
 
 type FormInput = {
   name: string;
@@ -37,6 +38,7 @@ const CreateCollection = () => {
     else if (error) setUploadingStatus("error");
     else if (isSuccess) setUploadingStatus("done");
     else setUploadingStatus("idle");
+    console.log("error", error);
   }, [isPending, error, isSuccess]);
 
   const handleBlockchainChange = async (id: number) => {
@@ -60,7 +62,7 @@ const CreateCollection = () => {
     writeContract({
       address: loadContractData(chainId)?.factory!,
       abi: ERC721CollectionFactory.abi,
-      functionName: "createERC721Collection",
+      functionName: "createCollection",
       args: [data.name, data.symbol],
     });
   };

@@ -10,16 +10,16 @@ describe("ERC721CollectionFactory", function () {
     return { eRC721CollectionFactory };
   }
 
-  it("should emit an ERC721CollectionCreated event upon collection creation", async function () {
+  it("should emit an CollectionCreated event upon collection creation", async function () {
     const [account0] = await ethers.getSigners();
     const { eRC721CollectionFactory } = await loadFixture(deployContractFixture);
     const name = "TestCollection";
     const symbol = "TST";
 
-    const tx = await eRC721CollectionFactory.createERC721Collection(name, symbol);
+    const tx = await eRC721CollectionFactory.createCollection(name, symbol);
     const receipt = await tx.wait();
 
-    const event = receipt.events?.find((e) => e.event === "ERC721CollectionCreated");
+    const event = receipt.events?.find((e) => e.event === "CollectionCreated");
     expect(event).to.not.be.undefined;
     expect(event?.args?.creator).to.equal(account0.address);
     expect(event?.args?.name).to.equal(name);
@@ -32,9 +32,9 @@ describe("ERC721CollectionFactory", function () {
     const name = "TestCollection";
     const symbol = "TST";
 
-    await eRC721CollectionFactory.createERC721Collection(name, symbol);
+    await eRC721CollectionFactory.createCollection(name, symbol);
 
-    const collections = await eRC721CollectionFactory.getCreatorCollections(account0.address);
+    const collections = await eRC721CollectionFactory.getCollectionsByCreator(account0.address);
     expect(collections.length).to.equal(1);
 
     const collectionInfo = collections[0];
