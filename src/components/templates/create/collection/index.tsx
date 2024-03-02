@@ -26,6 +26,7 @@ const CreateCollection = () => {
     handleSubmit,
     setValue,
     formState: { errors },
+    reset,
   } = useForm<FormInput>();
 
   useEffect(() => {
@@ -33,11 +34,16 @@ const CreateCollection = () => {
   }, [register]);
 
   useEffect(() => {
-    if (isPending) setUploadingStatus("minting");
-    else if (error) setUploadingStatus("error");
-    else if (isSuccess) setUploadingStatus("done");
-    else setUploadingStatus("idle");
-    console.log("error", error);
+    if (isPending) {
+      setUploadingStatus("minting");
+    } else if (error) {
+      setUploadingStatus("error");
+    } else if (isSuccess) {
+      setUploadingStatus("done");
+      reset();
+    } else {
+      setUploadingStatus("idle");
+    }
   }, [isPending, error, isSuccess]);
 
   const handleBlockchainChange = async (id: number) => {
