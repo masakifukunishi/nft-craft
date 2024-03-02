@@ -3,9 +3,10 @@ import { IoCopyOutline, IoCheckmarkCircleOutline } from "react-icons/io5";
 
 type Props = {
   text: string;
+  iconSize: number;
 };
 
-const CopyToClipboard = ({ text: text }: Props) => {
+const CopyToClipboard = ({ text, iconSize }: Props) => {
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -15,8 +16,12 @@ const CopyToClipboard = ({ text: text }: Props) => {
   };
 
   return (
-    <span onClick={handleCopy} className="ml-1 cursor-pointer">
-      {isCopied ? <IoCheckmarkCircleOutline size={18} className="text-green-500" /> : <IoCopyOutline size={18} className="text-blue-500" />}
+    <span onClick={handleCopy} className="cursor-pointer">
+      {isCopied ? (
+        <IoCheckmarkCircleOutline size={iconSize} className="text-green-500" />
+      ) : (
+        <IoCopyOutline size={iconSize} className="text-blue-500" />
+      )}
     </span>
   );
 };
