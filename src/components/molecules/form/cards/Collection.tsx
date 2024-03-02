@@ -20,7 +20,7 @@ const CollectionCard = ({ collectionAddress, name, symbol, selectedCollectionAdd
     >
       <div className="bg-green-300 w-3 h-3 rounded-full"></div>
       <div className="mt-2 text-sm">{symbol}</div>
-      <div className="text-sm break-words w-24">{effectiveName}</div>
+      <div className="text-sm break-words w-24 text-center">{effectiveName}</div>
     </div>
   );
 };

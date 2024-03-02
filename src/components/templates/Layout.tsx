@@ -19,7 +19,7 @@ const Layout = ({ children, title, isUseDefaultTitle = true, isRequireWalletConn
     const { isConnected: connected } = useAccount();
     isConnected = connected;
   }
-  const effectiveTitle = isUseDefaultTitle ? `${title} | NFT MINTING` : title;
+  const effectiveTitle = isUseDefaultTitle ? `${title} | NFT Minting` : title;
   return (
     <>
       <Head>

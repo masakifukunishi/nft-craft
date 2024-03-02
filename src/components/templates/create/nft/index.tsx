@@ -43,6 +43,7 @@ const CreateNFT = () => {
     handleSubmit,
     setValue,
     formState: { errors },
+    reset,
   } = useForm<FormInput>();
 
   const collectionsData = useReadContract({
@@ -95,10 +96,18 @@ const CreateNFT = () => {
   };
 
   useEffect(() => {
-    if (isPending) setUploadingStatus("minting");
-    else if (error) setUploadingStatus("error");
-    else if (isSuccess) setUploadingStatus("done");
-    else setUploadingStatus("idle");
+    if (isPending) {
+      setUploadingStatus("minting");
+    } else if (error) {
+      setUploadingStatus("error");
+    } else if (isSuccess) {
+      setUploadingStatus("done");
+      setNftImage(null);
+      setNftImagePreview("");
+      reset();
+    } else {
+      setUploadingStatus("idle");
+    }
   }, [isPending, isSuccess]);
 
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
@@ -169,7 +178,7 @@ const CreateNFT = () => {
             <Input label="Name" id="name" register={register} required="Username is required" errors={errors} />
           </div>
           <div className="mt-8">
-            <Textarea label="Description" id="description" register={register} required="Description is required" errors={errors} />
+            <Textarea label="Description" id="description" register={register} errors={errors} />
           </div>
         </div>
         <div className="mt-4 flex justify-end">

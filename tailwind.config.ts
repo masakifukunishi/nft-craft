@@ -9,11 +9,9 @@ const config: Config = {
         "base-black": "#1A1A1A",
         "base-black-light": "#282828",
       },
-      height: {
+      spacing: {
         18: "4.5rem",
-        118: "28rem",
-      },
-      width: {
+        68: "17rem",
         118: "28rem",
         140: "35rem",
       },
