@@ -7,7 +7,6 @@ import Input from "@/components/molecules/form/Input";
 import CreateModal from "@/components/organisms/create/collection/modals";
 import { loadContractData, loadChainList } from "@/utills/load";
 import ERC721CollectionFactory from "../../../../../hardhat/artifacts/contracts/ERC721CollectionFactory.sol/ERC721CollectionFactory.json";
-import { cronos } from "viem/chains";
 
 type FormInput = {
   name: string;
@@ -99,7 +98,7 @@ const CreateCollection = () => {
         </div>
       </form>
       <CreateModal
-        isModalOpen={isOpenCreatingModal}
+        isModalOpen={true}
         closeModal={() => setIsOpenCreatingModal(false)}
         uploadingStatus={uploadingStatus}
         hash={hash}
