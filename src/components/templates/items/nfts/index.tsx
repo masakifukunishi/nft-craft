@@ -34,7 +34,7 @@ const itemsNFTs = () => {
   }, [address, selectedChainId]);
 
   return (
-    <>
+    <div className="mt-2 mb-8">
       <div>
         <Profile address={address} />
       </div>
@@ -55,7 +55,7 @@ const itemsNFTs = () => {
           <CardList nfts={nfts} />
         </div>
       )}
-    </>
+    </div>
   );
 };
 
