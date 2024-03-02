@@ -48,7 +48,7 @@ const CreateNFT = () => {
   const collectionsData = useReadContract({
     address: loadContractData(chainId!)?.factory!,
     abi: ERC721CollectionFactory.abi,
-    functionName: "getCreatorCollections",
+    functionName: "getCollectionsByCreator",
     args: [address],
   });
   const collections = collectionsData.data as Collection[] | undefined;
