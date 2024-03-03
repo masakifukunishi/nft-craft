@@ -38,7 +38,7 @@ const itemsNFTs = () => {
       ) : (
         <>
           <div className="mt-8">
-            <CardList nfts={nfts} hasMore={hasMore} fetchMore={fetchMore} />
+            <CardList nfts={nfts} />
           </div>
           <LoadMore hasMore={hasMore} fetchMore={fetchMore} isFetchingMore={isFetchingMore} />
         </>

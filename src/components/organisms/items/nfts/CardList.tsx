@@ -5,14 +5,12 @@ import { normalizeImageUrl } from "@/utills/nftStorage";
 
 type Props = {
   nfts: EvmNft[];
-  hasMore: boolean;
-  fetchMore: () => void;
 };
 
-const CardList = ({ nfts, hasMore, fetchMore }: Props) => {
+const CardList = ({ nfts }: Props) => {
   return (
     <>
-      <div className="flex flex-wrap sm:justify-start justify-between gap-4">
+      <div className="flex flex-wrap sm:flex-row flex-col justify-start items-center gap-2.5">
         {nfts.map((nft: EvmNft) => {
           const metadata = typeof nft.metadata === "string" ? JSON.parse(nft.metadata) : nft.metadata;
           const image = normalizeImageUrl(metadata?.image);

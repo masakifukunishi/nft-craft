@@ -15,6 +15,9 @@ const config: Config = {
         118: "28rem",
         140: "35rem",
       },
+      height: {
+        "70%": "70%",
+      },
       border: {
         1: "1px",
       },
