@@ -73,7 +73,7 @@ const CreateNFT = () => {
     if (chainList.some((chain) => chain.id === chainId)) {
       setValue("chainId", chainId, { shouldValidate: true });
     }
-  }, [chainId]);
+  }, [chainId, chainList, setValue]);
 
   const handleCollectionChange = (address: `0x${string}` | null) => {
     if (selectedCollectionAddress === address) return;
@@ -108,7 +108,7 @@ const CreateNFT = () => {
     } else {
       setUploadingStatus("idle");
     }
-  }, [isPending, isSuccess]);
+  }, [isPending, isSuccess, error, reset]);
 
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
     setIsOpenCreatingModal(true);
