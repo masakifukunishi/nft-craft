@@ -1,40 +1,25 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useAccount } from "wagmi";
-import { useEvmWalletNFTs } from "@moralisweb3/next";
-import { type EvmAddressInput, type EvmNft } from "@moralisweb3/common-evm-utils";
 import Spinner from "@/components/atoms/Spinner";
 
 import BlockchainsTab from "@/components/organisms/items/common/blockchains-tab";
 import Profile from "@/components/organisms/items/common/profile";
 import CardList from "@/components/organisms/items/nfts/CardList";
+import LoadMore from "@/components/molecules/LoadMore";
+import useFetchNFTs from "@/hooks/useFetchNFTs";
 
 const itemsNFTs = () => {
   const { chainId, address } = useAccount();
-  const { fetch: fetchNFTs } = useEvmWalletNFTs();
-  const [nfts, setNfts] = useState<EvmNft[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [selectedChainId, setSelectedChainId] = useState(chainId);
+
+  const { nfts, isLoading, hasMore, fetchMore, isFetchingMore } = useFetchNFTs(address, selectedChainId, 2);
 
   const handleChainChange = (chainId: number) => {
     setSelectedChainId(chainId);
   };
 
-  useEffect(() => {
-    setIsLoading(true);
-    const fetchData = async () => {
-      const res = await fetchNFTs({
-        address: address as EvmAddressInput,
-        chain: selectedChainId,
-        excludeSpam: true,
-      });
-      if (res) setNfts(res.data);
-      setIsLoading(false);
-    };
-    fetchData();
-  }, [address, selectedChainId]);
-
   return (
-    <div className="mt-2 mb-8">
+    <div className="mt-2 mb-16">
       <div>
         <Profile address={address} />
       </div>
@@ -51,9 +36,12 @@ const itemsNFTs = () => {
           <p className="text-gray-400">We couldn't find anything</p>
         </div>
       ) : (
-        <div className="mt-8">
-          <CardList nfts={nfts} />
-        </div>
+        <>
+          <div className="mt-8">
+            <CardList nfts={nfts} />
+          </div>
+          <LoadMore hasMore={hasMore} fetchMore={fetchMore} isFetchingMore={isFetchingMore} />
+        </>
       )}
     </div>
   );
