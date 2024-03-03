@@ -5,20 +5,21 @@ import Spinner from "@/components/atoms/Spinner";
 import BlockchainsTab from "@/components/organisms/items/common/blockchains-tab";
 import Profile from "@/components/organisms/items/common/profile";
 import CardList from "@/components/organisms/items/nfts/CardList";
+import LoadMore from "@/components/molecules/LoadMore";
 import useFetchNFTs from "@/hooks/useFetchNFTs";
 
 const itemsNFTs = () => {
   const { chainId, address } = useAccount();
   const [selectedChainId, setSelectedChainId] = useState(chainId);
 
-  const { nfts, isLoading, hasMore, fetchMore } = useFetchNFTs(address, selectedChainId, 2);
+  const { nfts, isLoading, hasMore, fetchMore, isFetchingMore } = useFetchNFTs(address, selectedChainId, 2);
 
   const handleChainChange = (chainId: number) => {
     setSelectedChainId(chainId);
   };
 
   return (
-    <div className="mt-2 mb-8">
+    <div className="mt-2 mb-16">
       <div>
         <Profile address={address} />
       </div>
@@ -37,9 +38,9 @@ const itemsNFTs = () => {
       ) : (
         <>
           <div className="mt-8">
-            <CardList nfts={nfts} />
+            <CardList nfts={nfts} hasMore={hasMore} fetchMore={fetchMore} />
           </div>
-          <div className="flex justify-center mt-8">{hasMore && <button onClick={fetchMore}>Load More</button>}</div>
+          <LoadMore hasMore={hasMore} fetchMore={fetchMore} isFetchingMore={isFetchingMore} />
         </>
       )}
     </div>

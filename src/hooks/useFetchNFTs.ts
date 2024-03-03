@@ -7,6 +7,7 @@ interface UseFetchNFTsResult {
   isLoading: boolean;
   hasMore: boolean;
   fetchMore: () => void;
+  isFetchingMore: boolean;
 }
 
 export default function useFetchNFTs(
@@ -17,13 +18,21 @@ export default function useFetchNFTs(
   const { fetch: fetchNFTs } = useEvmWalletNFTs();
   const [nfts, setNfts] = useState<EvmNft[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isFetchingMore, setIsFetchingMore] = useState(false);
   const [cursor, setCursor] = useState<string | undefined>(undefined);
   const [hasMore, setHasMore] = useState(true);
 
+  const handleLoadingState = (isFetchMore: boolean, isLoading: boolean) => {
+    if (isFetchMore) {
+      setIsFetchingMore(isLoading);
+    } else {
+      setIsLoading(isLoading);
+    }
+  };
+
   const fetchData = async (cursorParam?: string, isFetchMore = false) => {
     if (!address || !selectedChainId) return;
-
-    if (!isFetchMore) setIsLoading(true);
+    handleLoadingState(isFetchMore, true);
     const res = await fetchNFTs({
       address: address as EvmAddressInput,
       chain: selectedChainId,
@@ -37,7 +46,7 @@ export default function useFetchNFTs(
       setCursor(res.cursor);
       setHasMore(res.cursor !== null);
     }
-    setIsLoading(false);
+    handleLoadingState(isFetchMore, false);
   };
 
   useEffect(() => {
@@ -50,5 +59,5 @@ export default function useFetchNFTs(
     }
   };
 
-  return { nfts, isLoading, hasMore, fetchMore };
+  return { nfts, isLoading, hasMore, fetchMore, isFetchingMore };
 }
