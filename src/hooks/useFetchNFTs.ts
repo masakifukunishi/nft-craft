@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useEvmWalletNFTs } from "@moralisweb3/next";
 import { EvmNft, EvmAddressInput } from "@moralisweb3/common-evm-utils";
 
@@ -30,28 +30,31 @@ export default function useFetchNFTs(
     }
   };
 
-  const fetchData = async (cursorParam?: string, isFetchMore = false) => {
-    if (!address || !selectedChainId) return;
-    handleLoadingState(isFetchMore, true);
-    const res = await fetchNFTs({
-      address: address as EvmAddressInput,
-      chain: selectedChainId,
-      excludeSpam: true,
-      limit: limitPerPage,
-      cursor: cursorParam,
-    });
+  const fetchData = useCallback(
+    async (cursorParam?: string, isFetchMore = false) => {
+      if (!address || !selectedChainId) return;
+      handleLoadingState(isFetchMore, true);
+      const res = await fetchNFTs({
+        address: address as EvmAddressInput,
+        chain: selectedChainId,
+        excludeSpam: true,
+        limit: limitPerPage,
+        cursor: cursorParam,
+      });
 
-    if (res) {
-      setNfts((prev) => (cursorParam ? [...prev, ...res.data] : res.data));
-      setCursor(res.cursor);
-      setHasMore(res.cursor !== null);
-    }
-    handleLoadingState(isFetchMore, false);
-  };
+      if (res) {
+        setNfts((prev) => (cursorParam ? [...prev, ...res.data] : res.data));
+        setCursor(res.cursor);
+        setHasMore(res.cursor !== null);
+      }
+      handleLoadingState(isFetchMore, false);
+    },
+    [address, selectedChainId, limitPerPage, fetchNFTs]
+  );
 
   useEffect(() => {
     fetchData();
-  }, [address, selectedChainId]);
+  }, [address, selectedChainId, fetchData]);
 
   const fetchMore = () => {
     if (cursor) {

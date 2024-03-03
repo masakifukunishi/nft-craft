@@ -151,7 +151,7 @@ const CreateNFT = () => {
             <div className="mt-4">
               {(collections === undefined || collections.length === 0) && (
                 <div className="my-4">
-                  You don&apos;t have any collections yet.
+                  {"You don't have any collections yet."}
                   <Link href="/create/collection" className="text-blue-500 hover:underline mx-2">
                     Create a collection
                   </Link>
