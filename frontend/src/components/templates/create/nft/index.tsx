@@ -11,8 +11,8 @@ import CreateModal from "@/components/organisms/create/nft/modals";
 import UploadImageFile from "@/components/molecules/form/UploadImageFile";
 import { uploadNFT } from "@/utills/nftStorage";
 import { loadContractData, loadChainList } from "@/utills/load";
-import ERC721CollectionFactory from "../../../../../hardhat/artifacts/contracts/ERC721CollectionFactory.sol/ERC721CollectionFactory.json";
-import ERC721Collection from "../../../../../hardhat/artifacts/contracts/ERC721Collection.sol/ERC721Collection.json";
+import ERC721CollectionFactory from "@/../../hardhat/artifacts/contracts/ERC721CollectionFactory.sol/ERC721CollectionFactory.json";
+import ERC721Collection from "@/../../hardhat/artifacts/contracts/ERC721Collection.sol/ERC721Collection.json";
 
 type FormInput = {
   name: string;

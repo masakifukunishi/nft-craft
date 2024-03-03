@@ -6,7 +6,7 @@ import BlockchainCardList from "@/components/molecules/form/card-lists/Blockchai
 import Input from "@/components/molecules/form/Input";
 import CreateModal from "@/components/organisms/create/collection/modals";
 import { loadContractData, loadChainList } from "@/utills/load";
-import ERC721CollectionFactory from "../../../../../hardhat/artifacts/contracts/ERC721CollectionFactory.sol/ERC721CollectionFactory.json";
+import ERC721CollectionFactory from "@/../../hardhat/artifacts/contracts/ERC721CollectionFactory.sol/ERC721CollectionFactory.json";
 
 type FormInput = {
   name: string;
