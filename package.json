@@ -5,7 +5,6 @@
   "type": "module",
   "scripts": {
     "install": "npm install --prefix frontend && npm install --prefix hardhat",
-    "build": "npm run build --prefix frontend && npm run compile --prefix hardhat",
-    "start": "npm start --prefix frontend"
+    "build": "npm run compile --prefix hardhat && npm run build --prefix frontend"
   }
 }
