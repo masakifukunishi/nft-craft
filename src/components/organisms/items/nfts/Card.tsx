@@ -9,8 +9,10 @@ type Props = {
 };
 
 const Card = ({ collectionName, name, image }: Props) => {
-  const effectiveCollectionName = collectionName ? shortenString(collectionName, 22) : "Unnamed...";
-  const effectiveName = name ? shortenString(name, 20) : "Unnamed...";
+  const a = "afghawuifghawhifgawiufgawiufgawifgaiuwfhaiuwf";
+  const b = "afghawuifghawhifgawiufgawiufgawifgaiuwfhaiuwf";
+  const effectiveCollectionName = collectionName ? shortenString(collectionName, 18) : "Unnamed...";
+  const effectiveName = name ? shortenString(name, 18) : "Unnamed...";
   return (
     <div className="bg-base-black-light rounded-lg relative overflow-hidden aspect-three-fourths">
       {image && (
