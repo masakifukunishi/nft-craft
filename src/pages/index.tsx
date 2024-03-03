@@ -4,7 +4,7 @@ import Layout from "@/components/templates/Layout";
 
 const Home: NextPage = () => {
   return (
-    <Layout title="NFTCraft, Mint & Display NFTs" isUseDefaultTitle={false}>
+    <Layout title="NFT Craft, Mint & Display NFTs" isUseDefaultTitle={false}>
       <div className="min-h-[calc(100vh-4.5rem)] ">
         <div className="min-h-[calc(100vh-9.5rem)] bg-lime-300 rounded-xl flex justify-center items-center">
           <div className="flex justify-center items-center flex-col md:flex-row gap-10 my-5">
