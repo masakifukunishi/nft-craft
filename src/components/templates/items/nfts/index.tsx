@@ -8,11 +8,11 @@ import CardList from "@/components/organisms/items/nfts/CardList";
 import LoadMore from "@/components/molecules/LoadMore";
 import useFetchNFTs from "@/hooks/useFetchNFTs";
 
-const itemsNFTs = () => {
+const ItemsNFTs = () => {
   const { chainId, address } = useAccount();
   const [selectedChainId, setSelectedChainId] = useState(chainId);
 
-  const { nfts, isLoading, hasMore, fetchMore, isFetchingMore } = useFetchNFTs(address, selectedChainId, 2);
+  const { nfts, isLoading, hasMore, fetchMore, isFetchingMore } = useFetchNFTs(address, selectedChainId, 32);
 
   const handleChainChange = (chainId: number) => {
     setSelectedChainId(chainId);
@@ -33,7 +33,7 @@ const itemsNFTs = () => {
       ) : nfts.length === 0 ? (
         <div className="p-3 mt-2">
           <p className="text-xl">Nothing found</p>
-          <p className="text-gray-400">We couldn't find anything</p>
+          <p className="text-gray-400">{"We couldn't find anything"}</p>
         </div>
       ) : (
         <>
@@ -47,4 +47,4 @@ const itemsNFTs = () => {
   );
 };
 
-export default itemsNFTs;
+export default ItemsNFTs;

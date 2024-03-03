@@ -14,12 +14,10 @@ type Props = {
 
 const Layout = ({ children, title, isUseDefaultTitle = true, isRequireWalletConnection = false }: Props) => {
   const router = useRouter();
-  let isConnected = false;
-  if (isRequireWalletConnection) {
-    const { isConnected: connected } = useAccount();
-    isConnected = connected;
-  }
+  const { isConnected } = useAccount();
+  const shouldDisplayContent = !isRequireWalletConnection || isConnected;
   const effectiveTitle = isUseDefaultTitle ? `${title} | NFT Craft` : title;
+
   return (
     <>
       <Head>
@@ -27,9 +25,9 @@ const Layout = ({ children, title, isUseDefaultTitle = true, isRequireWalletConn
       </Head>
       <div>
         <Header />
-        {(isConnected || !isRequireWalletConnection) && <div className="px-6">{children}</div>}
+        {shouldDisplayContent && <div className="px-6">{children}</div>}
         <WalletModal
-          isModalOpen={isConnected === false && isRequireWalletConnection}
+          isModalOpen={!isConnected && isRequireWalletConnection}
           closeModal={() => router.push("/")}
           isShouldCloseOnOverlayClick={false}
         />

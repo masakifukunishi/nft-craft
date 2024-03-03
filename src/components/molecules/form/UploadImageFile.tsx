@@ -1,4 +1,5 @@
 import { RxCross2 } from "react-icons/rx";
+import Image from "next/image";
 import ErrorMessage from "@/components/atoms/form/ErrorMessage";
 
 type Props = {
@@ -14,11 +15,13 @@ const UploadImageFile = ({ imagePreview, handleImageChange, handleImageRemove, e
       <div className="text-lg font-semibold">Upload file</div>
       <div className="mt-2">
         <div
-          className={`border border-dashed flex flex-col justify-center items-center rounded relative ${imagePreview ? "h-80" : "h-48"}`}
+          className={`border border-dashed flex flex-col justify-center items-center rounded relative p-10 ${
+            imagePreview ? "h-80" : "h-48"
+          }`}
         >
           {imagePreview && (
             <>
-              <img src={imagePreview} alt="Preview" className="max-h-64" />
+              <Image src={imagePreview} alt="Preview" layout="fill" objectFit="contain" className="p-7" />
               <RxCross2
                 size={40}
                 className="absolute top-0 right-0 text-white bg-gray-700 p-2 m-1 rounded-md cursor-pointer"

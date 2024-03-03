@@ -44,7 +44,7 @@ const CreateCollection = () => {
     } else {
       setUploadingStatus("idle");
     }
-  }, [isPending, error, isSuccess]);
+  }, [isPending, error, isSuccess, reset]);
 
   const handleBlockchainChange = async (id: number) => {
     if (chainId === id) return;
@@ -59,7 +59,7 @@ const CreateCollection = () => {
     if (chainList.some((chain) => chain.id === chainId)) {
       setValue("chainId", chainId, { shouldValidate: true });
     }
-  }, [chainId]);
+  }, [chainId, chainList, setValue]);
 
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
     if (!chainId) return;
