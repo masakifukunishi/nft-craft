@@ -21,6 +21,9 @@ const config: Config = {
       border: {
         1: "1px",
       },
+      aspectRatio: {
+        "three-fourths": "3.2 / 4",
+      },
     },
   },
   plugins: [],
