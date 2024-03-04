@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 
 import Header from "@/components/organisms/header";
 import WalletModal from "@/components/organisms/wallet/Modal";
+import Seo from "@/components/templates/Seo";
 
 type Props = {
   children: React.ReactNode;
@@ -16,13 +17,10 @@ const Layout = ({ children, title, isUseDefaultTitle = true, isRequireWalletConn
   const router = useRouter();
   const { isConnected } = useAccount();
   const shouldDisplayContent = !isRequireWalletConnection || isConnected;
-  const effectiveTitle = isUseDefaultTitle ? `${title} | NFT Craft` : title;
 
   return (
     <>
-      <Head>
-        <title>{effectiveTitle}</title>
-      </Head>
+      <Seo title={title} isUseDefaultTitle={isUseDefaultTitle} />
       <div>
         <Header />
         {shouldDisplayContent && <div className="px-6">{children}</div>}
