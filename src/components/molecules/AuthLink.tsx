@@ -14,7 +14,13 @@ const AuthLink = ({ href, children }: AuthLinkProps) => {
 
   const openModal = () => dispatch(setModalState({ isOpen: true }));
 
-  return isAuthenticated ? <Link href={href}>{children}</Link> : <div onClick={openModal}>{children}</div>;
+  return isAuthenticated ? (
+    <Link className="block" href={href}>
+      {children}
+    </Link>
+  ) : (
+    <div onClick={openModal}>{children}</div>
+  );
 };
 
 export default AuthLink;

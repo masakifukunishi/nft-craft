@@ -2,6 +2,8 @@ import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { useDisconnect } from "wagmi";
 
+import AuthLink from "@/components/molecules/AuthLink";
+
 type Props = {
   setIsOpen: (isOpen: boolean) => void;
 };
@@ -20,7 +22,7 @@ const UserMenu = ({ setIsOpen }: Props) => {
         onMouseLeave={() => setIsOpen(false)}
       >
         <li className="cursor-pointer py-2 pl-3 mx-2 rounded hover:bg-gray-700 hover:bg-opacity-35">
-          <Link href="/items/nfts">My NFTs </Link>
+          <AuthLink href="/items/nfts">My NFTs </AuthLink>
         </li>
         <div onClick={() => handleLogout()}>
           <li className="cursor-pointer py-2 pl-3 mx-2 rounded hover:bg-gray-700 hover:bg-opacity-35">Logout</li>
