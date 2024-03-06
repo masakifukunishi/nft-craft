@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { signOut } from "next-auth/react";
 import { useDisconnect } from "wagmi";
 
 type Props = {
@@ -7,6 +8,10 @@ type Props = {
 
 const UserMenu = ({ setIsOpen }: Props) => {
   const { disconnect } = useDisconnect();
+  const handleLogout = async () => {
+    disconnect();
+    signOut({ callbackUrl: "/" });
+  };
   return (
     <>
       <ul
@@ -17,8 +22,8 @@ const UserMenu = ({ setIsOpen }: Props) => {
         <Link href="/items/nfts">
           <li className="cursor-pointer py-2 pl-3 mx-2 rounded hover:bg-gray-700 hover:bg-opacity-35">My NFTs</li>
         </Link>
-        <div onClick={() => disconnect()}>
-          <li className="cursor-pointer py-2 pl-3 mx-2 rounded hover:bg-gray-700 hover:bg-opacity-35">Disconnect</li>
+        <div onClick={() => handleLogout()}>
+          <li className="cursor-pointer py-2 pl-3 mx-2 rounded hover:bg-gray-700 hover:bg-opacity-35">Logout</li>
         </div>
       </ul>
     </>

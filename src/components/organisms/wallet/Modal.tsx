@@ -18,12 +18,12 @@ const WalletModal = ({ isModalOpen, closeModal, isShouldCloseOnOverlayClick = tr
   const { isConnected, address, chainId } = useAccount();
   const { signMessageAsync } = useSignMessage();
 
-  const login = async () => {
+  const login = async (address: `0x${string}`, chainId: number) => {
     try {
       const callbackUrl = "/protected";
       const message = new SiweMessage({
         domain: window.location.host,
-        address: address as `0x${string}`,
+        address: address,
         statement: process.env.NEXT_PUBLIC_SIGNIN_MESSAGE,
         uri: window.location.origin,
         version: "1",
@@ -50,12 +50,12 @@ const WalletModal = ({ isModalOpen, closeModal, isShouldCloseOnOverlayClick = tr
   };
 
   const connectWalletAndLogin = (connector: Connector) => {
-    connect({ connector: connector }, { onSuccess: () => login() });
+    connect({ connector: connector }, { onSuccess: (data) => login(data.accounts[0], data.chainId) });
   };
 
   const handleConnect = (connector: Connector) => {
     if (isConnected) {
-      login();
+      login(address!, chainId!);
     } else {
       connectWalletAndLogin(connector);
     }
