@@ -19,9 +19,9 @@ const UserMenu = ({ setIsOpen }: Props) => {
         onMouseEnter={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
       >
-        <Link href="/items/nfts">
-          <li className="cursor-pointer py-2 pl-3 mx-2 rounded hover:bg-gray-700 hover:bg-opacity-35">My NFTs</li>
-        </Link>
+        <li className="cursor-pointer py-2 pl-3 mx-2 rounded hover:bg-gray-700 hover:bg-opacity-35">
+          <Link href="/items/nfts">My NFTs </Link>
+        </li>
         <div onClick={() => handleLogout()}>
           <li className="cursor-pointer py-2 pl-3 mx-2 rounded hover:bg-gray-700 hover:bg-opacity-35">Logout</li>
         </div>
