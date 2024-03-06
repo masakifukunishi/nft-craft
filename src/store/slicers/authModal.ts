@@ -3,7 +3,6 @@ import { RootState } from "@/store/store";
 
 const initialState = {
   isOpen: false,
-  // isShouldCloseOnOverlayClick: true,
 };
 
 const authModalSlice = createSlice({
@@ -12,7 +11,6 @@ const authModalSlice = createSlice({
   reducers: {
     setModalState: (state, action) => {
       state.isOpen = action.payload.isOpen;
-      // state.isShouldCloseOnOverlayClick = action.payload.isShouldCloseOnOverlayClick;
     },
   },
 });
