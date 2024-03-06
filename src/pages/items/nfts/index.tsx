@@ -5,7 +5,7 @@ import ItemsNFTsTemplate from "@/components/templates/items/nfts";
 
 const ItemsNFTs: NextPage = () => {
   return (
-    <Layout title="Items" isRequireWalletConnection={true}>
+    <Layout title="Items">
       <ItemsNFTsTemplate />
     </Layout>
   );

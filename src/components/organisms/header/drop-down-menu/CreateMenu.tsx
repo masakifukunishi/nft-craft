@@ -1,4 +1,4 @@
-import Link from "next/link";
+import AuthLink from "@/components/molecules/AuthLink";
 
 type Props = {
   setIsOpen: (isOpen: boolean) => void;
@@ -13,10 +13,10 @@ const CreateMenu = ({ setIsOpen }: Props) => {
         onMouseLeave={() => setIsOpen(false)}
       >
         <li className="cursor-pointer py-2 pl-3 mx-2 rounded hover:bg-gray-700 hover:bg-opacity-35">
-          <Link href="/create/collection">Collection </Link>
+          <AuthLink href="/create/collection">Collection</AuthLink>
         </li>
         <li className="cursor-pointer py-2 pl-3 mx-2 rounded hover:bg-gray-700 hover:bg-opacity-35">
-          <Link href="/create/nft">NFT</Link>
+          <AuthLink href="/create/nft">NFT</AuthLink>
         </li>
       </ul>
     </>

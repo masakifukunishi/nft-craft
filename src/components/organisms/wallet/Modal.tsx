@@ -1,22 +1,21 @@
 import Modal from "react-modal";
 import { IoMdClose } from "react-icons/io";
+import { useSelector, useDispatch } from "react-redux";
 import { Connector, useConnect, useAccount, useSignMessage } from "wagmi";
 import { SiweMessage } from "siwe";
 import { getCsrfToken, signIn } from "next-auth/react";
 
 import Item from "@/components/organisms/wallet/Item";
+import { setModalState, selectModalState } from "@/store/slicers/authModal";
 import customModalStyles from "@/styles/modal";
 
-type Props = {
-  isModalOpen: boolean;
-  closeModal: () => void;
-  isShouldCloseOnOverlayClick?: boolean;
-};
-
-const WalletModal = ({ isModalOpen, closeModal, isShouldCloseOnOverlayClick = true }: Props) => {
+const WalletModal = () => {
   const { connectors, connect } = useConnect();
   const { isConnected, address, chainId } = useAccount();
   const { signMessageAsync } = useSignMessage();
+  const { isOpen: isModalOpen } = useSelector(selectModalState);
+  const dispatch = useDispatch();
+  const closeModal = () => dispatch(setModalState({ isOpen: false }));
 
   const login = async (address: `0x${string}`, chainId: number) => {
     try {
@@ -62,13 +61,7 @@ const WalletModal = ({ isModalOpen, closeModal, isShouldCloseOnOverlayClick = tr
   };
 
   return (
-    <Modal
-      isOpen={isModalOpen}
-      onRequestClose={closeModal}
-      style={customModalStyles}
-      shouldCloseOnOverlayClick={isShouldCloseOnOverlayClick}
-      ariaHideApp={false}
-    >
+    <Modal isOpen={isModalOpen} onRequestClose={closeModal} style={customModalStyles} shouldCloseOnOverlayClick={true} ariaHideApp={false}>
       <div className="my-2 p-1">
         <div className="flex justify-between items-center">
           <div className="text-xl font-semibold ">Connect Wallet</div>
