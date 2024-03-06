@@ -1,8 +1,6 @@
-import Head from "next/head";
-import { useAccount } from "wagmi";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 
+import { useAuth } from "@/hooks/useAuth";
 import Header from "@/components/organisms/header";
 import WalletModal from "@/components/organisms/wallet/Modal";
 import Seo from "@/components/templates/Seo";
@@ -16,10 +14,9 @@ type Props = {
 
 const Layout = ({ children, title, isUseDefaultTitle = true, isRequireWalletConnection = false }: Props) => {
   const router = useRouter();
-  const { isConnected } = useAccount();
-  const { data: session } = useSession();
-  const shouldDisplayContent = !isRequireWalletConnection || (isConnected && session);
-  const isModalOpen = isRequireWalletConnection && (!isConnected || !session);
+  const { isAuthenticated } = useAuth();
+  const shouldDisplayContent = !isRequireWalletConnection || isAuthenticated;
+  const isModalOpen = isRequireWalletConnection && !isAuthenticated;
 
   return (
     <>
