@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useAccount } from "wagmi";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 import Header from "@/components/organisms/header";
 import WalletModal from "@/components/organisms/wallet/Modal";
@@ -16,7 +17,9 @@ type Props = {
 const Layout = ({ children, title, isUseDefaultTitle = true, isRequireWalletConnection = false }: Props) => {
   const router = useRouter();
   const { isConnected } = useAccount();
-  const shouldDisplayContent = !isRequireWalletConnection || isConnected;
+  const { data: session } = useSession();
+  const shouldDisplayContent = !isRequireWalletConnection || (isConnected && session);
+  const isModalOpen = isRequireWalletConnection && (!isConnected || !session);
 
   return (
     <>
@@ -24,11 +27,7 @@ const Layout = ({ children, title, isUseDefaultTitle = true, isRequireWalletConn
       <div>
         <Header />
         {shouldDisplayContent && <div className="px-6">{children}</div>}
-        <WalletModal
-          isModalOpen={!isConnected && isRequireWalletConnection}
-          closeModal={() => router.push("/")}
-          isShouldCloseOnOverlayClick={false}
-        />
+        <WalletModal isModalOpen={isModalOpen} closeModal={() => router.push("/")} isShouldCloseOnOverlayClick={false} />
       </div>
     </>
   );

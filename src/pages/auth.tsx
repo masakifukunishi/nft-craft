@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { SiweMessage } from "siwe";
 import { useAccount, useSignMessage } from "wagmi";
-import { getCsrfToken, signIn } from "next-auth/react";
+import { getCsrfToken, useSession, signIn } from "next-auth/react";
 
 export default function Auth() {
+  const { data: session, status } = useSession();
   const [mounted, setMounted] = useState(false);
   const { address, isConnected, chainId } = useAccount();
   const { signMessageAsync } = useSignMessage();
@@ -45,11 +46,12 @@ export default function Auth() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center">
       {/* {!isConnected && <w3m-button />} */}
-      {/* {isConnected && ( */}
-      <button onClick={handleLogin} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        Sign Message to Login
-      </button>
-      {/* )} */}
+      {isConnected && (
+        <button onClick={handleLogin} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Sign Message to Login
+        </button>
+      )}
+      {isConnected && session && <p>お前はログインしている</p>}
     </main>
   );
 }

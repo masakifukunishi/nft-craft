@@ -1,9 +1,13 @@
+import { use, useEffect } from "react";
 import Modal from "react-modal";
 import { IoMdClose } from "react-icons/io";
-import { Connector, useConnect } from "wagmi";
+import { Connector, useConnect, useAccount, useSignMessage } from "wagmi";
+import { SiweMessage } from "siwe";
+import { getCsrfToken, signIn, useSession } from "next-auth/react";
 
 import Item from "@/components/organisms/wallet/Item";
 import customModalStyles from "@/styles/modal";
+import { log } from "console";
 
 type Props = {
   isModalOpen: boolean;
@@ -13,9 +17,65 @@ type Props = {
 
 const WalletModal = ({ isModalOpen, closeModal, isShouldCloseOnOverlayClick = true }: Props) => {
   const { connectors, connect } = useConnect();
+  const { address, chainId } = useAccount();
+  const { signMessageAsync } = useSignMessage();
+  const { data: session } = useSession();
 
+  const login = async () => {
+    try {
+      const callbackUrl = "/protected";
+      const message = new SiweMessage({
+        domain: window.location.host,
+        address: address as `0x${string}`,
+        statement: process.env.NEXT_PUBLIC_SIGNIN_MESSAGE,
+        uri: window.location.origin,
+        version: "1",
+        chainId: chainId,
+        nonce: await getCsrfToken(),
+      });
+
+      const signature = await signMessageAsync({
+        message: message.prepareMessage(),
+      });
+
+      const response = await signIn("siwe", {
+        message: JSON.stringify(message),
+        redirect: true,
+        signature,
+        callbackUrl,
+      });
+      if (response?.error) {
+        console.log("Error occured:", response.error);
+      }
+    } catch (error) {
+      console.log("Error Occured", error);
+    }
+  };
+  // use onSuccess in connect
   const connectWallet = (connector: Connector) => {
-    connect({ connector });
+    connect(
+      {
+        connector: connector,
+      },
+      {
+        onSuccess: (data, variables, context) => {
+          // 接続成功時に行いたい処理をここに記述
+          login();
+        },
+        onError: (error, variables, context) => {
+          // エラー発生時の処理をここに記述
+          console.error("接続エラー", error);
+        },
+        onSettled: (data, error, variables, context) => {
+          // 接続が成功したかエラーが発生した後の処理をここに記述
+          if (error) {
+            console.log("接続後のエラー処理", error);
+          } else {
+            console.log("接続が確立された後の処理", data);
+          }
+        },
+      }
+    );
   };
 
   return (
