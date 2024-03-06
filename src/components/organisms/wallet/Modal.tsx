@@ -19,7 +19,9 @@ const WalletModal = () => {
 
   const login = async (address: `0x${string}`, chainId: number) => {
     try {
-      const callbackUrl = "/protected";
+      const queryParams = new URLSearchParams(window.location.search);
+      const callbackUrl = queryParams.get("callbackUrl") || undefined;
+
       const message = new SiweMessage({
         domain: window.location.host,
         address: address,
@@ -36,13 +38,14 @@ const WalletModal = () => {
 
       const response = await signIn("siwe", {
         message: JSON.stringify(message),
-        redirect: true,
+        redirect: !!callbackUrl,
         signature,
         callbackUrl,
       });
       if (response?.error) {
         console.log("Error occured:", response.error);
       }
+      closeModal();
     } catch (error) {
       console.log("Error Occured", error);
     }
