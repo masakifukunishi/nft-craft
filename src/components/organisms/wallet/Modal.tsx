@@ -1,13 +1,11 @@
-import { use, useEffect } from "react";
 import Modal from "react-modal";
 import { IoMdClose } from "react-icons/io";
 import { Connector, useConnect, useAccount, useSignMessage } from "wagmi";
 import { SiweMessage } from "siwe";
-import { getCsrfToken, signIn, useSession } from "next-auth/react";
+import { getCsrfToken, signIn } from "next-auth/react";
 
 import Item from "@/components/organisms/wallet/Item";
 import customModalStyles from "@/styles/modal";
-import { log } from "console";
 
 type Props = {
   isModalOpen: boolean;
@@ -17,9 +15,8 @@ type Props = {
 
 const WalletModal = ({ isModalOpen, closeModal, isShouldCloseOnOverlayClick = true }: Props) => {
   const { connectors, connect } = useConnect();
-  const { address, chainId } = useAccount();
+  const { isConnected, address, chainId } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const { data: session } = useSession();
 
   const login = async () => {
     try {
@@ -51,31 +48,17 @@ const WalletModal = ({ isModalOpen, closeModal, isShouldCloseOnOverlayClick = tr
       console.log("Error Occured", error);
     }
   };
-  // use onSuccess in connect
-  const connectWallet = (connector: Connector) => {
-    connect(
-      {
-        connector: connector,
-      },
-      {
-        onSuccess: (data, variables, context) => {
-          // 接続成功時に行いたい処理をここに記述
-          login();
-        },
-        onError: (error, variables, context) => {
-          // エラー発生時の処理をここに記述
-          console.error("接続エラー", error);
-        },
-        onSettled: (data, error, variables, context) => {
-          // 接続が成功したかエラーが発生した後の処理をここに記述
-          if (error) {
-            console.log("接続後のエラー処理", error);
-          } else {
-            console.log("接続が確立された後の処理", data);
-          }
-        },
-      }
-    );
+
+  const connectWalletAndLogin = (connector: Connector) => {
+    connect({ connector: connector }, { onSuccess: () => login() });
+  };
+
+  const handleConnect = (connector: Connector) => {
+    if (isConnected) {
+      login();
+    } else {
+      connectWalletAndLogin(connector);
+    }
   };
 
   return (
@@ -97,7 +80,7 @@ const WalletModal = ({ isModalOpen, closeModal, isShouldCloseOnOverlayClick = tr
 
         <div className="mt-5">
           {connectors.map((connector) => (
-            <Item key={connector.uid} connector={connector} connectWallet={connectWallet} />
+            <Item key={connector.uid} connector={connector} connectWallet={handleConnect} />
           ))}
         </div>
       </div>

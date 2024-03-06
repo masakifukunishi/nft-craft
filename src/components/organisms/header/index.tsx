@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { useAccount } from "wagmi";
 
 import Create from "@/components/organisms/header/Create";
 import Profile from "@/components/organisms/header/Profile";
 import ConnectWallet from "@/components/organisms/header/ConnectWallet";
+import { useAuth } from "@/hooks/useAuth";
 
 const Header = () => {
-  const { isConnected } = useAccount();
+  const { isAuthenticated } = useAuth();
 
   return (
     <>
@@ -16,7 +16,7 @@ const Header = () => {
         </h1>
         <div className="w-px h-7 bg-base-white mx-5"></div>
         <Create />
-        <div className="ml-auto">{isConnected ? <Profile /> : <ConnectWallet />}</div>
+        <div className="ml-auto">{isAuthenticated ? <Profile /> : <ConnectWallet />}</div>
       </header>
     </>
   );
