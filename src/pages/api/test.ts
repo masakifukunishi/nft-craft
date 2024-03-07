@@ -1,4 +1,3 @@
-// pages/api/test.ts
 import { NextApiRequest, NextApiResponse } from "next";
 import { withSession } from "@/pages/api/middleware/auth";
 

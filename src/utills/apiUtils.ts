@@ -1,5 +1,7 @@
 class APIUtils {
   static async post(url: string, body: Object): Promise<any> {
+    console.log("aaaaa");
+
     try {
       const response = await fetch(url, {
         method: "POST",

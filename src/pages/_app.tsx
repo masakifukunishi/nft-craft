@@ -1,8 +1,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
 import { Provider as ReactReduxProvider } from "react-redux";
+import { SessionProvider } from "next-auth/react";
 
-import NextAuthProvider from "@/providers/NextAuthProvider";
 import { config } from "../../config";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
@@ -15,7 +15,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <ReactReduxProvider store={store}>
       <WagmiProvider config={config}>
         <QueryClientProvider client={queryClient}>
-          <NextAuthProvider>{<Component {...pageProps} />}</NextAuthProvider>
+          <SessionProvider>{<Component {...pageProps} />}</SessionProvider>
         </QueryClientProvider>
       </WagmiProvider>
     </ReactReduxProvider>
