@@ -42,12 +42,10 @@ const WalletModal = () => {
         signature,
         callbackUrl,
       });
-      if (response?.error) {
-        console.log("Error occured:", response.error);
-      }
+
       closeModal();
     } catch (error) {
-      console.log("Error Occured", error);
+      console.log("Error Occured");
     }
   };
 
