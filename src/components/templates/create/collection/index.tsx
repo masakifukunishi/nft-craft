@@ -6,6 +6,7 @@ import BlockchainCardList from "@/components/molecules/form/card-lists/Blockchai
 import Input from "@/components/molecules/form/Input";
 import CreateModal from "@/components/organisms/create/collection/modals";
 import { loadContractData, loadChainList } from "@/utills/load";
+import shortenString from "@/utills/shortenString";
 import ERC721CollectionFactory from "@/../hardhat/artifacts/contracts/ERC721CollectionFactory.sol/ERC721CollectionFactory.json";
 
 type FormInput = {
@@ -18,9 +19,10 @@ const CreateCollection = () => {
   const [uploadingStatus, setUploadingStatus] = useState<"idle" | "minting" | "error" | "done">("idle");
   const [isOpenCreatingModal, setIsOpenCreatingModal] = useState(false);
   const chainList = loadChainList();
-  const { chainId } = useAccount();
+  const { address, chainId } = useAccount();
   const { switchChain } = useSwitchChain();
   const { data: hash, error, isPending, isSuccess, writeContract } = useWriteContract();
+  const connectedAddress = address ? shortenString(address, 11, "middle") : "";
   const {
     register,
     handleSubmit,
@@ -79,6 +81,10 @@ const CreateCollection = () => {
         <div className="mt-3">
           <div className="text-lg font-semibold">Standard</div>
           <div className="text-lg">ERC-721</div>
+        </div>
+        <div className="mt-4">
+          <div className="text-lg font-semibold">Connected Address</div>
+          <div className="text-lg">{connectedAddress}</div>
         </div>
         <div className="mt-8">
           <div className="text-lg font-semibold">Choose blockchain</div>

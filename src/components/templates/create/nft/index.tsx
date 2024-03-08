@@ -11,6 +11,7 @@ import CreateModal from "@/components/organisms/create/nft/modals";
 import UploadImageFile from "@/components/molecules/form/UploadImageFile";
 import { uploadNFT } from "@/utills/nftStorage";
 import { loadContractData, loadChainList } from "@/utills/load";
+import shortenString from "@/utills/shortenString";
 import ERC721CollectionFactory from "@/../hardhat/artifacts/contracts/ERC721CollectionFactory.sol/ERC721CollectionFactory.json";
 import ERC721Collection from "@/../hardhat/artifacts/contracts/ERC721Collection.sol/ERC721Collection.json";
 
@@ -38,6 +39,7 @@ const CreateNFT = () => {
   const [selectedCollectionAddress, setSelectedCollectionAddress] = useState<`0x${string}` | null>(null);
   const [nftImage, setNftImage] = useState<File | null>(null);
   const [nftImagePreview, setNftImagePreview] = useState("");
+  const connectedAddress = address ? shortenString(address, 11, "middle") : "";
   const {
     register,
     handleSubmit,
@@ -135,6 +137,10 @@ const CreateNFT = () => {
         <div className="mt-3">
           <div className="text-lg font-semibold">Standard</div>
           <div className="text-lg">ERC-721</div>
+        </div>
+        <div className="mt-4">
+          <div className="text-lg font-semibold">Connected Address</div>
+          <div className="text-lg">{connectedAddress}</div>
         </div>
         <div className="mt-8">
           <div className="text-lg font-semibold">Choose blockchain</div>
