@@ -120,12 +120,12 @@ const CreateNFT = () => {
       setUploadingStatus("error");
       return;
     }
-    // writeContract({
-    //   address: data.collectionAddress!,
-    //   abi: ERC721Collection.abi,
-    //   functionName: "safeMint",
-    //   args: [address, ipfsMetadataUrl],
-    // });
+    writeContract({
+      address: data.collectionAddress!,
+      abi: ERC721Collection.abi,
+      functionName: "safeMint",
+      args: [address, ipfsMetadataUrl],
+    });
   };
 
   return (
