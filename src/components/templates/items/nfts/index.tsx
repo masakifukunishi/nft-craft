@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAccount } from "wagmi";
 import Spinner from "@/components/atoms/Spinner";
 
@@ -17,6 +17,10 @@ const ItemsNFTs = () => {
   const handleChainChange = (chainId: number) => {
     setSelectedChainId(chainId);
   };
+
+  useEffect(() => {
+    if (chainId) setSelectedChainId(chainId);
+  }, [chainId]);
 
   return (
     <div className="mt-2 mb-16">
