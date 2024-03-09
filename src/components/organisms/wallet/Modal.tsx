@@ -45,7 +45,7 @@ const WalletModal = () => {
 
       closeModal();
     } catch (error) {
-      console.log("Error Occured");
+      console.error("Error Occured");
     }
   };
 
