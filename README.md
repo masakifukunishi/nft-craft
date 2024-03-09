@@ -1,9 +1,9 @@
 # NFT Craft
 
-## Summary🔥
+## Summary 🏔️
 This site allows users to mint NFTs (ERC-721 tokens) and view them. Currently, it supports the Testnets Sepolia and Mumbai.
 
-## Tech Stack🛠️
+## Tech Stack 🔗
 ### Contract
 - Hardhat
 - Solidity
