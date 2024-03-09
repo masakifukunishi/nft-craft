@@ -1,9 +1,9 @@
 # NFT Craft
 
-## Summary
-This site enables the minting and browsing of NFTs. It allows users to mint ERC-721 tokens and view them. Currently, the supported chains are the Testnets Sepolia and Mumbai.
+## Summary🔥
+This site allows users to mint NFTs (ERC-721 tokens) and view them. Currently, it supports the Testnets Sepolia and Mumbai.
 
-## Tech Stack
+## Tech Stack🛠️
 ### Contract
 - Hardhat
 - Solidity
