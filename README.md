@@ -3,23 +3,29 @@
 ## Summary
 This site enables the minting and browsing of NFTs. It allows users to mint ERC-721 tokens and view them. Currently, the supported chains are the Testnets Sepolia and Mumbai.
 
-## Language and Libraries
+## Tech Stack
 ### Contract
 - Hardhat
 - Solidity
 - OpenZeppelin
 
-### Frontend
+### Node Provider
+- Infura
+
+### IPFS
+- NFT.Storage
+
+### Frontend / Backend
 - TypeScript
 - Next.js
 - Tailwind CSS
 - Redux
 - Wagmi
 - Moralis
-- NFT Storage
 - Auth.js
+- siwe (Sign in with Ethereum)
 
-## Supported Chains
-### Testnets
+### Supported Chains
+#### Testnets
 - Sepolia
 - Mumbai
