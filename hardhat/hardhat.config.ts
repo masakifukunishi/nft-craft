@@ -7,6 +7,7 @@ const privateKey0: string = process.env.PRIVATE_KEY ?? "";
 const sepoliaUrl: string = process.env.SEPOLIA_URL ?? "";
 const mumbaiUrl: string = process.env.MUMBAI_URL ?? "";
 const etherscanApiKey: string = process.env.ETHERSCAN_API_KEY ?? "";
+const polygonscanApiKey: string = process.env.POLYGONSCAN_API_KEY ?? "";
 
 const networks: any = {};
 const etherscan: any = {};
@@ -26,6 +27,10 @@ if (privateKey0 && sepoliaUrl) {
 
 if (etherscanApiKey) {
   etherscan.apiKey = etherscanApiKey;
+}
+
+if (polygonscanApiKey) {
+  etherscan.apiKey = polygonscanApiKey;
 }
 
 const config: HardhatUserConfig = {
