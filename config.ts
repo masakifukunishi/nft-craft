@@ -1,13 +1,12 @@
 import { http, createConfig } from "wagmi";
-import { mainnet, polygon, sepolia } from "wagmi/chains";
+import { polygonMumbai, sepolia } from "wagmi/chains";
 
 export const config = createConfig({
-  chains: [mainnet, polygon, sepolia],
+  chains: [polygonMumbai, sepolia],
   connectors: [],
   ssr: true,
   transports: {
-    [mainnet.id]: http(),
-    [polygon.id]: http(),
+    [polygonMumbai.id]: http(),
     [sepolia.id]: http(),
   },
 });

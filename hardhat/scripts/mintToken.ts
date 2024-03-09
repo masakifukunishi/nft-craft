@@ -5,8 +5,8 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 function getRpcUrl(network: string): string {
-  if (network == "polygon") {
-    return process.env.POLYGON_URL ?? "";
+  if (network == "mumbai") {
+    return process.env.MUMBAI_URL ?? "";
   } else if (network == "sepolia") {
     return process.env.SEPOLIA_URL ?? "";
   } else {
@@ -15,8 +15,8 @@ function getRpcUrl(network: string): string {
 }
 
 function transactionExplorerUrl(network: string, txHash: string): string {
-  if (network == "polygon") {
-    return `https://polygonscan.com/tx/${txHash}`;
+  if (network == "mumbai") {
+    return `https://mumbai.polygonscan.com//tx/${txHash}`;
   } else if (network == "sepolia") {
     return `https://sepolia.etherscan.io/tx/${txHash}`;
   } else {
@@ -31,7 +31,7 @@ async function main(network: string, collectionAddress: string, accountAddress: 
   }
   const rpcUrl: string = getRpcUrl(network);
   if (rpcUrl === "") {
-    throw new Error("No value set for environement variable SEPOLIA_URL");
+    throw new Error("No value set for environement variable URL");
   }
 
   const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
@@ -54,8 +54,8 @@ async function main(network: string, collectionAddress: string, accountAddress: 
 
 program
   .addOption(
-    new Option("--network <string>", "name of blockchain network(e.g. polygon, sepolia)")
-      .choices(["polygon", "sepolia"])
+    new Option("--network <string>", "name of blockchain network(e.g. mumbai, sepolia)")
+      .choices(["mumbai", "sepolia"])
       .makeOptionMandatory()
   )
   .addOption(new Option("--collectionAddress <address>", "address of token contract").makeOptionMandatory())
