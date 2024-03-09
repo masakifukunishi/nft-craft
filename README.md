@@ -1,6 +1,6 @@
 # NFT Craft
 
-![Screenshot](https://github.com/masakifukunishi/nft-craft/assets/42294938/f086bd0f-696f-4fc5-ac8e-36012ec1c0fd)
+![Screenshot](https://github.com/masakifukunishi/nft-craft/assets/42294938/5d344009-b6f8-4486-bad4-e35ef5ec2425)
 
 ## Summary 🔥
 This site allows users to mint NFTs (ERC-721 tokens) and view them. Currently, it supports the Testnets Sepolia and Mumbai.
