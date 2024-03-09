@@ -76,6 +76,24 @@ const WalletModal = () => {
           {connectors.map((connector) => (
             <Item key={connector.uid} connector={connector} connectWallet={handleConnect} />
           ))}
+          {connectors.length === 0 && (
+            <>
+              <h3 className="text-xl text-lime-400 font-bold">No wallet detected 😞</h3>
+              <div className="mt-3">
+                Please ensure you have a wallet installed as a browser extension, or open this page from within a wallet app🔥
+              </div>
+              <div className="flex flex-col mt-3">
+                <div className="font-bold text-lg">Install</div>
+                <a href="https://metamask.io/" target="_blank" rel="noopener noreferrer" className="text-blue-400">
+                  Metamask
+                </a>
+                <a href="https://rabby.io/" target="_blank" rel="noopener noreferrer" className="text-blue-400">
+                  Rabby
+                </a>
+                <p>... or any other evm compatible wallet.</p>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </Modal>
