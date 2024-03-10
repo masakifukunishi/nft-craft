@@ -5,7 +5,6 @@ dotenv.config();
 
 const privateKey0: string = process.env.PRIVATE_KEY ?? "";
 const sepoliaUrl: string = process.env.SEPOLIA_URL ?? "";
-const mumbaiUrl: string = process.env.MUMBAI_URL ?? "";
 const etherscanApiKey: string = process.env.ETHERSCAN_API_KEY ?? "";
 const polygonscanApiKey: string = process.env.POLYGONSCAN_API_KEY ?? "";
 
@@ -17,11 +16,6 @@ if (privateKey0 && sepoliaUrl) {
     url: sepoliaUrl,
     accounts: [privateKey0],
     chainId: 11155111,
-  };
-  networks.mumbai = {
-    url: mumbaiUrl,
-    accounts: [privateKey0],
-    chainId: 80001,
   };
 }
 
