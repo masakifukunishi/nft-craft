@@ -5,9 +5,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 function getRpcUrl(network: string): string {
-  if (network == "mumbai") {
-    return process.env.MUMBAI_URL ?? "";
-  } else if (network == "sepolia") {
+  if (network == "sepolia") {
     return process.env.SEPOLIA_URL ?? "";
   } else {
     return "";
@@ -15,9 +13,7 @@ function getRpcUrl(network: string): string {
 }
 
 function transactionExplorerUrl(network: string, txHash: string): string {
-  if (network == "mumbai") {
-    return `https://mumbai.polygonscan.com//tx/${txHash}`;
-  } else if (network == "sepolia") {
+  if (network == "sepolia") {
     return `https://sepolia.etherscan.io/tx/${txHash}`;
   } else {
     return "";
@@ -48,11 +44,7 @@ async function main(network: string, contractAddress: string, name: string, symb
 }
 
 program
-  .addOption(
-    new Option("--network <string>", "name of blockchain network(e.g. mumbai, sepolia)")
-      .choices(["mumbai", "sepolia"])
-      .makeOptionMandatory()
-  )
+  .addOption(new Option("--network <string>", "name of blockchain network(e.g, sepolia)").choices(["sepolia"]).makeOptionMandatory())
   .addOption(new Option("--contractAddress <address>", "address of token contract").makeOptionMandatory())
   .addOption(new Option("--name <string>", "name of the collection").makeOptionMandatory())
   .addOption(new Option("--symbol <string>", "symbol of the collection").makeOptionMandatory())

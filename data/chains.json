@@ -1,4 +1,1 @@
-[
-  { "id": 80001, "name": "Mumbai", "imagePath": "/icons/blockchains/polygon.png" },
-  { "id": 11155111, "name": "Sepolia", "imagePath": "/icons/blockchains/ethereum.png" }
-]
+[{ "id": 11155111, "name": "Sepolia", "imagePath": "/icons/blockchains/ethereum.png" }]
