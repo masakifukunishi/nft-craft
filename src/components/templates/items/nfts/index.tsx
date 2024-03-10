@@ -7,10 +7,13 @@ import Profile from "@/components/organisms/items/common/profile";
 import CardList from "@/components/organisms/items/nfts/CardList";
 import LoadMore from "@/components/molecules/LoadMore";
 import useFetchNFTs from "@/hooks/useFetchNFTs";
+import { loadChainList } from "@/utills/load";
 
 const ItemsNFTs = () => {
   const { chainId, address } = useAccount();
-  const [selectedChainId, setSelectedChainId] = useState(chainId);
+  const chainList = loadChainList();
+  const initialChainId = chainList[0].id;
+  const [selectedChainId, setSelectedChainId] = useState(initialChainId);
 
   const { nfts, isLoading, hasMore, fetchMore, isFetchingMore } = useFetchNFTs(address, selectedChainId, 32);
 
@@ -19,7 +22,9 @@ const ItemsNFTs = () => {
   };
 
   useEffect(() => {
-    if (chainId) setSelectedChainId(chainId);
+    if (chainList.some((chain) => chain.id === chainId)) {
+      setSelectedChainId(chainId!);
+    }
   }, [chainId]);
 
   return (
