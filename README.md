@@ -30,3 +30,19 @@ This site allows users to mint NFTs (ERC-721 tokens) and view them. Currently, i
 ### Supported Chains
 #### Testnets
 - Sepolia
+
+## How to Use
+### Test
+```
+npm hardhat test
+```
+
+### Deploy
+```
+npx hardhat run --network sepolia scripts/deploy.ts
+```
+
+### Verify
+```
+npx hardhat verify --network sepolia DEPLOYED_CONTRACT_ADDRESS
+```
