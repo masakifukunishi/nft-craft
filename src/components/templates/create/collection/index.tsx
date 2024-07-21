@@ -87,7 +87,7 @@ const CreateCollection = () => {
           <div className="text-lg">{connectedAddress}</div>
         </div>
         <div className="mt-8">
-          <div className="text-lg font-semibold">Choose blockchain</div>
+          <div className="text-lg font-semibold">Choose a blockchain</div>
           <div className="mt-4">
             <BlockchainCardList
               blockchains={chainList}

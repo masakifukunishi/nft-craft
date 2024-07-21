@@ -143,7 +143,7 @@ const CreateNFT = () => {
           <div className="text-lg">{connectedAddress}</div>
         </div>
         <div className="mt-8">
-          <div className="text-lg font-semibold">Choose blockchain</div>
+          <div className="text-lg font-semibold">Choose a blockchain</div>
           <div className="mt-4">
             <BlockchainCardList
               blockchains={chainList}
@@ -153,7 +153,7 @@ const CreateNFT = () => {
             />
           </div>
           <div className="mt-8">
-            <div className="text-lg font-semibold">Choose collection</div>
+            <div className="text-lg font-semibold">Choose a collection</div>
             <div className="mt-4">
               {(collections === undefined || collections.length === 0) && (
                 <div className="my-4">
