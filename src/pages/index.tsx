@@ -18,8 +18,8 @@ const Home: NextPage = () => {
             <div className="xl:w-118 lg:w-96 md:w-80 w-full px-6 md:px-0">
               <div className="text-3xl text-base-black font-semibold mb-2">NFT Craft</div>
               <p className="text-gray-700">
-                Discover the future of digital art ownership with our platform. Mint your own unique NFTs effortlessly and become part of an
-                ever-expanding universe of creativity. Dive into a seamless experience where innovation meets digital asset security.
+                Mint your own unique NFTs with ease on our platform. Join a growing community of creators and collectors, and enjoy a
+                secure, seamless experience built for digital art.
               </p>
             </div>
           </div>
